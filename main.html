@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="nav-wrapper">
+        <nav class="navbar">
+        <a href="main.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Me</a>
+        <a href="Projects.html" class="nav-link">Projects</a>
+        <a href="Contact.html" class="nav-link">Contact Me</a>
+    </nav>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="hero-header">
+                <img src="images/profile.png" alt="Profile Picture" class="profile-picture">
+                <i class="studying-text">Studying, can't work rn...</i>
+            </div>
+        <h1>Hey! I'm Adriano</h1>
+        <nav>
+            <ul>
+                <li>A student from <span class="highlight">Lisbon</span>, <span class="highlight">Portugal</span>.</li>
+                <li>Pursuing the course of <span class="highlight">Computer Systems Management and Programming Technician</span>.</li>
+                <li style="white-space: nowrap;">First Global 24' - <span class="highlight">Team Portugal (Travel Team) participant</span>.</li>
+            </ul>
+        </nav>
+        <div class="contact-buttons-main-wrapper">
+            <a href="mailto:adrianolop.v@icloud.com" class="mail-button">
+                <img src="images/mailicon.svg" alt="Mail icon">Mail
+            </a>
+            <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" class="linkedin-button">
+                <img src="images/Linkedin.svg" alt="LinkedIn icon">LinkedIn
+            </a>
+        </div>
+    </div>
+
+    <div class="experience-section">
+        <h2>Experience</h2>
+        <div class="toggle-wrapper">
+            <button class="toggle-btn active" data-target="work">Work/Projects</button>
+            <button class="toggle-btn" data-target="education">School/Education</button>
+        </div>
+        <div class="experience-content" id="work-content">
+            <div class="timeline-content">
+                <div class="timeline-item">
+                    <img class="company-logo" src="images/ceiia.svg" alt="Ceiia Logo" />
+                    <div class="timeline-date">05/05/25 ― 14/07/25</div>
+                    <div class="timeline-title">Web Development<br/>Internship</div>
+                    <div class="timeline-company">CEiiA</div>
+                </div>
+                <div class="timeline-item">
+                    <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Logo" />
+                    <div class="timeline-date">10/05/24 ― 10/10/24</div>
+                    <div class="timeline-title">First Global 24' Team Portugal</div>
+                    <div class="timeline-company">FIRST</div>
+                </div>
+            </div>
+        </div>
+        <div class="experience-content hidden" id="education-content">
+            <div class="timeline-content">
+                <div class="timeline-item">
+                    <img class="company-logo round" src="images/ipe.svg" alt="Instituto Logo" />
+                    <div class="timeline-date">11/09/2023 ― 18/07/26</div>
+                    <div class="timeline-title">Technician in Management and Programming of Computer Systems</div>
+                    <div class="timeline-company">Instituto Dos Pupilos Do Exército</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between experience sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.experience-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(`${target}-content`).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+    <div class="card">
+        <div class="profile">
+            <img class="profile-image" src="images/firstglobalpicture.png" />
+            <div class="name">Adriano<br/>Vilhena™</div>
+        </div>
+        <div class="social-links">
+            <div class="social-item">
+                <a href="https://github.com/adrxLV" target="_blank" class="social-link">
+                    <div class="icon-container">
+                        <img src="images/github 1.svg" alt="GitHub" class="social-icon">
+                    </div>
+                    <div class="social-text">GitHub</div>
+                </a>
+            </div>
+            <div class="social-item">
+                <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" class="social-link">
+                    <div class="icon-container">
+                        <img src="images/linkedin-linked-in 1.svg" alt="LinkedIn" class="social-icon">
+                    </div>
+                    <div class="social-text">LinkedIn</div>
+                </a>
+            </div>
+            <div class="social-item">
+                <a href="http://instagram.com/adriano._.l" target="_blank" class="social-link">
+                    <div class="icon-container">
+                        <img src="images/instagram 1.svg" alt="Instagram" class="social-icon">
+                    </div>
+                    <div class="social-text">Instagram</div>
+                </a>
+            </div>
+            <div class="social-item">
+                <a href="https://discordapp.com/users/1153326917001429022" target="_blank" class="social-link">
+                    <div class="icon-container">
+                        <img src="images/discord 1.svg" alt="Discord" class="social-icon">
+                    </div>
+                    <div class="social-text">Discord</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

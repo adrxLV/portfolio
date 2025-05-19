@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Portfolio</title>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="nav-wrapper">
+        <nav class="navbar">
+        <a href="main.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Me</a>
+        <a href="Projects.html" class="nav-link">Projects</a>
+        <a href="Contact.html" class="nav-link">Contact Me</a>
+        </nav>
+    </div>
+
+    <div class="main-wrapper">
+        <h1>My Projects</h1>
+
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="images/myhub.png" alt="MyHub Project">
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">MyHub</h3>
+                    </div>
+                    <p class="project-description">MyHub is the internal platform (similar to an intranet) used by CEiiA to manage its members and collaborators in a centralized and efficient way.</p>
+                    <div class="project-client">Para <span class="highlight">CEiiA</span></div>
+                    <div class="project-tags">
+                        <span class="tech-item blue">.NET</span>
+                        <span class="tech-item blue">C#</span>
+                        <span class="tech-item green">FRONT-END</span>
+                        <span class="tech-item green">DEVEXPRESS</span>
+                        <span class="tech-item yellow">RAZOR</span>
+                        <span class="tech-item yellow">FIGMA</span>
+                        <span class="tech-item blue">HTML5</span>
+                        <span class="tech-item blue">CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="images/myrecipe.png" alt="My Recipe Project">
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">My Recipe</h3>
+                    </div>
+                    <p class="project-description">Discover what to cook with the ingredients you already have, let our AI inspire you with easy and delicious recipes!</p>
+                    <div class="project-client">Personal Project</div>
+                    <div class="project-tags">
+                        <span class="tech-item green">Databases</span>
+                        <span class="tech-item green">LLM'S</span>
+                        <span class="tech-item yellow">Vision AI</span>
+                        <span class="tech-item yellow">Auth System</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="images/jarvis.png" alt="JARVIS AI Project">
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">J.A.R.V.I.S - AI</h3>
+                        <a href="#" class="project-link">Access →</a>
+                    </div>
+                    <p class="project-description">A powerful AI-driven virtual assistant inspired by JARVIS, capable of controlling your PC and responding intelligently using Ollama models.</p>
+                    <div class="project-client">Personal Project</div>
+                    <div class="project-tags">
+                        <span class="tech-item blue">PYTHON</span>
+                        <span class="tech-item blue">OLLAMA</span>
+                        <span class="tech-item green">CTkinter</span>
+                        <span class="tech-item green">Tkinter</span>
+                        <span class="tech-item yellow">APIs</span>
+                        <span class="tech-item yellow">TTS</span>
+                        <span class="tech-item yellow">STT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation for project cards
+            const projectCards = document.querySelectorAll('.project-card');
+
+            function checkScroll() {
+                projectCards.forEach((card, index) => {
+                    const cardTop = card.getBoundingClientRect().top;
+                    if (cardTop < window.innerHeight * 0.9) {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }
+
+            // Initial check
+            checkScroll();
+
+            // Listen for scroll
+            window.addEventListener('scroll', checkScroll);
+        });
+    </script>
+</body>
+</html>
+
