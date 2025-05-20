@@ -29,7 +29,7 @@ html, body {
     background-color: #504945;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 12px 17px;
     gap: clamp(20px, 5vw, 73px);
     border-radius: 16px;
@@ -39,6 +39,25 @@ html, body {
     max-height: 65px;
     list-style: none;
     flex-wrap: wrap;
+    position: relative;
+}
+
+.menu-icon {
+    display: none;
+    cursor: pointer;
+    color: #EBDBB2;
+}
+
+.menu-icon .material-icons {
+    font-size: 24px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
 }
 
 .nav-wrapper {
@@ -609,8 +628,19 @@ nav ul li:last-child {
     }
 
     .navbar {
-        gap: 15px;
-        padding: 10px;
+        gap: 10px;
+        padding: 8px 12px;
+        justify-content: center;
+        max-width: fit-content;
+        width: auto;
+        border-radius: 50px;
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .nav-wrapper {
+        justify-content: flex-end;
+        padding-right: 5%;
     }
 
     .hero-header {
@@ -624,6 +654,169 @@ nav ul li:last-child {
     nav ul {
         padding-left: 50px;
         text-align: left;
+    }
+
+    .menu-icon {
+        display: block;
+        margin: 0;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        left: auto;
+        flex-direction: column;
+        background-color: #504945;
+        border: 3px solid #EBDBB2;
+        border-radius: 12px;
+        padding: 15px;
+        width: 200px;
+        z-index: 1000;
+        display: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    .nav-links.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .contact-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-form-container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .contact-info {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
+
+    .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .card {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        gap: 40px;
+        margin: 30px auto 50px auto;
+    }
+
+    .profile {
+        width: 100%;
+        height: auto;
+    }
+
+    .name {
+        font-size: 40px;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .studying-text {
+        font-size: 14px;
+        padding: 8px 12px;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .contact-buttons-main-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .toggle-wrapper {
+        width: 100%;
+    }
+
+    .toggle-btn {
+        font-size: 14px;
+    }
+
+    .experience-content {
+        height: auto;
+        min-height: 300px;
+    }
+
+    .timeline-item {
+        padding-left: 80px;
+    }
+
+    .company-logo {
+        width: 50px;
+        height: 50px;
+        left: 20px;
+    }
+
+    .timeline-content::before {
+        left: 45px;
+    }
+
+    .timeline-title {
+        font-size: 20px;
+        max-width: 100%;
+    }
+
+    .tech-category h3 {
+        font-size: 24px;
+    }
+
+    .tech-item {
+        font-size: 18px;
+        min-width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-wrapper h1 {
+        font-size: 28px;
+    }
+
+    .timeline-date {
+        font-size: 16px;
+    }
+
+    .timeline-title {
+        font-size: 18px;
+    }
+
+    .timeline-company {
+        font-size: 18px;
+    }
+
+    .tech-item {
+        font-size: 14px;
+        min-width: 70px;
+        padding: 8px;
+    }
+
+    .hero-header {
+        flex-direction: column;
+        align-items: center;
     }
 }
 
