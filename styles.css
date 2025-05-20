@@ -157,10 +157,14 @@ nav ul li {
     margin-bottom: 10px;
     color: white;
     font-size: clamp(16px, 2.5vw, 24px);
+    word-wrap: break-word;
+    line-height: 1.4;
 }
+
 nav ul li:last-child {
-    white-space: nowrap;
+    white-space: normal;
 }
+
 .main-wrapper h1 {
     color: #EBDBB2;
     font-size: clamp(32px, 5vw, 48px);
@@ -649,11 +653,35 @@ nav ul li:last-child {
 
     .main-wrapper h1 {
         align-self: center;
+        font-size: 28px;
+    }
+
+    .main-wrapper p, .bio-text, .contact-intro, .project-description, .status-description {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .about-title {
+        font-size: 32px;
     }
 
     nav ul {
-        padding-left: 50px;
+        padding-left: 25px;
         text-align: left;
+        width: 100%;
+    }
+
+    nav ul li {
+        font-size: 16px;
+        margin-bottom: 8px;
+        line-height: 1.4;
+        word-wrap: break-word;
+        white-space: normal;
+        width: 100%;
+    }
+
+    .contact-heading {
+        font-size: 20px;
     }
 
     .menu-icon {
@@ -793,30 +821,85 @@ nav ul li:last-child {
 
 @media (max-width: 480px) {
     .main-wrapper h1 {
+        font-size: 24px;
+    }
+
+    .about-title {
         font-size: 28px;
     }
 
+    .contact-heading {
+        font-size: 18px;
+    }
+
+    nav ul {
+        padding-left: 20px;
+    }
+
+    nav ul li {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
     .timeline-date {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .timeline-title {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .timeline-company {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .tech-item {
-        font-size: 14px;
-        min-width: 70px;
-        padding: 8px;
+        font-size: 12px;
+        min-width: 60px;
+        padding: 6px;
     }
 
     .hero-header {
         flex-direction: column;
         align-items: center;
+    }
+
+    .tech-category h3 {
+        font-size: 20px;
+    }
+
+    .project-title {
+        font-size: 22px;
+    }
+
+    .project-client {
+        font-size: 12px;
+    }
+
+    .project-tags .tech-item {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .contact-details h4 {
+        font-size: 14px;
+    }
+
+    .contact-details a {
+        font-size: 12px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+
+    .status-text {
+        font-size: 14px;
     }
 }
 
