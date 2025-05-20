@@ -1247,7 +1247,7 @@ body.fade-out {
     transition: all 0.3s ease;
     align-self: flex-end;
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 35px;
 }
 
 .submit-btn:hover {
