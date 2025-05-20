@@ -789,11 +789,14 @@ body.fade-out {
     flex-wrap: wrap;
     gap: 30px;
     width: 100%;
+    align-items: flex-start;
 }
 
 .contact-info {
     flex: 1;
     min-width: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-section {
@@ -897,18 +900,20 @@ body.fade-out {
     border-radius: 16px;
     border: 4px solid #EBDBB2;
     padding: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .form-group label {
@@ -942,6 +947,11 @@ body.fade-out {
     color: #928374;
 }
 
+.form-group textarea {
+    min-height: 80px;
+    max-height: 120px;
+}
+
 .submit-btn {
     background-color: #EBDBB2;
     color: #282828;
@@ -955,6 +965,7 @@ body.fade-out {
     transition: all 0.3s ease;
     align-self: flex-end;
     margin-top: 10px;
+    margin-bottom: 50px;
 }
 
 .submit-btn:hover {
