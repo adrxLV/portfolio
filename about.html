@@ -120,6 +120,24 @@
         </div>
         <div id="fencing-message" class="fencing-message"></div>
     </div>
+    <script>
+        // Toggle between experience sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
 
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.experience-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(`${target}-content`).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
