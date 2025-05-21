@@ -1247,7 +1247,7 @@ body.fade-out {
     transition: all 0.3s ease;
     align-self: flex-end;
     margin-top: 10px;
-    margin-bottom: 35px;
+    margin-bottom: 55px;
 }
 
 .submit-btn:hover {
@@ -1565,3 +1565,40 @@ body.fade-out {
     cursor: pointer;
     z-index: 10000;
 }
+
+
+
+.easter-egg-hint {
+    position: relative;
+    display: inline-block;
+    color: #3a3a3a;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.easter-egg-hint .easter-egg-explanation {
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background: #504945;
+    color: #EBDBB2;
+    text-align: left;
+    border-radius: 8px;
+    padding: 8px 14px;
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    top: 120%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    font-size: 14px;
+    transition: opacity 0.2s, visibility 0.2s;
+    pointer-events: none;
+}
+.easter-egg-hint:hover {
+    color: #D79928;
+}
+.easter-egg-hint:hover .easter-egg-explanation {
+    visibility: visible;
+    opacity: 1;
+}
+
