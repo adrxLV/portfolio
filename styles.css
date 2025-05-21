@@ -1265,3 +1265,251 @@ body.fade-out {
         width: 100%;
     }
 }
+
+/* Linux Console Easter Egg */
+.console-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    overflow: auto;
+}
+
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.console-title {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.console-close {
+    color: #ff5555;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+.console-content {
+    font-family: 'JetBrains Mono', monospace;
+    color: #4CAF50;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.console-input-line {
+    display: flex;
+    margin-top: 10px;
+}
+
+.console-prompt {
+    color: #4CAF50;
+    margin-right: 10px;
+}
+
+.console-input {
+    background: transparent;
+    border: none;
+    color: #4CAF50;
+    font-family: 'JetBrains Mono', monospace;
+    flex-grow: 1;
+    outline: none;
+}
+
+/* Easter Egg - fencing */
+.fencing-game-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3c3836;
+    border: 4px solid #EBDBB2;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    z-index: 1000;
+    padding: 20px;
+    color: #EBDBB2;
+    font-family: "JetBrains Mono", monospace;
+}
+
+.fencing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.fencing-header h2 {
+    margin: 0;
+    color: #D79928;
+}
+
+#close-fencing {
+    background: none;
+    border: none;
+    color: #EBDBB2;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.fencing-arena {
+    position: relative;
+    height: 150px;
+    background-color: #504945;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+.fencer {
+    font-size: 40px;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.fencer.player {
+    left: 20%;
+    transform: scaleX(-1);
+}
+
+.fencer.opponent {
+    right: 20%;
+    transform: scaleX(1);
+}
+
+.fencer.attack {
+    animation: attack 0.5s forwards;
+}
+
+.fencer.parry {
+    animation: parry 0.5s forwards;
+}
+
+.fencer.hit {
+    animation: hit 0.5s forwards;
+}
+
+@keyframes attack {
+    0% { transform: translateX(0) scaleX(1); }
+    50% { transform: translateX(40px) scaleX(1); }
+    100% { transform: translateX(0) scaleX(1); }
+}
+
+@keyframes parry {
+    0% { transform: rotate(0deg) scaleX(1); }
+    25% { transform: rotate(-15deg) scaleX(1); }
+    75% { transform: rotate(15deg) scaleX(1); }
+    100% { transform: rotate(0deg) scaleX(1); }
+}
+
+@keyframes hit {
+    0% { transform: translateX(0) rotate(0) scaleX(1); opacity: 1; }
+    25% { transform: translateX(10px) rotate(10deg) scaleX(1); opacity: 0.8; }
+    50% { transform: translateX(-5px) rotate(-5deg) scaleX(1); opacity: 0.6; }
+    75% { transform: translateX(5px) rotate(5deg) scaleX(1); opacity: 0.8; }
+    100% { transform: translateX(0) rotate(0) scaleX(1); opacity: 1; }
+}
+
+.fencer.opponent.attack {
+    animation: attackOpponent 0.5s forwards;
+}
+
+.fencer.opponent.parry {
+    animation: parryOpponent 0.5s forwards;
+}
+
+.fencer.opponent.hit {
+    animation: hitOpponent 0.5s forwards;
+}
+
+@keyframes attackOpponent {
+    0% { transform: translateX(0) scaleX(-1); }
+    50% { transform: translateX(-40px) scaleX(-1); }
+    100% { transform: translateX(0) scaleX(-1); }
+}
+
+@keyframes parryOpponent {
+    0% { transform: rotate(0deg) scaleX(-1); }
+    25% { transform: rotate(15deg) scaleX(-1); }
+    75% { transform: rotate(-15deg) scaleX(-1); }
+    100% { transform: rotate(0deg) scaleX(-1); }
+}
+
+@keyframes hitOpponent {
+    0% { transform: translateX(0) rotate(0) scaleX(-1); opacity: 1; }
+    25% { transform: translateX(-10px) rotate(-10deg) scaleX(-1); opacity: 0.8; }
+    50% { transform: translateX(5px) rotate(5deg) scaleX(-1); opacity: 0.6; }
+    75% { transform: translateX(-5px) rotate(-5deg) scaleX(-1); opacity: 0.8; }
+    100% { transform: translateX(0) rotate(0) scaleX(-1); opacity: 1; }
+}
+
+.fencing-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.fencing-controls button {
+    background-color: #504945;
+    border: 2px solid #EBDBB2;
+    color: #EBDBB2;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", monospace;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.fencing-controls button:hover {
+    background-color: #665c54;
+}
+
+#attack-button {
+    border-color: #FB4934;
+    color: #FB4934;
+}
+
+#parry-button {
+    border-color: #B8BB26;
+    color: #B8BB26;
+}
+
+.fencing-score {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.fencing-message {
+    text-align: center;
+    height: 20px;
+    margin: 10px 0;
+    font-style: italic;
+}
+
+#fencing-trigger {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#fencing-trigger:hover {
+    transform: scale(1.1);
+}

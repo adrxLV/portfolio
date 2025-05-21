@@ -93,30 +93,33 @@
                         <div class="tech-item yellow">Unity Game Engine</div>
                         <div class="tech-item yellow">Arduino</div>
                         <div class="tech-item yellow">Micro:Bit</div>
+                        <div class="tech-item yellow" id="fencing-trigger" title="Click here to play a game">⚔Fencing</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Toggle between experience sections
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleBtns = document.querySelectorAll('.toggle-btn');
+    <!-- Easter Egg de Esgrima -->
+    <div id="fencing-game" class="fencing-game-container" style="display: none;">
+        <div class="fencing-header">
+            <h2>Fencing Duel</h2>
+            <button id="close-fencing">×</button>
+        </div>
+        <div class="fencing-arena">
+            <div class="fencer player" id="player-fencer">🤺</div>
+            <div class="fencer opponent" id="opponent-fencer">🤺</div>
+        </div>
+        <div class="fencing-controls">
+            <button id="attack-button">Atacar</button>
+            <button id="parry-button">Defender</button>
+        </div>
+        <div class="fencing-score">
+            <span>You: <span id="player-score">0</span></span>
+            <span>Computer: <span id="computer-score">0</span></span>
+        </div>
+        <div id="fencing-message" class="fencing-message"></div>
+    </div>
 
-            toggleBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    toggleBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    document.querySelectorAll('.experience-content').forEach(content => {
-                        content.classList.add('hidden');
-                    });
-
-                    const target = this.getAttribute('data-target');
-                    document.getElementById(`${target}-content`).classList.remove('hidden');
-                });
-            });
-        });
-    </script>
 </body>
 </html>
