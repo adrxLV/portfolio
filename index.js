@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Easter Egg - HACK Console
 document.addEventListener('DOMContentLoaded', function() {
-    // Key sequence detection for "HACK"
+
     const keySequence = [];
     const hackCode = "HACK";
 
@@ -90,13 +90,154 @@ document.addEventListener('DOMContentLoaded', function() {
     const consoleInput = document.getElementById('consoleInput');
     const closeConsole = document.getElementById('closeConsole');
 
-    // Available commands for the terminal
+
+    const fileSystem = {
+        '/': {
+            type: 'directory',
+            contents: {
+                'home': {
+                    type: 'directory',
+                    contents: {
+                        'hacker': {
+                            type: 'directory',
+                            contents: {
+                                'Documents': {
+                                    type: 'directory',
+                                    contents: {
+                                        'notes.txt': {
+                                            type: 'file',
+                                            content: 'Remember to update your portfolio with the latest projects.'
+                                        },
+                                        'ideas.txt': {
+                                            type: 'file',
+                                            content: 'Project Ideas:\n1. AI-powered task manager\n2. Blockchain voting system\n3. AR navigation app\n4. Decentralized social network'
+                                        }
+                                    }
+                                },
+                                'Downloads': {
+                                    type: 'directory',
+                                    contents: {
+                                        'archive.zip': {
+                                            type: 'file',
+                                            content: '[Binary content: archive.zip]'
+                                        }
+                                    }
+                                },
+                                'Projects': {
+                                    type: 'directory',
+                                    contents: {
+                                        'portfolio': {
+                                            type: 'directory',
+                                            contents: {
+                                                'README.md': {
+                                                    type: 'file',
+                                                    content: '# Portfolio Website\nMy personal portfolio website showcasing my projects and skills.\n\nTech stack:\n- HTML/CSS/JavaScript\n- Responsive design\n- Interactive elements\n- Easter eggs'
+                                                }
+                                            }
+                                        },
+                                        'myrecipe': {
+                                            type: 'directory',
+                                            contents: {
+                                                'README.md': {
+                                                    type: 'file',
+                                                    content: '# MyRecipe\nA recipe management and sharing app with social features.\n\nFeatures:\n- User accounts\n- Recipe creation and sharing\n- Rating system\n- Ingredient search'
+                                                }
+                                            }
+                                        },
+                                        'myhub': {
+                                            type: 'directory',
+                                            contents: {
+                                                'README.md': {
+                                                    type: 'file',
+                                                    content: '# MyHub\nA centralized dashboard for managing multiple services and applications.\n\nFeatures:\n- Single sign-on\n- Customizable widgets\n- Analytics\n- Multiple service integrations'
+                                                }
+                                            }
+                                        },
+                                        'jarvis': {
+                                            type: 'directory',
+                                            contents: {
+                                                'README.md': {
+                                                    type: 'file',
+                                                    content: '# J.A.R.V.I.S.\nJust A Rather Very Intelligent System - A personal AI assistant.\n\nFeatures:\n- Natural language processing\n- Task automation\n- Calendar integration\n- Smart home control'
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                'portfolio.txt': {
+                                    type: 'file',
+                                    content: "This is Adriano's portfolio website. You found the easter egg!"
+                                },
+                                'secret.txt': {
+                                    type: 'file',
+                                    content: "Congratulations hacker! You found the secret file.\nMessage from Adriano: Thanks for exploring my portfolio deeply enough to find this easter egg!"
+                                },
+                                '.bash_history': {
+                                    type: 'file',
+                                    content: "ls -la\ncd Projects\ncat portfolio.txt\nneofetch\ncd ..\ngrep 'secret' *.txt\nwhoami\nsudo rm -rf /\n^C\nhistory -c"
+                                }
+                            }
+                        }
+                    }
+                },
+                'etc': {
+                    type: 'directory',
+                    contents: {
+                        'passwd': {
+                            type: 'file',
+                            content: 'root:x:0:0:root:/root:/bin/bash\nhacker:x:1000:1000:Hacker:/home/hacker:/bin/bash'
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+
+    let currentPath = ['/','home','hacker'];
+
+
+    function getDirectoryFromPath(path) {
+        try {
+            let current = fileSystem;
+            if (path.length === 1 && path[0] === '/') {
+                return current['/'];
+            }
+
+            for (let i = 0; i < path.length; i++) {
+                if (i === 0 && path[i] === '/') {
+                    current = current['/'];
+                    continue;
+                }
+
+                if (!current.contents || !current.contents[path[i]]) {
+                    throw new Error('Path not found');
+                }
+                current = current.contents[path[i]];
+            }
+            return current;
+        } catch (error) {
+            throw new Error('Invalid path');
+        }
+    }
+
+    function getCurrentDirectory() {
+        return getDirectoryFromPath(currentPath);
+    }
+
+    function formatPathString() {
+        if (currentPath.length === 1) return '/';
+        return '/' + currentPath.slice(1).join('/');
+    }
+
+
     const commands = {
         'help': () => {
             return `Available commands:
 - help: Show this help message
 - neofetch: Display system information
-- ls: List files in current directory
+- ls [directory]: List files in directory
+- cd [directory]: Change directory
 - cat [filename]: Display file content
 - whoami: Display current user
 - pwd: Print working directory
@@ -122,12 +263,133 @@ document.addEventListener('DOMContentLoaded', function() {
                                Battery: 98% [Eternal Power Mode]
                                Most used phrase: i use arch btw`;
         },
-        'ls': () => {
-            return `drwxr-xr-x  2 hacker  users  4096 May 21 2025 Documents
-drwxr-xr-x  2 hacker  users  4096 May 21 2025 Downloads
--rw-r--r--  1 hacker  users   420 May 21 2025 portfolio.txt
--rw-r--r--  1 hacker  users  1226 May 21 2025 secret.txt
-drwxr-xr-x  2 hacker  users  4096 May 21 2025 Projects`;
+        'ls': (args) => {
+            let targetPath = [...currentPath];
+
+            if (args && args.length > 0) {
+                const dirArg = args[0];
+
+
+                if (dirArg === '/') {
+                    targetPath = ['/'];
+                } else if (dirArg === '..') {
+                    if (targetPath.length > 1) {
+                        targetPath.pop();
+                    }
+                } else if (dirArg === '.') {
+
+                } else if (dirArg === '~' || dirArg === '/home/hacker') {
+                    targetPath = ['/', 'home', 'hacker'];
+                } else if (dirArg.startsWith('/')) {
+
+                    targetPath = ['/'];
+                    const segments = dirArg.split('/').filter(s => s);
+                    targetPath.push(...segments);
+                } else {
+
+                    targetPath.push(dirArg);
+                }
+            }
+
+            try {
+                const current = getDirectoryFromPath(targetPath);
+
+                if (current.type !== 'directory') {
+                    return `ls: cannot access '${args ? args[0] : ''}': Not a directory`;
+                }
+
+
+                let dirs = [];
+                let files = [];
+
+                for (const [name, item] of Object.entries(current.contents)) {
+                    if (item.type === 'directory') {
+                        dirs.push(name + '/');
+                    } else {
+                        files.push(name);
+                    }
+                }
+
+
+                dirs.sort();
+                files.sort();
+
+
+                return [...dirs, ...files].join('  ');
+            } catch (error) {
+                return `ls: cannot access '${args ? args[0] : ''}': No such file or directory`;
+            }
+        },
+        'cd': (args) => {
+            if (!args || args.length === 0 || args[0] === '~') {
+
+                currentPath = ['/', 'home', 'hacker'];
+                return '';
+            }
+
+            const dirArg = args[0];
+
+
+            if (dirArg === '/') {
+                currentPath = ['/'];
+                return '';
+            } else if (dirArg === '..') {
+                if (currentPath.length > 1) {
+                    currentPath.pop();
+                }
+                return '';
+            } else if (dirArg === '.') {
+
+                return '';
+            } else if (dirArg.startsWith('/')) {
+
+                try {
+                    const segments = dirArg.split('/').filter(s => s);
+                    let testPath = ['/'];
+
+                    for (const segment of segments) {
+                        let current = getDirectoryFromPath(testPath);
+
+
+                        const dirEntry = Object.keys(current.contents).find(
+                            key => key.toLowerCase() === segment.toLowerCase()
+                        );
+
+                        if (!dirEntry || current.contents[dirEntry].type !== 'directory') {
+                            return `cd: ${dirArg}: No such directory`;
+                        }
+                        testPath.push(dirEntry);
+                    }
+
+                    currentPath = testPath;
+                    return '';
+                } catch (error) {
+                    return `cd: ${dirArg}: No such directory`;
+                }
+            } else {
+
+                try {
+                    const current = getCurrentDirectory();
+
+
+                    const dirEntry = Object.keys(current.contents).find(
+                        key => key.toLowerCase() === dirArg.toLowerCase()
+                    );
+
+                    if (!dirEntry) {
+                        return `cd: ${dirArg}: No such directory`;
+                    }
+
+                    if (current.contents[dirEntry].type !== 'directory') {
+                        return `cd: ${dirArg}: Not a directory`;
+                    }
+
+                    currentPath.push(dirEntry);
+                    return '';
+                } catch (error) {
+                    return `cd: ${dirArg}: No such directory`;
+                }
+            }
         },
         'cat': (args) => {
             if (!args || args.length === 0) {
@@ -136,11 +398,42 @@ drwxr-xr-x  2 hacker  users  4096 May 21 2025 Projects`;
 
             const filename = args[0];
 
-            if (filename === 'portfolio.txt') {
-                return "This is Adriano's portfolio website. You found the easter egg!";
-            } else if (filename === 'secret.txt') {
-                return "Congratulations hacker! You found the secret file.\nMessage from Adriano: Thanks for exploring my portfolio deeply enough to find this easter egg!";
-            } else {
+            try {
+
+                if (filename.startsWith('/')) {
+                    const segments = filename.split('/').filter(s => s);
+                    const filePath = ['/', ...segments.slice(0, -1)];
+                    const fileName = segments[segments.length - 1];
+
+                    try {
+                        const currentDir = getDirectoryFromPath(filePath);
+
+                        if (!currentDir.contents[fileName]) {
+                            return `cat: ${filename}: No such file or directory`;
+                        }
+
+                        if (currentDir.contents[fileName].type !== 'file') {
+                            return `cat: ${filename}: Is a directory`;
+                        }
+
+                        return currentDir.contents[fileName].content;
+                    } catch (error) {
+                        return `cat: ${filename}: No such file or directory`;
+                    }
+                } else {
+                   const current = getCurrentDirectory();
+
+                    if (!current.contents[filename]) {
+                        return `cat: ${filename}: No such file or directory`;
+                    }
+
+                    if (current.contents[filename].type !== 'file') {
+                        return `cat: ${filename}: Is a directory`;
+                    }
+
+                    return current.contents[filename].content;
+                }
+            } catch (error) {
                 return `cat: ${filename}: No such file or directory`;
             }
         },
@@ -148,7 +441,7 @@ drwxr-xr-x  2 hacker  users  4096 May 21 2025 Projects`;
             return "hacker";
         },
         'pwd': () => {
-            return "/home/hacker";
+            return formatPathString();
         },
         'clear': () => {
             consoleContent.innerHTML = "Welcome to HackerOS v1.0.0\nType 'help' for available commands.";
@@ -158,7 +451,7 @@ drwxr-xr-x  2 hacker  users  4096 May 21 2025 Projects`;
             return "HackerOS 6.4.7-arch1-1";
         },
         'date': () => {
-            return "Saturday Oct 11 13:37:42 UTC 2008";
+            return "Saturday May 21 13:37:42 UTC 2025";
         },
         'htop': () => {
             return `Tasks: 42 total, 7 running
@@ -241,9 +534,9 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
         }
     };
 
-    // Listen for keypresses to detect "HACK"
+
     document.addEventListener('keydown', function(e) {
-        // Don't capture keypresses when typing in the console
+
         if (hackConsole.style.display === 'flex' && document.activeElement === consoleInput) {
             return;
         }
@@ -258,36 +551,56 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
         }
     });
 
-    // Open the hack console
+
     function openHackConsole() {
         hackConsole.style.display = 'flex';
         consoleInput.focus();
+
+
+        consoleContent.innerHTML = "Welcome to HackerOS v1.0.0\nType 'help' for available commands.";
+
+
+        const commandLine = document.createElement('div');
+        commandLine.innerHTML = `<span class="console-prompt">hacker@localhost:~$</span> ls`;
+        consoleContent.appendChild(commandLine);
+
+        const output = commands['ls']();
+        if (output) {
+            const outputElement = document.createElement('div');
+            outputElement.textContent = output;
+            consoleContent.appendChild(outputElement);
+        }
+
+
+        consoleContent.scrollTop = consoleContent.scrollHeight;
     }
 
-    // Close the hack console
+
     function closeHackConsole() {
         hackConsole.style.display = 'none';
         keySequence.length = 0; // Reset key sequence
     }
 
-    // Handle console input
+
     consoleInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             const command = consoleInput.value.trim();
             consoleInput.value = '';
 
-            // Add command to console output
+
+            const promptPath = formatPathString();
+            const displayPath = promptPath === '/home/hacker' ? '~' : promptPath;
             const commandLine = document.createElement('div');
-            commandLine.innerHTML = `<span class="console-prompt">hacker@localhost:~$</span> ${command}`;
+            commandLine.innerHTML = `<span class="console-prompt">hacker@localhost:${displayPath}$</span> ${command}`;
             consoleContent.appendChild(commandLine);
 
-            // Process command
+
             const parts = command.split(' ');
             const cmd = parts[0].toLowerCase();
             const args = parts.slice(1);
 
             if (cmd === '') {
-                // Empty command, just show a blank line
+
             } else if (commands[cmd]) {
                 const output = commands[cmd](args);
                 if (output) {
@@ -301,15 +614,15 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
                 consoleContent.appendChild(outputElement);
             }
 
-            // Scroll to bottom
+
             consoleContent.scrollTop = consoleContent.scrollHeight;
         }
     });
 
-    // Close console when clicking X
+
     closeConsole.addEventListener('click', closeHackConsole);
 
-    // Close console when pressing ESC
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && hackConsole.style.display === 'flex') {
             closeHackConsole();
@@ -330,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const playerFencer = document.getElementById('player-fencer');
     const opponentFencer = document.getElementById('opponent-fencer');
 
-    // Verifica se estamos na página about.html
+
     if (fencingTrigger) {
         fencingTrigger.addEventListener('click', function() {
             fencingGame.style.display = 'block';
@@ -338,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Fecha o jogo
+
     if (closeFencing) {
         closeFencing.addEventListener('click', function() {
             fencingGame.style.display = 'none';
@@ -668,4 +981,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+
+
 
