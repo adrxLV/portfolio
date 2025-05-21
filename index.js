@@ -466,3 +466,206 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Easter Egg - Star Wars Opening Crawl
+document.addEventListener('DOMContentLoaded', function() {
+    // Only run on Contact.html page
+    if (!document.getElementById('starwars-easter-egg')) return;
+
+    // Key sequence detection for the trigger "FORCE"
+    const keySequence = [];
+    const forceCode = "FORCE";
+    const starWarsEgg = document.getElementById('starwars-easter-egg');
+    const closeCrawl = document.querySelector('.close-crawl');
+
+    // Listen for keypresses to detect "FORCE"
+    document.addEventListener('keydown', function(e) {
+        // Get the pressed key
+        const key = e.key.toUpperCase();
+
+        // Add key to sequence and trim if needed
+        keySequence.push(key);
+        if (keySequence.length > forceCode.length) {
+            keySequence.shift();
+        }
+
+        // Check if sequence matches the code
+        if (keySequence.join('') === forceCode) {
+            showStarWarsEgg();
+        }
+    });
+
+    // Open Star Wars crawl
+    function showStarWarsEgg() {
+        starWarsEgg.style.display = 'block';
+        // Play Star Wars theme (optional)
+        const audio = new Audio('https://soundbible.com/mp3/Star_Wars_Theme_Song-John_Williams-1778671936.mp3');
+        audio.volume = 0.3;
+        audio.play().catch(err => console.log('Audio playback prevented:', err));
+
+        // Set cursor to lightsaber if available
+        try {
+            document.body.style.cursor = "url('images/lightsaber.cur'), auto";
+        } catch (e) {
+            console.log('Lightsaber cursor not found');
+        }
+    }
+
+    // Close Star Wars crawl
+    if (closeCrawl) {
+        closeCrawl.addEventListener('click', function() {
+            starWarsEgg.style.display = 'none';
+            document.body.style.cursor = 'auto';
+            keySequence.length = 0; // Reset key sequence
+        });
+    }
+
+    // Easter egg can also be triggered by clicking on email 3 times quickly
+    const emailLink = document.querySelector('.contact-details a[href^="mailto"]');
+    if (emailLink) {
+        let clickCount = 0;
+        let clickTimer;
+
+        emailLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            clickCount++;
+
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                if (clickCount >= 3) {
+                    showStarWarsEgg();
+                }
+                clickCount = 0;
+            }, 800);
+        });
+    }
+
+    // Also close on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && starWarsEgg.style.display === 'block') {
+            starWarsEgg.style.display = 'none';
+            document.body.style.cursor = 'auto';
+        }
+    });
+});
+
+// Easter Egg - Projects Page Matrix Effect
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're on the Projects page
+    if (window.location.pathname.includes('Projects.html')) {
+        // Key sequence detection for "MATRIX"
+        const matrixCode = "MATRIX";
+        const userKeys = [];
+        let lastKeyTime = Date.now();
+
+        document.addEventListener('keydown', function(e) {
+            const currentTime = Date.now();
+
+            // Reset sequence if too much time passed between key presses (3 seconds)
+            if (currentTime - lastKeyTime > 3000) {
+                userKeys.length = 0;
+            }
+
+            lastKeyTime = currentTime;
+            userKeys.push(e.key.toUpperCase());
+
+            // Keep only the last MATRIX.length keys
+            if (userKeys.length > matrixCode.length) {
+                userKeys.shift();
+            }
+
+            // Check if sequence matches
+            if (userKeys.join('') === matrixCode) {
+                triggerMatrixEffect();
+                userKeys.length = 0; // Reset after triggering
+            }
+        });
+
+        function triggerMatrixEffect() {
+            // Create matrix rain effect
+            const matrix = document.createElement('div');
+            matrix.className = 'matrix-effect';
+            matrix.style.position = 'fixed';
+            matrix.style.top = '0';
+            matrix.style.left = '0';
+            matrix.style.width = '100%';
+            matrix.style.height = '100%';
+            matrix.style.background = 'rgba(0, 0, 0, 0.9)';
+            matrix.style.color = '#0F0';
+            matrix.style.fontSize = '14px';
+            matrix.style.fontFamily = 'monospace';
+            matrix.style.zIndex = '9999';
+            matrix.style.overflow = 'hidden';
+            document.body.appendChild(matrix);
+
+            // Add message in center of screen
+            const messageEl = document.createElement('div');
+            messageEl.textContent = "You've discovered the Matrix! Press ESC to exit.";
+            messageEl.style.position = 'absolute';
+            messageEl.style.top = '10px';
+            messageEl.style.left = '50%';
+            messageEl.style.transform = 'translateX(-50%)';
+            messageEl.style.color = '#FFFFFF';
+            messageEl.style.fontSize = '18px';
+            messageEl.style.zIndex = '10000';
+            messageEl.style.padding = '10px';
+            messageEl.style.background = 'rgba(0, 0, 0, 0.7)';
+            messageEl.style.borderRadius = '5px';
+            matrix.appendChild(messageEl);
+
+            // Create matrix characters
+            const columns = Math.floor(window.innerWidth / 14);
+            const drops = [];
+
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+
+            // Create canvas for better performance
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.position = 'absolute';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            matrix.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+
+            // Generate matrix characters
+            const matrixInterval = setInterval(() => {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0F0';
+                ctx.font = '14px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = String.fromCharCode(
+                        Math.floor(Math.random() * 94) + 33
+                    );
+
+                    ctx.fillText(text, i * 14, drops[i] * 14);
+
+                    if (drops[i] * 14 > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+
+                    drops[i]++;
+                }
+            }, 50);
+
+            // Allow escape from matrix effect
+            function escapeMatrix(e) {
+                if (e.key === 'Escape') {
+                    clearInterval(matrixInterval);
+                    document.body.removeChild(matrix);
+                    document.removeEventListener('keydown', escapeMatrix);
+                }
+            }
+
+            document.addEventListener('keydown', escapeMatrix);
+        }
+    }
+});
+
