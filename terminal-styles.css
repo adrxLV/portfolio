@@ -1,0 +1,198 @@
+.console-overlay {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  height: 70%;
+  background-color: rgba(40, 40, 40, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  flex-direction: column;
+  font-family: "JetBrains Mono", monospace;
+  overflow: hidden;
+  border: 1px solid #83A598;
+  animation: console-appear 0.3s ease-out;
+}
+
+@keyframes console-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1D2021;
+  padding: 8px 16px;
+  border-bottom: 1px solid #4E4E4E;
+  border-radius: 10px 10px 0 0;
+}
+
+.console-title {
+  color: #EBDBB2;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.console-close {
+  color: #EBDBB2;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.console-close:hover {
+  color: #FB4934;
+  transform: scale(1.2);
+}
+
+.console-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  color: #EBDBB2;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  background-color: rgba(29, 32, 33, 0.9);
+  scrollbar-width: thin;
+  scrollbar-color: #4E4E4E #1D2021;
+}
+
+.console-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.console-content::-webkit-scrollbar-track {
+  background: #1D2021;
+}
+
+.console-content::-webkit-scrollbar-thumb {
+  background-color: #4E4E4E;
+  border-radius: 3px;
+}
+
+.console-input-line {
+  display: flex;
+  padding: 8px 16px;
+  background-color: #1D2021;
+  border-top: 1px solid #4E4E4E;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.console-prompt {
+  color: #B8BB26;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.console-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #EBDBB2;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  outline: none;
+  caret-color: #FB4934;
+}
+
+.console-content div:nth-child(odd) {
+  color: #EBDBB2;
+}
+
+.console-content div:nth-child(even) {
+  color: #D5C4A1;
+}
+
+.konami-hint {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(40, 40, 40, 0.8);
+  color: #EBDBB2;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  opacity: 0;
+  z-index: 1000;
+  animation: hint-flash 3s ease-in-out;
+}
+
+@keyframes hint-flash {
+  0% { opacity: 0; }
+  20% { opacity: 0.9; }
+  80% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+.command-result {
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.directory-name {
+  color: #B8BB26;
+  font-weight: 700;
+}
+
+.file-name {
+  color: #EBDBB2;
+}
+
+.ascii-art {
+  color: #83A598;
+  font-family: monospace;
+  line-height: 1.2;
+  margin: 10px 0;
+  white-space: pre;
+}
+
+@keyframes matrix-flow {
+  0% { color: #0F0; }
+  50% { color: #8EC07C; }
+  100% { color: #0F0; }
+}
+
+.matrix-text {
+  animation: matrix-flow 2s infinite;
+}
+
+.console-input::placeholder {
+  color: rgba(235, 219, 178, 0.3);
+}
+
+.special-char {
+  color: #FE8019;
+  font-weight: 700;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.console-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: #EBDBB2;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}

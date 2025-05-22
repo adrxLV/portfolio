@@ -1,96 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const menuIcon = document.querySelector('.menu-icon');
-    const navLinks = document.querySelector('.nav-links');
-
-    function toggleMenu() {
-        console.log('Menu clicado');
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            setTimeout(() => {
-                navLinks.style.display = 'none';
-            }, 300);
-        } else {
-            navLinks.style.display = 'flex';
-            setTimeout(() => {
-                navLinks.classList.add('active');
-            }, 10);
-        }
-    }
-
-    if (menuIcon) {
-        console.log('Menu icon encontrado, adicionando listener');
-        menuIcon.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMenu();
-        });
-    }
-
-    const navLinksItems = document.querySelectorAll('.nav-link');
-    navLinksItems.forEach(link => {
-        link.addEventListener('click', function() {
-            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
-    });
-
-    document.addEventListener('click', function(event) {
-        if (window.innerWidth <= 768 &&
-            navLinks.classList.contains('active') &&
-            !event.target.closest('.navbar')) {
-            toggleMenu();
-        }
-    });
-
-    function handleWindowResize() {
-        if (window.innerWidth > 768) {
-            navLinks.style.display = 'flex';
-            navLinks.classList.remove('active');
-        } else if (!navLinks.classList.contains('active')) {
-            navLinks.style.display = 'none';
-        }
-    }
-
-    handleWindowResize();
-
-    window.addEventListener('resize', handleWindowResize);
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-
-            if (href === currentPath) {
-                return;
-            }
-
-            e.preventDefault();
-
-            document.body.classList.add('fade-out');
-            setTimeout(() => {
-                window.location.href = href;
-            }, 400);
-        });
-    });
-
-    window.addEventListener('pageshow', function() {
-        document.body.classList.remove('fade-out');
-    });
-});
-
-// Easter Egg - HACK Console
-document.addEventListener('DOMContentLoaded', function() {
-
     const keySequence = [];
-    const hackCode = "HACK";
+    const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
     const hackConsole = document.getElementById('hackConsole');
     const consoleContent = document.getElementById('consoleContent');
     const consoleInput = document.getElementById('consoleInput');
     const closeConsole = document.getElementById('closeConsole');
 
-
+    // Virtual file system structure
     const fileSystem = {
         '/': {
             type: 'directory',
@@ -193,10 +110,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-
+    // Current directory path
     let currentPath = ['/','home','hacker'];
 
+    // Vi editor state
+    let viMode = false;
+    let viFilePath = null;
+    let viFileContent = '';
+    let viEditorElement = null;
+    let viStatusElement = null;
 
+    // Helper function to get directory from path
     function getDirectoryFromPath(path) {
         try {
             let current = fileSystem;
@@ -221,16 +145,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Get current directory
     function getCurrentDirectory() {
         return getDirectoryFromPath(currentPath);
     }
 
+    // Format path string for display
     function formatPathString() {
         if (currentPath.length === 1) return '/';
         return '/' + currentPath.slice(1).join('/');
     }
 
-
+    // Available terminal commands
     const commands = {
         'help': () => {
             return `Available commands:
@@ -239,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
 - ls [directory]: List files in directory
 - cd [directory]: Change directory
 - cat [filename]: Display file content
+- vi [filename]: Edit file with vi editor
 - whoami: Display current user
 - pwd: Print working directory
 - clear: Clear the console
@@ -269,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (args && args.length > 0) {
                 const dirArg = args[0];
 
-
                 if (dirArg === '/') {
                     targetPath = ['/'];
                 } else if (dirArg === '..') {
@@ -277,16 +203,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         targetPath.pop();
                     }
                 } else if (dirArg === '.') {
-
+                    // Current directory, do nothing
                 } else if (dirArg === '~' || dirArg === '/home/hacker') {
                     targetPath = ['/', 'home', 'hacker'];
                 } else if (dirArg.startsWith('/')) {
-
                     targetPath = ['/'];
                     const segments = dirArg.split('/').filter(s => s);
                     targetPath.push(...segments);
                 } else {
-
                     targetPath.push(dirArg);
                 }
             }
@@ -297,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (current.type !== 'directory') {
                     return `ls: cannot access '${args ? args[0] : ''}': Not a directory`;
                 }
-
 
                 let dirs = [];
                 let files = [];
@@ -310,10 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-
                 dirs.sort();
                 files.sort();
-
 
                 return [...dirs, ...files].join('  ');
             } catch (error) {
@@ -322,13 +243,11 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         'cd': (args) => {
             if (!args || args.length === 0 || args[0] === '~') {
-
                 currentPath = ['/', 'home', 'hacker'];
                 return '';
             }
 
             const dirArg = args[0];
-
 
             if (dirArg === '/') {
                 currentPath = ['/'];
@@ -339,17 +258,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 return '';
             } else if (dirArg === '.') {
-
                 return '';
             } else if (dirArg.startsWith('/')) {
-
                 try {
                     const segments = dirArg.split('/').filter(s => s);
                     let testPath = ['/'];
 
                     for (const segment of segments) {
                         let current = getDirectoryFromPath(testPath);
-
 
                         const dirEntry = Object.keys(current.contents).find(
                             key => key.toLowerCase() === segment.toLowerCase()
@@ -367,10 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     return `cd: ${dirArg}: No such directory`;
                 }
             } else {
-
                 try {
                     const current = getCurrentDirectory();
-
 
                     const dirEntry = Object.keys(current.contents).find(
                         key => key.toLowerCase() === dirArg.toLowerCase()
@@ -399,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const filename = args[0];
 
             try {
-
                 if (filename.startsWith('/')) {
                     const segments = filename.split('/').filter(s => s);
                     const filePath = ['/', ...segments.slice(0, -1)];
@@ -435,6 +348,139 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 return `cat: ${filename}: No such file or directory`;
+            }
+        },
+        'vi': (args) => {
+            if (viMode) {
+                return "Already in vi editor mode. Save and quit with ESC + :wq or quit without saving with :q";
+            }
+
+            if (!args || args.length === 0) {
+                return "Usage: vi [filename]";
+            }
+
+            const filename = args[0];
+            let targetDir, targetFileName;
+
+            try {
+                if (filename.startsWith('/')) {
+                    const segments = filename.split('/').filter(s => s);
+                    const filePath = ['/', ...segments.slice(0, -1)];
+                    targetFileName = segments[segments.length - 1];
+                    targetDir = getDirectoryFromPath(filePath);
+                } else {
+                    targetDir = getCurrentDirectory();
+                    targetFileName = filename;
+                }
+
+                // Check if file exists or create new one
+                if (!targetDir.contents[targetFileName]) {
+                    targetDir.contents[targetFileName] = {
+                        type: 'file',
+                        content: ''
+                    };
+                } else if (targetDir.contents[targetFileName].type !== 'file') {
+                    return `vi: ${filename}: Is a directory`;
+                }
+
+                // Store file path for saving
+                viFilePath = [...(filename.startsWith('/')
+                               ? ['/', ...filename.split('/').filter(s => s).slice(0, -1)]
+                               : currentPath), targetFileName];
+
+                // Initialize editor with file content
+                viFileContent = targetDir.contents[targetFileName].content;
+
+                // Create editor interface
+                viMode = true;
+
+                // Clear console content temporarily
+                const savedConsoleContent = consoleContent.innerHTML;
+                consoleContent.innerHTML = '';
+
+                // Create editor elements
+                viEditorElement = document.createElement('textarea');
+                viEditorElement.className = 'vi-editor';
+                viEditorElement.value = viFileContent;
+                viEditorElement.style.width = '100%';
+                viEditorElement.style.height = 'calc(100% - 20px)';
+                viEditorElement.style.backgroundColor = '#1a1a1a';
+                viEditorElement.style.color = '#33ff33';
+                viEditorElement.style.border = 'none';
+                viEditorElement.style.outline = 'none';
+                viEditorElement.style.resize = 'none';
+                viEditorElement.style.fontFamily = 'monospace';
+                viEditorElement.style.padding = '5px';
+
+                viStatusElement = document.createElement('div');
+                viStatusElement.className = 'vi-status';
+                viStatusElement.textContent = `"${targetFileName}" [New File]`;
+                viStatusElement.style.backgroundColor = '#333';
+                viStatusElement.style.color = '#33ff33';
+                viStatusElement.style.position = 'absolute';
+                viStatusElement.style.bottom = '0';
+                viStatusElement.style.left = '0';
+                viStatusElement.style.right = '0';
+                viStatusElement.style.padding = '2px 5px';
+
+                consoleContent.appendChild(viEditorElement);
+                consoleContent.appendChild(viStatusElement);
+
+                // Disable the regular input
+                consoleInput.disabled = true;
+
+                // Focus the editor
+                viEditorElement.focus();
+
+                // Handle vi commands
+                viEditorElement.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        viStatusElement.textContent = ':';
+
+                        // Allow command input after ESC
+                        viStatusElement.contentEditable = true;
+                        viStatusElement.focus();
+
+                        e.preventDefault();
+                    }
+                });
+
+                // Handle vi command execution
+                viStatusElement.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        const command = viStatusElement.textContent.substring(1);
+
+                        if (command === 'w' || command === 'wq') {
+                            // Save file
+                            saveViFile();
+                            viStatusElement.textContent = `"${targetFileName}" written`;
+
+                            if (command === 'wq') {
+                                // Quit vi
+                                exitViMode(savedConsoleContent);
+                                return "File saved.";
+                            }
+                        } else if (command === 'q' || command === 'q!') {
+                            // Quit without saving
+                            exitViMode(savedConsoleContent);
+                            return "Vi editor closed without saving.";
+                        } else {
+                            viStatusElement.textContent = `Error: Unknown command: ${command}`;
+                        }
+
+                        e.preventDefault();
+
+                        // After command execution, go back to editor unless we exited
+                        if (viMode) {
+                            viStatusElement.contentEditable = false;
+                            viEditorElement.focus();
+                        }
+                    }
+                });
+
+                return "";
+            } catch (error) {
+                return `vi: ${filename}: ${error.message}`;
             }
         },
         'whoami': () => {
@@ -516,46 +562,90 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
      .                           .         .               .                 .
                 .                                   .            .
                      A long time ago in a galaxy far,
-                              far away....
-            .    .       .        .     .      .
-     .    __ _o|                        .
-         |  /__|===--        .                                       <=>
-  LS     [__|______~~--._                      .                .      .
-   .    |\\  \`---.__:====]-----...,,_____                *      .         \` -
-        |[>-----|_______<----------_____;::===--
-        |/_____.....-----'''~~~~~~~                        .               .
-   +               .        Rendili StarDrive's Victory-class Star Destroyer`
-                ;
-
+                              far away....`;
         },
         'exit': () => {
+            if (viMode) {
+                return "You're in vi editor mode. Save and quit with ESC + :wq or quit without saving with :q";
+            }
             closeHackConsole();
             return "";
         }
     };
 
+    // Save file contents from vi editor to the virtual file system
+    function saveViFile() {
+        if (!viMode || !viFilePath) return;
+
+        try {
+            // Get the directory object
+            const dirPath = viFilePath.slice(0, -1);
+            const fileName = viFilePath[viFilePath.length - 1];
+            const directory = getDirectoryFromPath(dirPath);
+
+            // Update file content
+            if (!directory.contents[fileName]) {
+                directory.contents[fileName] = {
+                    type: 'file',
+                    content: ''
+                };
+            }
+
+            directory.contents[fileName].content = viEditorElement.value;
+            return true;
+        } catch (error) {
+            viStatusElement.textContent = `Error saving file: ${error.message}`;
+            return false;
+        }
+    }
+
+    // Exit vi mode and restore console
+    function exitViMode(savedConsoleContent) {
+        if (!viMode) return;
+
+        viMode = false;
+        viFilePath = null;
+        viFileContent = '';
+
+        // Remove vi editor elements
+        viEditorElement.remove();
+        viStatusElement.remove();
+
+        // Re-enable the console input
+        consoleInput.disabled = false;
+
+        // Restore console content
+        consoleContent.innerHTML = savedConsoleContent;
+        consoleInput.focus();
+    }
 
     document.addEventListener('keydown', function(e) {
-
+        // Skip if we're already in the console and typing
         if (hackConsole.style.display === 'flex' && document.activeElement === consoleInput) {
             return;
         }
 
-        keySequence.push(e.key.toUpperCase());
-        if (keySequence.length > hackCode.length) {
+        keySequence.push(e.key);
+        if (keySequence.length > konamiCode.length) {
             keySequence.shift();
         }
 
-        if (keySequence.join('') === hackCode) {
+        let codeMatched = true;
+        for (let i = 0; i < konamiCode.length; i++) {
+            if (keySequence[i] !== konamiCode[i]) {
+                codeMatched = false;
+                break;
+            }
+        }
+
+        if (codeMatched) {
             openHackConsole();
         }
     });
 
-
     function openHackConsole() {
         hackConsole.style.display = 'flex';
         consoleInput.focus();
-
 
         consoleContent.innerHTML = "Welcome to HackerOS v1.0.0\nType 'help' for available commands.";
 
@@ -571,36 +661,37 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
             consoleContent.appendChild(outputElement);
         }
 
-
         consoleContent.scrollTop = consoleContent.scrollHeight;
     }
 
-
     function closeHackConsole() {
+        // Exit vi mode if active
+        if (viMode) {
+            exitViMode(consoleContent.innerHTML);
+        }
         hackConsole.style.display = 'none';
-        keySequence.length = 0; // Reset key sequence
+        keySequence.length = 0;
     }
 
-
     consoleInput.addEventListener('keydown', function(e) {
+        // Skip if in vi mode
+        if (viMode) return;
+
         if (e.key === 'Enter') {
             const command = consoleInput.value.trim();
             consoleInput.value = '';
-
-
+            // Display command with proper prom
             const promptPath = formatPathString();
             const displayPath = promptPath === '/home/hacker' ? '~' : promptPath;
             const commandLine = document.createElement('div');
             commandLine.innerHTML = `<span class="console-prompt">hacker@localhost:${displayPath}$</span> ${command}`;
             consoleContent.appendChild(commandLine);
 
-
             const parts = command.split(' ');
             const cmd = parts[0].toLowerCase();
             const args = parts.slice(1);
 
             if (cmd === '') {
-
             } else if (commands[cmd]) {
                 const output = commands[cmd](args);
                 if (output) {
@@ -614,374 +705,15 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
                 consoleContent.appendChild(outputElement);
             }
 
-
             consoleContent.scrollTop = consoleContent.scrollHeight;
         }
     });
 
-
     closeConsole.addEventListener('click', closeHackConsole);
 
-
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && hackConsole.style.display === 'flex') {
+        if (e.key === 'Escape' && hackConsole.style.display === 'flex' && !viMode) {
             closeHackConsole();
         }
     });
 });
-
-// Easter Egg - Fencing Game
-document.addEventListener('DOMContentLoaded', function() {
-    const fencingTrigger = document.getElementById('fencing-trigger');
-    const fencingGame = document.getElementById('fencing-game');
-    const closeFencing = document.getElementById('close-fencing');
-    const attackButton = document.getElementById('attack-button');
-    const parryButton = document.getElementById('parry-button');
-    const playerScore = document.getElementById('player-score');
-    const computerScore = document.getElementById('computer-score');
-    const fencingMessage = document.getElementById('fencing-message');
-    const playerFencer = document.getElementById('player-fencer');
-    const opponentFencer = document.getElementById('opponent-fencer');
-
-
-    if (fencingTrigger) {
-        fencingTrigger.addEventListener('click', function() {
-            fencingGame.style.display = 'block';
-            resetGame();
-        });
-    }
-
-
-    if (closeFencing) {
-        closeFencing.addEventListener('click', function() {
-            fencingGame.style.display = 'none';
-        });
-    }
-
-    // Variáveis
-    let pScore = 0;
-    let cScore = 0;
-    let computerAction = null;
-    let gameActive = false;
-    let roundInProgress = false;
-
-    function resetGame() {
-        pScore = 0;
-        cScore = 0;
-        updateScore();
-        setMessage('Prepare-se para o duelo! Escolha atacar ou defender.');
-        gameActive = true;
-        playerFencer.style.left = '20%';
-        opponentFencer.style.right = '20%';
-        playerFencer.classList.remove('attack', 'parry', 'hit');
-        opponentFencer.classList.remove('attack', 'parry', 'hit');
-    }
-
-    function updateScore() {
-        playerScore.textContent = pScore;
-        computerScore.textContent = cScore;
-    }
-
-    function setMessage(message) {
-        fencingMessage.textContent = message;
-    }
-
-    function computerChooseAction() {
-        return Math.random() < 0.5 ? 'attack' : 'parry';
-    }
-
-    function playerAction(action) {
-        if (!gameActive || roundInProgress) return;
-
-        roundInProgress = true;
-        computerAction = computerChooseAction();
-
-        // Animação das ações
-        if (action === 'attack') {
-            playerFencer.classList.add('attack');
-            if (computerAction === 'parry') {
-                opponentFencer.classList.add('parry');
-                setTimeout(() => {
-                    setMessage('O oponente defendeu seu ataque!');
-                }, 300);
-            } else {
-                opponentFencer.classList.add('hit');
-                setTimeout(() => {
-                    setMessage('Você acertou! +1 ponto');
-                    pScore++;
-                    updateScore();
-                }, 300);
-            }
-        } else { // Parry
-            playerFencer.classList.add('parry');
-            if (computerAction === 'attack') {
-                opponentFencer.classList.add('attack');
-                setTimeout(() => {
-                    setMessage('Você defendeu o ataque!');
-                }, 300);
-            } else {
-                setTimeout(() => {
-                    setMessage('Ambos se defenderam. Nada acontece.');
-                }, 300);
-            }
-        }
-
-        setTimeout(() => {
-            playerFencer.classList.remove('attack', 'parry', 'hit');
-            opponentFencer.classList.remove('attack', 'parry', 'hit');
-            roundInProgress = false;
-
-            if (pScore >= 5) {
-                setMessage('Vitória! Você é o mestre da esgrima!');
-                gameActive = false;
-            } else if (cScore >= 5) {
-                setMessage('Derrota! O oponente venceu o duelo.');
-                gameActive = false;
-            }
-        }, 1000);
-    }
-
-    let parryCount = 0;
-
-    if (attackButton) {
-        attackButton.addEventListener('click', function() {
-            if (gameActive && !roundInProgress) {
-                parryCount = 0;
-                playerAction('attack');
-            }
-        });
-    }
-
-    if (parryButton) {
-        parryButton.addEventListener('click', function() {
-            if (gameActive && !roundInProgress) {
-                parryCount++;
-
-                // Se jogador defender muito, o computador é mais agressivo
-                if (parryCount >= 3) {
-                    computerAction = 'attack';
-                    setTimeout(() => {
-                        if (!playerFencer.classList.contains('parry')) {
-                            setMessage('O oponente te pegou desprevenido! +1 ponto para ele');
-                            cScore++;
-                            updateScore();
-                            playerFencer.classList.add('hit');
-                            setTimeout(() => {
-                                playerFencer.classList.remove('hit');
-                            }, 500);
-                        }
-                    }, 500);
-                    parryCount = 0;
-                }
-
-                playerAction('parry');
-            }
-        });
-    }
-});
-
-// Easter Egg - Star Wars Opening Crawl
-document.addEventListener('DOMContentLoaded', function() {
-    // Only run on Contact.html page
-    if (!document.getElementById('starwars-easter-egg')) return;
-
-    // Key sequence detection for the trigger "FORCE"
-    const keySequence = [];
-    const forceCode = "FORCE";
-    const starWarsEgg = document.getElementById('starwars-easter-egg');
-    const closeCrawl = document.querySelector('.close-crawl');
-
-    // Listen for keypresses to detect "FORCE"
-    document.addEventListener('keydown', function(e) {
-        // Get the pressed key
-        const key = e.key.toUpperCase();
-
-        // Add key to sequence and trim if needed
-        keySequence.push(key);
-        if (keySequence.length > forceCode.length) {
-            keySequence.shift();
-        }
-
-        // Check if sequence matches the code
-        if (keySequence.join('') === forceCode) {
-            showStarWarsEgg();
-        }
-    });
-
-    // Open Star Wars crawl
-    function showStarWarsEgg() {
-        starWarsEgg.style.display = 'block';
-        // Play Star Wars theme (optional)
-        const audio = new Audio('https://soundbible.com/mp3/Star_Wars_Theme_Song-John_Williams-1778671936.mp3');
-        audio.volume = 0.3;
-        audio.play().catch(err => console.log('Audio playback prevented:', err));
-
-        // Set cursor to lightsaber if available
-        try {
-            document.body.style.cursor = "url('images/lightsaber.cur'), auto";
-        } catch (e) {
-            console.log('Lightsaber cursor not found');
-        }
-    }
-
-    // Close Star Wars crawl
-    if (closeCrawl) {
-        closeCrawl.addEventListener('click', function() {
-            starWarsEgg.style.display = 'none';
-            document.body.style.cursor = 'auto';
-            keySequence.length = 0; // Reset key sequence
-        });
-    }
-
-    // Easter egg can also be triggered by clicking on email 3 times quickly
-    const emailLink = document.querySelector('.contact-details a[href^="mailto"]');
-    if (emailLink) {
-        let clickCount = 0;
-        let clickTimer;
-
-        emailLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            clickCount++;
-
-            clearTimeout(clickTimer);
-            clickTimer = setTimeout(() => {
-                if (clickCount >= 3) {
-                    showStarWarsEgg();
-                }
-                clickCount = 0;
-            }, 800);
-        });
-    }
-
-    // Also close on ESC key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && starWarsEgg.style.display === 'block') {
-            starWarsEgg.style.display = 'none';
-            document.body.style.cursor = 'auto';
-        }
-    });
-});
-
-// Easter Egg - Projects Page Matrix Effect
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on the Projects page
-    if (window.location.pathname.includes('Projects.html')) {
-        // Key sequence detection for "MATRIX"
-        const matrixCode = "MATRIX";
-        const userKeys = [];
-        let lastKeyTime = Date.now();
-
-        document.addEventListener('keydown', function(e) {
-            const currentTime = Date.now();
-
-            // Reset sequence if too much time passed between key presses (3 seconds)
-            if (currentTime - lastKeyTime > 3000) {
-                userKeys.length = 0;
-            }
-
-            lastKeyTime = currentTime;
-            userKeys.push(e.key.toUpperCase());
-
-            // Keep only the last MATRIX.length keys
-            if (userKeys.length > matrixCode.length) {
-                userKeys.shift();
-            }
-
-            // Check if sequence matches
-            if (userKeys.join('') === matrixCode) {
-                triggerMatrixEffect();
-                userKeys.length = 0; // Reset after triggering
-            }
-        });
-
-        function triggerMatrixEffect() {
-            // Create matrix rain effect
-            const matrix = document.createElement('div');
-            matrix.className = 'matrix-effect';
-            matrix.style.position = 'fixed';
-            matrix.style.top = '0';
-            matrix.style.left = '0';
-            matrix.style.width = '100%';
-            matrix.style.height = '100%';
-            matrix.style.background = 'rgba(0, 0, 0, 0.9)';
-            matrix.style.color = '#0F0';
-            matrix.style.fontSize = '14px';
-            matrix.style.fontFamily = 'monospace';
-            matrix.style.zIndex = '9999';
-            matrix.style.overflow = 'hidden';
-            document.body.appendChild(matrix);
-
-            // Add message in center of screen
-            const messageEl = document.createElement('div');
-            messageEl.textContent = "You've discovered the Matrix! Press ESC to exit.";
-            messageEl.style.position = 'absolute';
-            messageEl.style.top = '10px';
-            messageEl.style.left = '50%';
-            messageEl.style.transform = 'translateX(-50%)';
-            messageEl.style.color = '#FFFFFF';
-            messageEl.style.fontSize = '18px';
-            messageEl.style.zIndex = '10000';
-            messageEl.style.padding = '10px';
-            messageEl.style.background = 'rgba(0, 0, 0, 0.7)';
-            messageEl.style.borderRadius = '5px';
-            matrix.appendChild(messageEl);
-
-            // Create matrix characters
-            const columns = Math.floor(window.innerWidth / 14);
-            const drops = [];
-
-            for (let i = 0; i < columns; i++) {
-                drops[i] = 1;
-            }
-
-            // Create canvas for better performance
-            const canvas = document.createElement('canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.style.position = 'absolute';
-            canvas.style.top = '0';
-            canvas.style.left = '0';
-            matrix.appendChild(canvas);
-
-            const ctx = canvas.getContext('2d');
-
-            // Generate matrix characters
-            const matrixInterval = setInterval(() => {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = '#0F0';
-                ctx.font = '14px monospace';
-
-                for (let i = 0; i < drops.length; i++) {
-                    const text = String.fromCharCode(
-                        Math.floor(Math.random() * 94) + 33
-                    );
-
-                    ctx.fillText(text, i * 14, drops[i] * 14);
-
-                    if (drops[i] * 14 > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-
-                    drops[i]++;
-                }
-            }, 50);
-
-            // Allow escape from matrix effect
-            function escapeMatrix(e) {
-                if (e.key === 'Escape') {
-                    clearInterval(matrixInterval);
-                    document.body.removeChild(matrix);
-                    document.removeEventListener('keydown', escapeMatrix);
-                }
-            }
-
-            document.addEventListener('keydown', escapeMatrix);
-        }
-    }
-});
-
-
-
-

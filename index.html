@@ -2,152 +2,315 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/arch-linux-svgrepo-com.svg" type="image/svg+xml">
-    <!-- Open Graph (Facebook, Discord, etc) -->
-    <meta property="og:title" content="AdrxLV - Portfolio" />
-    <meta property="og:description" content="Just another dev trying to stand out 😅." />
-    <meta property="og:image" content="https://raw.githubusercontent.com/adrxLV/portfolio/refs/heads/main/images/portfolio.png" />
-    <meta property="og:url" content="https://adrxlv.github.io/portfolio/" />
-    <meta property="og:type" content="website" />
-
-    <!-- Twitter Card (X / Twitter preview) -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="AdrxLV - Portfolio" />
-    <meta name="twitter:description" content="Just another dev trying to stand out 😅." />
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/adrxLV/portfolio/refs/heads/main/images/portfolio.png" />
-    <meta name="twitter:url" content="https://adrxlv.github.io/portfolio/" />
-
-    <title>Portfolio</title>
+    <title>Adriano Vilhena | Portfolio</title>
+    <link rel="stylesheet" href="new-styles.css">
+    <link rel="stylesheet" href="terminal-styles.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <div class="nav-wrapper">
         <nav class="navbar">
-            <div class="menu-icon">
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="menu-icon" onclick="toggleMenu()">
                 <span class="material-icons">menu</span>
             </div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About Me</a>
-                <a href="Projects.html" class="nav-link">Projects</a>
-                <a href="Contact.html" class="nav-link">Contact Me</a>
-            </div>
         </nav>
     </div>
 
-    <div class="main-wrapper">
-        <div class="hero-header">
-                <img src="images/profile.png" alt="Profile Picture" class="profile-picture">
-                <i class="studying-text">On an Internship, can't work right now...</i>
+    <!-- Home Section -->
+    <section id="home" class="section">
+        <div class="main-wrapper">
+            <div class="hero-header">
+                <img src="images/profile.png" alt="Adriano Vilhena" class="profile-picture">
+                <div class="hero-text">
+                    <h1>Adriano Vilhena</h1>
+                    <div class="location">
+                        <span class="material-icons">location_on</span>
+                        <span>Lisbon, Portugal</span>
+                    </div>
+                </div>
             </div>
-        <h1>Hey! I'm Adriano</h1>
-        <nav>
             <ul>
-                <li>A student from <span class="highlight">Lisbon</span>, <span class="highlight">Portugal</span>.</li>
                 <li>Pursuing the course of <span class="highlight">Computer Systems Management and Programming Technician</span>.</li>
-                <li>First Global 24' - <span class="highlight">Team Portugal (Travel Team) participant</span>.</li>
-                <div class="easter-egg-hint">type "hack" :></div>
+                <li>First Global 24' - <span class="highlight">Team Portugal</span>. <a class="find-more-btn" href="#projects">Find out more</a></li>
+                <li>Focusing in <span class="highlight">Web Development</span> and <span class="highlight">AI integration</span>.</li>
             </ul>
-        </nav>
+        </div>
         <div class="contact-buttons-main-wrapper">
-            <a href="mailto:adrianolop.v@icloud.com" class="mail-button">
-                <img src="images/mailicon.svg" alt="Mail icon">Mail
+            <a href="mailto:adrianovilhena.cs@gmail.com" class="button primary">
+                <img src="images/email-mail-message-svgrepo-com.svg" alt="Email">
+                Email
             </a>
-            <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" class="linkedin-button">
-                <img src="images/Linkedin.svg" alt="LinkedIn icon">LinkedIn
+            <a href="https://www.linkedin.com/in/adrianovilhena/" target="_blank" class="button secondary">
+                <img src="images/Linkedin.svg" alt="LinkedIn">
+                LinkedIn
             </a>
         </div>
-    </div>
+    </section>
 
-    <div class="experience-section">
-        <h2>Experience</h2>
-        <div class="toggle-wrapper">
-            <button class="toggle-btn active" data-target="work">Work/Projects</button>
-            <button class="toggle-btn" data-target="education">School/Education</button>
-        </div>
-        <div class="experience-content" id="work-content">
-            <div class="timeline-content">
-                <div class="timeline-item">
-                    <img class="company-logo" src="images/ceiia.svg" alt="Ceiia Logo" />
-                    <div class="timeline-date">05/05/25 ― 14/07/25</div>
-                    <div class="timeline-title">Web Development<br/>Internship</div>
-                    <div class="timeline-company">CEiiA</div>
-                </div>
-                <div class="timeline-item">
-                    <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Logo" />
-                    <div class="timeline-date">10/05/24 ― 10/10/24</div>
-                    <div class="timeline-title">First Global 24' Team Portugal</div>
-                    <div class="timeline-company">FIRST</div>
-                </div>
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-content">
+            <h2>About Me</h2>
+            <div class="bio-content">
+                <p>I'm a software developer with a passion for creating intuitive digital experiences. With a strong foundation in frontend and backend technologies, I enjoy tackling complex problems and turning them into simple, beautiful solutions.</p>
+                <p>Currently focusing on web development and AI integration projects, I continuously expand my technical skills while delivering high-quality software that meets user needs.</p>
+                <p>When I'm not coding, you can find me experimenting with new technologies or contributing to open-source projects.</p>
             </div>
-        </div>
-        <div class="experience-content hidden" id="education-content">
-            <div class="timeline-content">
-                <div class="timeline-item">
-                    <img class="company-logo round" src="images/ipe.svg" alt="Instituto Logo" />
-                    <div class="timeline-date">11/09/2023 ― 18/07/26</div>
-                    <div class="timeline-title">Technician in Management and Programming of Computer Systems</div>
-                    <div class="timeline-company">Instituto Dos Pupilos Do Exército</div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // Toggle between experience sections
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleBtns = document.querySelectorAll('.toggle-btn');
-
-            toggleBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    toggleBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    document.querySelectorAll('.experience-content').forEach(content => {
-                        content.classList.add('hidden');
-                    });
-
-                    const target = this.getAttribute('data-target');
-                    document.getElementById(`${target}-content`).classList.remove('hidden');
-                });
-            });
-        });
-    </script>
-    <div class="card">
-        <div class="profile">
-            <img class="profile-image" src="images/firstglobalpicture.png" />
-            <div class="name">Adriano<br/>Vilhena™</div>
-        </div>
-        <div class="social-links">
-            <div class="social-item">
-                <a href="https://github.com/adrxLV" target="_blank" class="social-link">
-                    <div class="icon-container">
-                        <img src="images/github 1.svg" alt="GitHub" class="social-icon">
+            <div class="tech-stack-section">
+                <h2>Tech Stack</h2>
+                <div class="tech-stack-container">
+                    <div class="tech-category">
+                        <h3>Languages</h3>
+                        <div class="tech-items">
+                            <span class="tech-item blue">JavaScript</span>
+                            <span class="tech-item blue">HTML5</span>
+                            <span class="tech-item blue">CSS</span>
+                            <span class="tech-item blue">C#</span>
+                            <span class="tech-item blue">C++</span>
+                            <span class="tech-item blue">C</span>
+                            <span class="tech-item blue">Java</span>
+                            <span class="tech-item blue">Python</span>
+                        </div>
                     </div>
-                    <div class="social-text">GitHub</div>
-                </a>
-            </div>
-            <div class="social-item">
-                <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" class="social-link">
-                    <div class="icon-container">
-                        <img src="images/linkedin-linked-in 1.svg" alt="LinkedIn" class="social-icon">
+                    <div class="tech-category">
+                        <h3>Frameworks & Libraries</h3>
+                        <div class="tech-items">
+                            <span class="tech-item green">.NET</span>
+                            <span class="tech-item green">React</span>
+                            <span class="tech-item green">DevExpress</span>
+                        </div>
                     </div>
-                    <div class="social-text">LinkedIn</div>
-                </a>
-            </div>
-            <div class="social-item">
-                <a href="http://instagram.com/adriano._.l" target="_blank" class="social-link">
-                    <div class="icon-container">
-                        <img src="images/instagram 1.svg" alt="Instagram" class="social-icon">
+                    <div class="tech-category">
+                        <h3>Tools & Technologies</h3>
+                        <div class="tech-items">
+                            <span class="tech-item yellow">Git</span>
+                            <span class="tech-item yellow">Figma</span>
+                            <span class="tech-item yellow">VS Code</span>
+                            <span class="tech-item yellow">LLMs</span>
+                        </div>
                     </div>
-                    <div class="social-text">Instagram</div>
-                </a>
+                </div>
             </div>
-
         </div>
-    </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <div class="section-content">
+            <h2>Experience</h2>
+            <div class="experience-section">
+                <div class="toggle-wrapper">
+                    <button class="toggle-btn active" data-target="work">Work/Projects</button>
+                    <button class="toggle-btn" data-target="education">School/Education</button>
+                </div>
+                <div class="experience-content" id="work-content">
+                    <div class="timeline-content">
+                        <div class="timeline-item">
+                            <img class="company-logo" src="images/ceiia.svg" alt="Ceiia Logo" />
+                            <div class="timeline-date">05/05/25 ― 14/07/25</div>
+                            <div class="timeline-title">Web Development<br/>Internship</div>
+                            <div class="timeline-company">CEiiA</div>
+                        </div>
+                        <div class="timeline-item">
+                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Logo" />
+                            <div class="timeline-date">10/05/24 ― 10/10/24</div>
+                            <div class="timeline-title">First Global 24' Team Portugal</div>
+                            <div class="timeline-company">FIRST</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="experience-content hidden" id="education-content">
+                    <div class="timeline-content">
+                        <div class="timeline-item">
+                            <img class="company-logo round" src="images/ipe.svg" alt="Instituto Logo" />
+                            <div class="timeline-date">11/09/2023 ― 18/07/26</div>
+                            <div class="timeline-title">Technician in Management and Programming of Computer Systems</div>
+                            <div class="timeline-company">Instituto Dos Pupilos Do Exército</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="section-content">
+            <h2>My Projects</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/firstglobalpicture.png" alt="First Global Challenge Project">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">FGC 2024</h3>
+                            <a href="https://first.global/archive/fgc-2024/" class="project-link">Access →</a>
+                        </div>
+                        <p class="project-description">Participated in the international robotics competition representing <a class="highlight" href="https://first.global/2024-nations/portugal-2024/">Portugal</a>. Designed and built a robot to solve real-world challenges related to environmental sustainability.</p>
+                        <div class="project-client">International Competition, <span class="highlight">FIRST.</span></div>
+                        <div class="project-tags">
+                            <span class="tech-item blue">ROBOTICS</span>
+                            <span class="tech-item blue">S.T.E.M.</span>
+                            <span class="tech-item green">ENGINEERING</span>
+                            <span class="tech-item green">TEAMWORK</span>
+                            <span class="tech-item yellow">PROBLEM SOLVING</span>
+                            <span class="tech-item yellow">SUSTAINABILITY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/myhub.png" alt="MyHub Project">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">MyHub</h3>
+                        </div>
+                        <p class="project-description">MyHub is the internal platform (similar to an intranet) used by CEiiA to manage its members and collaborators in a centralized and efficient way.</p>
+                        <div class="project-client">Para <span class="highlight">CEiiA</span></div>
+                        <div class="project-tags">
+                            <span class="tech-item blue">.NET</span>
+                            <span class="tech-item blue">C#</span>
+                            <span class="tech-item green">FRONT-END</span>
+                            <span class="tech-item green">DEVEXPRESS</span>
+                            <span class="tech-item yellow">RAZOR</span>
+                            <span class="tech-item yellow">FIGMA</span>
+                            <span class="tech-item blue">HTML5</span>
+                            <span class="tech-item blue">CSS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/myrecipe.png" alt="My Recipe Project">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">My Recipe</h3>
+                        </div>
+                        <p class="project-description">Discover what to cook with the ingredients you already have, let our AI inspire you with easy and delicious recipes!</p>
+                        <div class="project-client">Personal Project</div>
+                        <div class="project-tags">
+                            <span class="tech-item green">Databases</span>
+                            <span class="tech-item green">LLM'S</span>
+                            <span class="tech-item yellow">Vision AI</span>
+                            <span class="tech-item yellow">Auth System</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/jarvis.png" alt="JARVIS AI Project">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">J.A.R.V.I.S - AI</h3>
+                            <a href="https://github.com/adrxLV/J.A.R.V.I.S.AI" class="project-link">Access →</a>
+                        </div>
+                        <p class="project-description">A powerful AI-driven virtual assistant inspired by JARVIS, capable of controlling your PC and responding intelligently using Ollama models.</p>
+                        <div class="project-client">Personal Project</div>
+                        <div class="project-tags">
+                            <span class="tech-item blue">PYTHON</span>
+                            <span class="tech-item blue">OLLAMA</span>
+                            <span class="tech-item green">CTkinter</span>
+                            <span class="tech-item green">Tkinter</span>
+                            <span class="tech-item yellow">APIs</span>
+                            <span class="tech-item yellow">TTS</span>
+                            <span class="tech-item yellow">STT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="section-content">
+            <h2>Contact</h2>
+            <p class="contact-intro">If you'd like to get in touch, feel free to reach out via email or LinkedIn.</p>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-section">
+                        <h3 class="contact-heading">Contact Information</h3>
+
+                        <div class="contact-methods">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <img src="images/email-mail-message-svgrepo-com.svg" alt="Email">
+                                </div>
+                                <div class="contact-details">
+                                    <h4>Email</h4>
+                                    <a href="mailto:adrianolop.v@icloud.com">adrianolop.v@icloud.com</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <img src="images/linkedin-linked-in 1.svg" alt="LinkedIn">
+                                </div>
+                                <div class="contact-details">
+                                    <h4>LinkedIn</h4>
+                                    <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank">Adriano Vilhena</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <img src="images/github 1.svg" alt="GitHub">
+                                </div>
+                                <div class="contact-details">
+                                    <h4>GitHub</h4>
+                                    <a href="https://github.com/adrxLV/" target="_blank">adrxLV</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container">
+                        <h3 class="contact-heading">Send Me a Message</h3>
+                        <form class="contact-form" action="https://formspree.io/f/mblobann" method="POST">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" placeholder="What's this about?">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Your Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Tell me about your project, idea, or question" required></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Consola Easter Egg -->
     <div class="console-overlay" id="hackConsole">
@@ -156,14 +319,16 @@
             <div class="console-close" id="closeConsole">×</div>
         </div>
         <div class="console-content" id="consoleContent">
-Welcome to HackerOS v1.0.0
-Type 'help' for available commands.
+            Welcome to HackerOS v1.0.0
+            Type 'help' for available commands.
         </div>
         <div class="console-input-line">
             <div class="console-prompt">hacker@localhost:~$</div>
             <input type="text" class="console-input" id="consoleInput" autofocus>
         </div>
     </div>
+    <script src="terminal.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
 
