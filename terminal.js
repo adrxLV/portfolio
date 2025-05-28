@@ -1863,7 +1863,7 @@ Example: pacman -S neofetch`;
                     output += `\nPackages (1) ${packageName}-${pkg.version}\n\n`;
                     output += `Total Download Size:   ${pkg.size || '0.00 MiB'}\n`;
                     output += `Total Installed Size:  ${pkg.size || '0.00 MiB'}\n\n`;
-                    output += `:: Proceed with installation? [Y/n] Y\n`; // Simulating user input 'Y'
+                    output += `:: Proceed with installation? [Y/n] Y\n`;
                     output += `:: Retrieving packages...\n`;
                     output += ` ${packageName}-${pkg.version}-any.pkg.tar.xz... 100.0% ${pkg.size || '0.00 MiB'}/s 00:00 [######################] 100%\n`;
                     output += `(1/1) checking keys in keyring                               [######################] 100%\n`;
@@ -2897,24 +2897,18 @@ Wind: Variable at 13.37 km/h
             currentTextColor = color;
         }
 
-        // Muda a cor de todos os elementos existentes no terminal
         Array.from(consoleContent.children).forEach(child => {
-            // Se o elemento contém o prompt, preserva a cor do prompt mas muda o resto
             if (child.innerHTML && child.innerHTML.includes('hacker@localhost:')) {
                 const promptSpan = child.querySelector('.console-prompt');
                 if (promptSpan) {
-                    // Mantém a cor original do prompt
                     promptSpan.style.color = '#B8BB26';
                 }
-                // Aplica a nova cor ao elemento, mas o prompt já tem sua cor preservada
                 child.style.color = currentTextColor;
             } else {
-                // Para elementos sem prompt, aplica a nova cor normalmente
                 child.style.color = currentTextColor;
             }
         });
 
-        // Atualiza também o estilo padrão para novos elementos
         const style = document.getElementById('dynamic-terminal-style') || document.createElement('style');
         style.id = 'dynamic-terminal-style';
         style.textContent = `
@@ -3029,7 +3023,6 @@ Wind: Variable at 13.37 km/h
         if (e.key === 'Enter') {
             e.preventDefault();
             const commandLine = consoleInput.value.trim();
-            // Echo the command itself (typically no special animation here, or handled by appendToConsole's default)
             appendToConsole(`hacker@localhost:~${formatPathString()}$ ${commandLine}`, false);
             consoleInput.value = '';
 
@@ -3039,9 +3032,7 @@ Wind: Variable at 13.37 km/h
             }
 
             const [cmd, ...args] = commandLine.split(/\s+/);
-            let output; // Variable to store command output
 
-            // Add non-empty commands to history
             if (commandLine !== '') {
                 commandHistory.push(commandLine);
                 historyIndex = commandHistory.length;
@@ -3050,9 +3041,9 @@ Wind: Variable at 13.37 km/h
             if (commands[cmd]) {
                 try {
                     output = commands[cmd](args);
-                    if (cmd === 'clear') { // Special handling for clear, as it modifies consoleContent directly
+                    if (cmd === 'clear') {
                         consoleContent.scrollTop = consoleContent.scrollHeight;
-                        return; // Output is already handled by the command itself
+                        return;
                     }
                 } catch (error) {
                     output = `Error: ${error.message}`;
@@ -3061,20 +3052,18 @@ Wind: Variable at 13.37 km/h
                 output = `Command not found: ${cmd}. Type 'help' for available commands.`;
             }
 
-            // Process and display the output with animation
-            if (output) { // Check if there is any output to display
+            if (output) {
                 if (typeof output === 'string') {
                     const animationOptions = {};
                     if (output.includes('\n')) {
                         animationOptions.lineByLine = true;
-                    } else if (output.trim() !== "") { // Apply charByChar only if there's non-whitespace content
+                    } else if (output.trim() !== "") {
                         animationOptions.charByChar = true;
                     }
-                    // Pass true for isCommandOutput to enable animations if options are set
+
                     appendToConsole(output, true, animationOptions);
                 } else {
-                    // If output is not a string (e.g., some commands might return other types or handle their own output)
-                    // appendToConsole's default behavior will handle String(output)
+
                     appendToConsole(String(output));
                 }
             }
@@ -3085,7 +3074,6 @@ Wind: Variable at 13.37 km/h
             if (historyIndex > 0) {
                 historyIndex--;
                 consoleInput.value = commandHistory[historyIndex];
-                // Move cursor to end of input
                 setTimeout(() => {
                     consoleInput.selectionStart = consoleInput.selectionEnd = consoleInput.value.length;
                 }, 0);
@@ -3096,7 +3084,6 @@ Wind: Variable at 13.37 km/h
             if (historyIndex < commandHistory.length - 1) {
                 historyIndex++;
                 consoleInput.value = commandHistory[historyIndex];
-                // Move cursor to end of input
                 setTimeout(() => {
                     consoleInput.selectionStart = consoleInput.selectionEnd = consoleInput.value.length;
                 }, 0);
