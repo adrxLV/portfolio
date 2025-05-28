@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const consoleInput = document.getElementById('consoleInput');
     const closeConsole = document.getElementById('closeConsole');
 
+    let currentTextColor = '#EBDBB2';
+
     const fileSystem = {
         '/': {
             type: 'directory',
@@ -108,7 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
-
+    let commandHistory = [];
+    let historyIndex = -1;
     let currentPath = ['/','home','hacker'];
 
     let viMode = false;
@@ -188,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
 - df: Display disk space usage
 - ps: Display current processes
 - rm: Remove files
+- color: Change terminal text color
 - exit: Close the console`;
         },
         'neofetch': () => {
@@ -545,14 +549,6 @@ PID USER     PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command
             }
         },
 
-        'history': () => {
-            try {
-                return commands['cat'](['/home/hacker/.bash_history']);
-            } catch (error) {
-                return "No command history available";
-            }
-        },
-
         'tree': (args) => {
             let targetPath = [...currentPath];
 
@@ -640,25 +636,39 @@ tmpfs           64G     1G    63G     2%
 
         'rm': (args) => {
             if (!args || args.length === 0) {
-                return "Usage: rm [file]";
+                return "Usage: rm [-rf] [file|directory]";
             }
 
-            const filename = args[0];
-            try {
-                const current = getCurrentDirectory();
+            let targetName;
+            let forceRemove = false;
 
-                if (!current.contents[filename]) {
-                    return `rm: cannot remove '${filename}': No such file or directory`;
+            if (args[0] === '-rf') {
+                if (args.length < 2) {
+                    return "Usage: rm [-rf] [file|directory]";
                 }
+                forceRemove = true;
+                targetName = args[1];
+            } else {
+                targetName = args[0];
+            }
 
-                if (current.contents[filename].type === 'directory') {
-                    return `rm: cannot remove '${filename}': Is a directory`;
-                }
+            const current = getCurrentDirectory();
 
-                delete current.contents[filename];
-                return '';
-            } catch (error) {
-                return `rm: ${filename}: ${error.message}`;
+            if (!current.contents[targetName]) {
+                return `rm: cannot remove '${targetName}': No such file or directory`;
+            }
+
+            if (current.contents[targetName].type === 'directory' && !forceRemove) {
+                appendToConsole(`Do you really want to delete the directory '${targetName}'? (y/yes, n/no)`);
+
+                window.waitingForRmConfirmation = {
+                    directoryName: targetName,
+                    directory: current
+                };
+                return;
+            } else {
+                delete current.contents[targetName];
+                return `'${targetName}' removed.`;
             }
         },
 
@@ -1015,7 +1025,43 @@ Wind: Variable at 13.37 km/h
         }
     };
 
-    function saveViFile() {
+    function appendToConsole(text) {
+        const line = document.createElement('div');
+        line.textContent = text;
+        line.style.color = currentTextColor;
+        consoleContent.appendChild(line);
+        consoleContent.scrollTop = consoleContent.scrollHeight;
+    }
+
+
+    commands['history'] = (args) => {
+        if (commandHistory.length === 0) {
+            return "No commands in history";
+        }
+
+        return commandHistory.map((cmd, index) => `${index + 1}  ${cmd}`).join('\n');
+    };
+    commands['color'] = (args) => {
+        if (!args || args.length === 0) {
+            return "Usage: color [color-name|default]";
+        }
+
+        const color = args[0].toLowerCase();
+        if (color === 'default') {
+            currentTextColor = '#EBDBB2';
+        } else {
+            currentTextColor = color;
+        }
+
+
+        Array.from(consoleContent.children).forEach(child => {
+            child.style.color = currentTextColor;
+        });
+
+        return `Text color changed to ${color}`;
+    };
+
+   function saveViFile() {
         if (!viMode || !viFilePath) return;
 
         try {
@@ -1111,7 +1157,35 @@ Wind: Variable at 13.37 km/h
 
         if (e.key === 'Enter') {
             const command = consoleInput.value.trim();
+
+            // Add non-empty commands to history
+            if (command !== '') {
+                commandHistory.push(command);
+                historyIndex = commandHistory.length;
+            }
+
             consoleInput.value = '';
+
+            if (window.waitingForRmConfirmation) {
+                // Existing rm confirmation code
+                const response = command.toLowerCase();
+                const { directoryName, directory } = window.waitingForRmConfirmation;
+
+                if (response === 'y' || response === 'yes') {
+                    delete directory.contents[directoryName];
+                    appendToConsole(`Directory '${directoryName}' removed.`);
+                } else if (response === 'n' || response === 'no') {
+                    appendToConsole(`Directory '${directoryName}' not removed.`);
+                } else {
+                    appendToConsole("Invalid input. Please type 'y/yes' or 'n/no'.");
+                    return;
+                }
+
+                window.waitingForRmConfirmation = null;
+                return;
+            }
+
+            // Rest of your existing Enter key code
             const promptPath = formatPathString();
             const displayPath = promptPath === '/home/hacker' ? '~' : promptPath;
             const commandLine = document.createElement('div');
@@ -1137,6 +1211,31 @@ Wind: Variable at 13.37 km/h
             }
 
             consoleContent.scrollTop = consoleContent.scrollHeight;
+        }
+        else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                consoleInput.value = commandHistory[historyIndex];
+                // Move cursor to end of input
+                setTimeout(() => {
+                    consoleInput.selectionStart = consoleInput.selectionEnd = consoleInput.value.length;
+                }, 0);
+            }
+        }
+        else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                consoleInput.value = commandHistory[historyIndex];
+                // Move cursor to end of input
+                setTimeout(() => {
+                    consoleInput.selectionStart = consoleInput.selectionEnd = consoleInput.value.length;
+                }, 0);
+            } else if (historyIndex === commandHistory.length - 1) {
+                historyIndex = commandHistory.length;
+                consoleInput.value = '';
+            }
         }
     });
 
