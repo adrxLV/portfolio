@@ -138,6 +138,44 @@ document.addEventListener('DOMContentLoaded', function() {
     let commandHistory = [];
     let historyIndex = -1;
     let currentPath = ['/','home','hacker'];
+    const availablePackages = {
+        'neofetch': {
+            description: 'A command-line system information tool.',
+            version: '7.1.0',
+            size: '1.2 MiB',
+            dependencies: ['bash', 'coreutils', 'procps-ng']
+        },
+        'cmatrix': {
+            description: 'Simulates the CMatrix effect in the terminal.',
+            version: '2.0',
+            size: '0.5 MiB',
+            dependencies: ['ncurses']
+        },
+        'htop': {
+            description: 'An interactive process viewer.',
+            version: '3.0.5',
+            size: '0.8 MiB',
+            dependencies: ['ncurses', 'libcap']
+        },
+        'figlet': {
+            description: 'A program for making large letters out of ordinary text.',
+            version: '2.2.5',
+            size: '0.3 MiB',
+            dependencies: []
+        },
+        'cowsay': {
+            description: 'A program that generates ASCII pictures of a cow with a message.',
+            version: '3.04',
+            size: '0.2 MiB',
+            dependencies: ['perl']
+        },
+        'sl': {
+            description: 'Bro is trying to mistype? Crazy...`.',
+            version: '5.02',
+            size: '0.1 MiB',
+            dependencies: []
+        }
+    };
 
     let viMode = false;
     let viFilePath = null;
@@ -261,25 +299,23 @@ AI Commands:
     - pandas [dataframe|analyze]: Data manipulation`;
         },
         'neofetch': () => {
-            return `                               OS: Arch Linux x86_64
-                               Hostname: hacker
-               /\\              Kernel: 6.4.7-arch1-1
-              /  \\             Packages: 13379883
-             /\\   \\            Uptime: 42d 13h 37m
-            /      \\           WM: Hyprland
-           /   ,,   \\          Theme: Gruvbox
-          /   |  |   \\         CPU: AMD Ryzen 9 8950HX (32) @ 10.2GHz
-         /_-''    ''-_\\        GPU: NVIDIA 9060 Ti
-                               Battery: 98% [Eternal Power Mode]
-                               Most used phrase: i use arch btw
-                               
-                               ⚡ Force Sensitivity: High
-                               🏰 House: Ravenclaw
-                               🔒 Security Level: Jedi Master
-                               🤖 AI Models: 42 loaded`;
+            return `           _..._               OS: Arch Linux x86_64
+         .'     '.             Hostname: hacker
+        /  _   _  \\            Kernel: 6.4.7-arch1-1
+        | (o)_(o) |            Packages: 13379883
+         \\(     ) /            Uptime: 42d 13h 37m
+         //'._.'\\ \\            WM: Hyprland
+        //   .   \\ \\           Theme: Gruvbox
+       ||   .     \\ \\          CPU: AMD Ryzen 9 8950HX (32) @ 10.2GHz
+       |\\   :     / |          GPU: NVIDIA 9060 Ti
+       \\ \`) '   (\`  /_         Battery: 98% [Eternal Power Mode]
+     _)\\\`\`".____,.'"\\\` (_       Most used phrase: i use arch btw
+     )     )'--'(     (        🏰 House: Ravenclaw
+      '---\`      \`---\`         🔒 Security Access: Jedi Council
+                               🤖 L.L.Models: 42 loaded`;
         },
 
-        // Star Wars Commands
+// Star Wars Commands - Without Quotes
         'jedi': (args) => {
             if (!args || args.length === 0) {
                 return `
@@ -291,16 +327,14 @@ AI Commands:
 ║ • jedi council  - Council members    ║
 ║ • jedi training - Training modules   ║
 ║ • jedi code     - The Jedi Code      ║
-╚══════════════════════════════════════╝
-
-"A Jedi uses the Force for knowledge and defense, never for attack."`;
+╚══════════════════════════════════════╝`;
             }
 
             const subCmd = args[0].toLowerCase();
             switch(subCmd) {
                 case 'info':
                     return `
-🌟 JEDI ORDER INFORMATION 🌟
+JEDI ORDER INFORMATION
 
 Founded: 25,000 BBY
 Headquarters: Jedi Temple, Coruscant
@@ -316,20 +350,18 @@ Force Abilities:
 
                 case 'council':
                     return `
-🏛️  JEDI HIGH COUNCIL 🏛️
+JEDI HIGH COUNCIL
 
 Active Members:
-• Master Yoda (Grand Master) ⭐
+• Master Yoda (Grand Master)
 • Master Mace Windu
 • Master Obi-Wan Kenobi
 • Master Ki-Adi-Mundi
-• Master Plo Koon
-
-"The Council will decide your fate."`;
+• Master Plo Koon`;
 
                 case 'training':
                     return `
-⚔️  JEDI TRAINING MODULES ⚔️
+JEDI TRAINING MODULES
 
 Youngling Training:
 □ Basic Force Sensitivity
@@ -345,222 +377,58 @@ Knight Trials:
 □ Trial of Skill
 □ Trial of Courage
 □ Trial of the Flesh
-□ Trial of Spirit
-
-"Train yourself to let go of everything you fear to lose."`;
+□ Trial of Spirit`;
 
                 case 'code':
                     return `
-📜 THE JEDI CODE 📜
+THE JEDI CODE
 
 There is no emotion, there is peace.
 There is no ignorance, there is knowledge.
 There is no passion, there is serenity.
 There is no chaos, there is harmony.
-There is no death, there is the Force.
-
-"The Force will be with you, always."`;
+There is no death, there is the Force.`;
 
                 default:
                     return "Unknown Jedi command. Use 'jedi' to see available options.";
             }
         },
 
-        'force': (args) => {
-            if (!args || args.length === 0) {
-                return "Available Force abilities: scan, push, heal, lightning, vision";
-            }
-
-            const ability = args[0].toLowerCase();
-            const forceMessages = {
-                'scan': `
-🔍 Force Scan Initiated...
-
-Scanning surroundings...
-━━━━━━━━━━ 100%
-
-Life forms detected: 3 sentient beings
-Force sensitivity: Moderate levels detected
-Dark Side presence: Minimal
-Threat level: Low
-
-"I sense something... a presence I haven't felt since..."`,
-
-                'push': `
-💨 Force Push!
-
-*WHOOOOSH*
-
-You extend your hand and focus the Force...
-A powerful invisible wave emanates from you!
-
-Target Status: ⚡ PUSHED BACK ⚡
-Effectiveness: High
-Collateral damage: Minimal
-
-"The Force is strong with this one."`,
-
-                'heal': `
-✨ Force Heal Activated
-
-Channeling the light side of the Force...
-━━━━━━━━━━ Healing... 100%
-
-✅ Wounds closed
-✅ Pain subsided  
-✅ Energy restored
-✅ Balance maintained
-
-"The Force flows through all living things."`,
-
-                'lightning': `
-⚡ Force Lightning ⚡
-
-ERROR: Dark Side ability detected!
-⚠️  WARNING: Jedi Code violation!
-
-"Anger, fear, aggression... the dark side are they.
-Once you start down the dark path, forever will it dominate your destiny."
-
-Access denied by Jedi Council.`,
-
-                'vision': `
-🔮 Force Vision
-
-The Force shows you glimpses of the future...
-
-Vision fragments:
-• A great disturbance in the Force
-• Twin suns setting on a desert world
-• A weapon capable of destroying planets
-• Hope, embodied in unlikely heroes
-
-"Difficult to see. Always in motion is the future."`
-            };
-
-            return forceMessages[ability] || "Unknown Force ability. The Force works in mysterious ways.";
-        },
-
-        'lightsaber': (args) => {
-            if (!args || args.length === 0) {
-                return "Lightsaber commands: ignite, duel, customize, meditate";
-            }
-
-            const action = args[0].toLowerCase();
-            switch(action) {
-                case 'ignite':
-                    return `
-⚡ Lightsaber Ignited! ⚡
-
-    \\    |    /
-     \\   |   /
-      \\  |  /
-═══════════════
-       |||
-       |||  *VWOOM*
-       |||
-       |||
-       |||
-      |||||
-     |||||||
-    |||||||||
-
-Blade Color: Blue
-Crystal: Ilum Crystal
-Length: 1 meter
-Status: Ready for combat
-
-"This weapon is your life."`;
-
-                case 'duel':
-                    return `
-⚔️  LIGHTSABER DUEL ⚔️
-
-*CLASH* *VWOOM* *BZZT*
-
-Opponent: Training Remote
-Form Used: Form I - Shii-Cho
-
-Round 1: ⚡ STRIKE ⚡
-Round 2: 🛡️ BLOCK 🛡️
-Round 3: ⚡ VICTORY ⚡
-
-"Your skills are complete. Indeed, you are powerful as the Emperor has foreseen."`;
-
-                case 'customize':
-                    return `
-🔧 Lightsaber Customization 🔧
-
-Available Crystals:
-• Blue (Jedi Guardian)
-• Green (Jedi Consular)  
-• Purple (Rare, Mace Windu style)
-• Yellow (Jedi Sentinel)
-• Red (Sith only - unavailable)
-
-Hilt Materials:
-• Durasteel • Phrik • Cortosis
-• Bronzium • Electrum
-
-"The lightsaber is not just a weapon. It is a work of art."`;
-
-                case 'meditate':
-                    return `
-🧘‍♂️ Lightsaber Meditation 🧘‍♂️
-
-Connecting with your kyber crystal...
-Feeling the Force flow through the blade...
-Understanding the weapon's spirit...
-
-Meditation complete.
-Lightsaber attunement: +15%
-Force connection: Enhanced
-Combat efficiency: Improved
-
-"The crystal is the heart of the blade."`;
-
-                default:
-                    return "Unknown lightsaber command. The weapon of a Jedi Knight requires proper handling.";
-            }
-        },
-
         'rebel': (args) => {
             if (!args || args.length === 0) {
                 return `
-🌟 REBEL ALLIANCE COMMAND 🌟
+REBEL ALLIANCE COMMAND
 
 Available operations:
 • rebel mission  - Current missions
 • rebel intel    - Intelligence reports  
 • rebel fleet    - Fleet status
-• rebel heroes   - Notable members
-
-"The Empire may have the numbers, but we have the cause."`;
+• rebel heroes   - Notable members`;
             }
 
             const operation = args[0].toLowerCase();
             switch(operation) {
                 case 'mission':
                     return `
-📋 ACTIVE REBEL MISSIONS 📋
+ACTIVE REBEL MISSIONS
 
 MISSION ALPHA-7: Steal Death Star plans
-Status: ✅ COMPLETED (Rogue One)
+Status: COMPLETED (Rogue One)
 Casualty Level: Heavy
 
 MISSION BETA-12: Destroy Death Star
-Status: ✅ COMPLETED (Luke Skywalker)
-Death Star Status: 💥 DESTROYED
+Status: COMPLETED (Luke Skywalker)
+Death Star Status: DESTROYED
 
 MISSION GAMMA-3: Evacuate Echo Base
-Status: ✅ COMPLETED 
+Status: COMPLETED 
 Base Status: Compromised
 
 CURRENT PRIORITY: Rescue Han Solo from Jabba's Palace`;
 
                 case 'intel':
                     return `
-🕵️ INTELLIGENCE REPORT 🕵️
+INTELLIGENCE REPORT
 
 CLASSIFIED - EYES ONLY
 
@@ -568,13 +436,11 @@ CLASSIFIED - EYES ONLY
 • Emperor will be personally overseeing completion
 • Rebel fleet position may be compromised
 • Imperial trap suspected
-• Recommend extreme caution
-
-"It's a trap!" - Admiral Ackbar`;
+• Recommend extreme caution`;
 
                 case 'fleet':
                     return `
-🚀 REBEL FLEET STATUS 🚀
+REBEL FLEET STATUS
 
 Capital Ships:
 • Mon Calamari Cruisers: 12 operational
@@ -587,12 +453,11 @@ Starfighters:
 • A-wing interceptors: 18 operational
 
 Fleet Status: Ready for assault
-Morale: High
-"May the Force be with us."`;
+Morale: High`;
 
                 case 'heroes':
                     return `
-🌟 REBEL HEROES 🌟
+REBEL HEROES
 
 Princess Leia Organa - Leader, Diplomat
 Luke Skywalker - Jedi Knight, Pilot
@@ -600,34 +465,30 @@ Han Solo - Smuggler, General
 Chewbacca - Co-pilot, Warrior
 Lando Calrissian - Baron Administrator
 Admiral Ackbar - Fleet Commander
-Mon Mothma - Chief of State
-
-"They are our most precious resource."`;
+Mon Mothma - Chief of State`;
 
                 default:
-                    return "Unknown rebel operation. Stay strong, the Empire will fall.";
+                    return "Unknown rebel operation.";
             }
         },
 
         'empire': (args) => {
             if (!args || args.length === 0) {
                 return `
-⚫ IMPERIAL COMMAND CENTER ⚫
-🔴 ACCESS RESTRICTED 🔴
+IMPERIAL COMMAND CENTER
+ACCESS RESTRICTED
 
 Available operations:
 • empire status  - Imperial status
 • empire fleet   - Fleet deployment
-• empire vader   - Lord Vader's orders
-
-"Your lack of faith is disturbing."`;
+• empire vader   - Lord Vader's orders`;
             }
 
             const operation = args[0].toLowerCase();
             switch(operation) {
                 case 'status':
                     return `
-⚫ GALACTIC EMPIRE STATUS ⚫
+GALACTIC EMPIRE STATUS
 
 Territory: Entire Known Galaxy
 Capital: Coruscant, Imperial Center
@@ -639,13 +500,11 @@ Recent Setbacks:
 • Rebel Alliance: Still active
 • Jedi Survivor: Luke Skywalker
 
-Status: Iron grip on galaxy, some Rebel resistance
-
-"The Emperor is not as forgiving as I am."`;
+Status: Iron grip on galaxy, some Rebel resistance`;
 
                 case 'fleet':
                     return `
-⚫ IMPERIAL FLEET DEPLOYMENT ⚫
+IMPERIAL FLEET DEPLOYMENT
 
 Star Destroyers: 25,000 operational
 Super Star Destroyers: 13 operational
@@ -655,39 +514,33 @@ Death Star II: 60% complete
 Current Deployment:
 • Endor System: Death Star protection
 • Outer Rim: Rebel hunting
-• Core Worlds: Security patrol
-
-"Most impressive."`;
+• Core Worlds: Security patrol`;
 
                 case 'vader':
                     return `
-🔴 LORD VADER'S ORDERS 🔴
+LORD VADER'S ORDERS
 
-"Find the Rebel base."
-"Bring me the Death Star plans."
-"The Emperor wants Luke Skywalker alive."
-"You have failed me for the last time."
+Find the Rebel base.
+Bring me the Death Star plans.
+The Emperor wants Luke Skywalker alive.
+You have failed me for the last time.
 
-Current Priority: Convert Luke Skywalker to the Dark Side
-
-"Join me, and together we can rule the galaxy as father and son."`;
+Current Priority: Convert Luke Skywalker to the Dark Side`;
 
                 default:
-                    return "Unknown Imperial operation. The Emperor does not tolerate failure.";
+                    return "Unknown Imperial operation.";
             }
         },
 
         'cantina': () => {
             return `
-🍺 MOS EISLEY CANTINA 🍺
+MOS EISLEY CANTINA
 
 *Jizz music plays in the background*
 
-Bartender: "We don't serve their kind here!"
-
 Patrons present:
-• Greedo (Bounty Hunter) 💀
-• Figrin D'an and the Modal Nodes (Band) 🎵
+• Greedo (Bounty Hunter)
+• Figrin D'an and the Modal Nodes (Band)
 • Ponda Baba (Aqualish thug) 
 • Dr. Evazan (Wanted criminal)
 • Various smugglers and scoundrels
@@ -696,16 +549,14 @@ Drinks Available:
 • Blue Milk
 • Corellian Ale  
 • Jawa Juice
-• Bantha Beer
-
-"You will never find a more wretched hive of scum and villainy."`;
+• Bantha Beer`;
         },
 
         'deathstar': () => {
             return `
-💀 DEATH STAR TECHNICAL SPECIFICATIONS 💀
+DEATH STAR TECHNICAL SPECIFICATIONS
 
-⚠️  CLASSIFIED IMPERIAL DOCUMENT ⚠️
+CLASSIFIED IMPERIAL DOCUMENT
 
 Diameter: 120 kilometers
 Crew: 1,186,295 personnel
@@ -718,140 +569,74 @@ Status: DESTROYED by Rebel Alliance
 Design Flaw: Intentionally placed by Galen Erso
 Destroyed by: Luke Skywalker (X-wing, proton torpedoes)
 
-"That's no moon... it's a space station."
-
-⚠️  This workstation is now operating under Rebel control.`;
+This workstation is now operating under Rebel control.`;
         },
 
-        // Harry Potter Commands
+// Harry Potter Commands - Improved Version
         'sortinghat': (args) => {
             const houses = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'];
             const houseDescriptions = {
-                'gryffindor': 'Brave, daring, and chivalrous! You belong in GRYFFINDOR! 🦁',
-                'hufflepuff': 'Loyal, patient, and kind! You belong in HUFFLEPUFF! 🦡',
-                'ravenclaw': 'Intelligent, witty, and wise! You belong in RAVENCLAW! 🦅',
-                'slytherin': 'Ambitious, cunning, and resourceful! You belong in SLYTHERIN! 🐍'
+                'gryffindor': 'Brave, daring, and chivalrous! You belong in GRYFFINDOR!',
+                'hufflepuff': 'Loyal, patient, and kind! You belong in HUFFLEPUFF!',
+                'ravenclaw': 'Intelligent, witty, and wise! You belong in RAVENCLAW!',
+                'slytherin': 'Ambitious, cunning, and resourceful! You belong in SLYTHERIN!'
             };
 
             if (args && args.length > 0) {
                 const requestedHouse = args[0].toLowerCase();
                 if (houseDescriptions[requestedHouse]) {
-                    return `
-🎩 THE SORTING HAT 🎩
+                    return `THE SORTING HAT
 
-"Hmm... ${requestedHouse.toUpperCase()}? An interesting choice..."
+Hmm... ${requestedHouse.toUpperCase()}? An interesting choice...
 
 ${houseDescriptions[requestedHouse]}
 
 House Qualities:
-${requestedHouse === 'gryffindor' ? '• Courage • Bravery • Determination • Daring' :
-                        requestedHouse === 'hufflepuff' ? '• Loyalty • Patience • Hard Work • Dedication' :
-                            requestedHouse === 'ravenclaw' ? '• Intelligence • Wisdom • Wit • Learning' :
-                                '• Ambition • Cunning • Leadership • Resourcefulness'}
+${requestedHouse === 'gryffindor' ? 'Courage • Bravery • Determination • Daring' :
+                        requestedHouse === 'hufflepuff' ? 'Loyalty • Patience • Hard Work • Dedication' :
+                            requestedHouse === 'ravenclaw' ? 'Intelligence • Wisdom • Wit • Learning' :
+                                'Ambition • Cunning • Leadership • Resourcefulness'}
 
-"Better be... ${requestedHouse.toUpperCase()}!"`;
+Better be... ${requestedHouse.toUpperCase()}!`;
                 }
             }
 
             const randomHouse = houses[Math.floor(Math.random() * houses.length)].toLowerCase();
-            return `
-🎩 THE SORTING HAT 🎩
+            return `THE SORTING HAT
 
-"Hmm... difficult, very difficult..."
-"I see courage... intelligence... loyalty... ambition..."
-"But where to put you?"
+Hmm... difficult, very difficult...
+I see courage... intelligence... loyalty... ambition...
+But where to put you?
 
 *The hat contemplates deeply*
 
-"Better be... ${randomHouse.toUpperCase()}!"
+Better be... ${randomHouse.toUpperCase()}!
 
 ${houseDescriptions[randomHouse]}`;
         },
 
-        'spell': (args) => {
-            if (!args || args.length === 0) {
-                return `
-🪄 SPELL COMMANDS 🪄
-
-• spell list - Show available spells
-• spell cast [spell] - Cast a spell
-• spell info [spell] - Get spell information
-
-"It's LeviOsa, not LeviosA!"`;
-            }
-
-            const action = args[0].toLowerCase();
-            const spellName = args[1] ? args[1].toLowerCase() : '';
-
-            if (action === 'list') {
-                return `
-📚 SPELL BOOK 📚
-
-Charms:
-• Lumos - Creates light
-• Alohomora - Unlocks doors
-• Wingardium Leviosa - Levitation charm
-• Accio - Summoning charm
-
-Defensive Spells:
-• Expelliarmus - Disarming charm
-• Protego - Shield charm
-• Expecto Patronum - Patronus charm
-
-Advanced Magic:
-• Avada Kedavra - Killing curse (FORBIDDEN)
-• Imperio - Imperius curse (FORBIDDEN)
-• Crucio - Cruciatus curse (FORBIDDEN)
-
-"Remember, these spells require proper wand movement and pronunciation!"`;
-            }
-
-            if (action === 'cast') {
-                const spells = {
-                    'lumos': '💡 *LUMOS!* Your wand tip lights up with a bright glow!',
-                    'alohomora': '🔓 *ALOHOMORA!* The lock clicks open!',
-                    'wingardium': '🪶 *WINGARDIUM LEVIOSA!* The feather rises gracefully into the air!',
-                    'leviosa': '🪶 *WINGARDIUM LEVIOSA!* The feather rises gracefully into the air!',
-                    'accio': '🏃‍♂️ *ACCIO!* The object zooms toward you!',
-                    'expelliarmus': '⚡ *EXPELLIARMUS!* Your opponent\'s wand flies out of their hand!',
-                    'protego': '🛡️ *PROTEGO!* A magical shield forms in front of you!',
-                    'patronus': '🦌 *EXPECTO PATRONUM!* A silvery stag bounds from your wand!',
-                    'avada': '💀 *ERROR* This is an Unforgivable Curse! Aurors have been notified!',
-                    'kedavra': '💀 *ERROR* This is an Unforgivable Curse! Aurors have been notified!',
-                    'imperio': '🧠 *ERROR* This is an Unforgivable Curse! Aurors have been notified!',
-                    'crucio': '⚡ *ERROR* This is an Unforgivable Curse! Aurors have been notified!'
-                };
-
-                return spells[spellName] || `❌ Unknown spell "${spellName}". Check your pronunciation!`;
-            }
-
-            return "Unknown spell command. Use 'spell list' to see available spells.";
-        },
-
         'quidditch': (args) => {
             if (!args || args.length === 0) {
-                return `
-🏆 QUIDDITCH HEADQUARTERS 🏆
+                return `QUIDDITCH HEADQUARTERS
 
 • quidditch stats - View league standings
 • quidditch play - Play a quick match
 • quidditch rules - Game rules
 • quidditch teams - Famous teams
 
-"Quidditch is played by two teams of seven people on broomsticks."`;
+Quidditch is played by two teams of seven people on broomsticks.`;
             }
 
             const action = args[0].toLowerCase();
             switch(action) {
                 case 'stats':
-                    return `
-🏆 HOGWARTS QUIDDITCH LEAGUE 🏆
+                    return `HOGWARTS QUIDDITCH LEAGUE
 
 Current Standings:
-1. Gryffindor - 420 points 🦁
-2. Slytherin - 380 points 🐍  
-3. Ravenclaw - 340 points 🦅
-4. Hufflepuff - 290 points 🦡
+1. Gryffindor - 420 points
+2. Slytherin - 380 points  
+3. Ravenclaw - 340 points
+4. Hufflepuff - 290 points
 
 Top Scorer: Harry Potter (Gryffindor Seeker)
 Fastest Snitch Catch: 3 minutes, 47 seconds
@@ -861,25 +646,23 @@ Next Match: Gryffindor vs Slytherin`;
 
                 case 'play':
                     const outcomes = [
-                        '🏆 You caught the Golden Snitch! Gryffindor wins 150-140!',
-                        '😤 Slytherin caught the Snitch! They win 160-80!',
-                        '⚡ Amazing comeback! You caught the Snitch in the final seconds!',
-                        '🌧️ Match postponed due to severe weather conditions!',
-                        '🦌 Your Patronus distracted the Dementors! Gryffindor wins!'
+                        'You caught the Golden Snitch! Gryffindor wins 150-140!',
+                        'Slytherin caught the Snitch! They win 160-80!',
+                        'Amazing comeback! You caught the Snitch in the final seconds!',
+                        'Match postponed due to severe weather conditions!',
+                        'Your Patronus distracted the Dementors! Gryffindor wins!'
                     ];
-                    return `
-🧙‍♂️ QUIDDITCH MATCH SIMULATION 🧙‍♂️
+                    return `QUIDDITCH MATCH SIMULATION
 
 *You mount your Nimbus 2000*
 *The crowd roars as you take to the sky*
 
 ${outcomes[Math.floor(Math.random() * outcomes.length)]}
 
-"I've seen you fly. You're a natural seeker!"`;
+I've seen you fly. You're a natural seeker!`;
 
                 case 'rules':
-                    return `
-📋 QUIDDITCH RULES 📋
+                    return `QUIDDITCH RULES
 
 Teams: 7 players each
 • 3 Chasers (score with Quaffle)
@@ -895,25 +678,24 @@ Equipment:
 • Quaffles (1) • Bludgers (2) • Golden Snitch (1)
 • Broomsticks • Bats • Goal hoops
 
-"Catch the Snitch or die trying!"`;
+Catch the Snitch or die trying!`;
 
                 case 'teams':
-                    return `
-🌟 FAMOUS QUIDDITCH TEAMS 🌟
+                    return `FAMOUS QUIDDITCH TEAMS
 
 Professional:
-• Chudley Cannons 🧡
-• Holyhead Harpies 💚
-• Wimbourne Wasps 💛
-• Bulgarian National Team 🇧🇬
+• Chudley Cannons
+• Holyhead Harpies
+• Wimbourne Wasps
+• Bulgarian National Team
 
 Hogwarts Houses:
-• Gryffindor Lions 🦁
-• Slytherin Serpents 🐍
-• Ravenclaw Eagles 🦅  
-• Hufflepuff Badgers 🦡
+• Gryffindor Lions
+• Slytherin Serpents
+• Ravenclaw Eagles  
+• Hufflepuff Badgers
 
-"The Irish National Team has the best Chasers in the world!"`;
+The Irish National Team has the best Chasers in the world!`;
 
                 default:
                     return "Unknown Quidditch command. Try 'quidditch stats' or 'quidditch play'.";
@@ -921,14 +703,13 @@ Hogwarts Houses:
         },
 
         'marauders': () => {
-            return `
-🗺️ THE MARAUDER'S MAP 🗺️
+            return `THE MARAUDER'S MAP
 
-"I solemnly swear that I am up to no good."
+I solemnly swear that I am up to no good.
 
 *The map reveals...*
 
-📍 CURRENT LOCATIONS:
+CURRENT LOCATIONS:
 • Harry Potter - Gryffindor Common Room
 • Hermione Granger - Library (as usual)
 • Ron Weasley - Great Hall (eating)
@@ -936,35 +717,34 @@ Hogwarts Houses:
 • Argus Filch - Third Floor Corridor
 • Peeves - Everywhere and nowhere
 
-🚪 SECRET PASSAGES:
+SECRET PASSAGES:
 • Behind Gregory the Smarmy
 • One-eyed witch statue (Honeyduke's)
 • Mirror on 4th floor
 • Portrait of Ariana Dumbledore
 
-⚠️ WARNING: Dementors detected near the castle gates
+WARNING: Dementors detected near the castle gates
 
-"Mischief managed."`;
+Mischief managed.`;
         },
 
         'patronus': () => {
             const patronuses = [
-                'Stag (like Harry Potter) 🦌',
-                'Otter (like Hermione Granger) 🦦',
-                'Jack Russell Terrier (like Ron Weasley) 🐕',
-                'Doe (like Severus Snape) 🦌',
-                'Phoenix (rare) 🔥',
-                'Dragon (very rare) 🐉',
-                'Wolf 🐺',
-                'Cat 🐱',
-                'Rabbit 🐰',
-                'Eagle 🦅'
+                'Stag',
+                'Otter',
+                'Jack Russell Terrier',
+                'Doe',
+                'Phoenix',
+                'Dragon',
+                'Wolf',
+                'Cat',
+                'Rabbit',
+                'Eagle'
             ];
 
             const myPatronus = patronuses[Math.floor(Math.random() * patronuses.length)];
 
-            return `
-✨ EXPECTO PATRONUM! ✨
+            return `EXPECTO PATRONUM!
 
 *You concentrate on your happiest memory*
 *A silvery mist erupts from your wand*
@@ -972,28 +752,26 @@ Hogwarts Houses:
 
 Your Patronus is: ${myPatronus}
 
-"A Patronus is a kind of positive force, a projection of the very things that the Dementor feeds upon — hope, happiness, the desire to survive."
+A Patronus is a kind of positive force, a projection of the very things that the Dementor feeds upon — hope, happiness, the desire to survive.
 
 The silvery guardian bounds around you protectively, driving away all dark creatures!`;
         },
 
         'potions': (args) => {
             if (!args || args.length === 0) {
-                return `
-🧪 PROFESSOR SNAPE'S POTIONS CLASS 🧪
+                return `PROFESSOR SNAPE'S POTIONS CLASS
 
 • potions brew [potion] - Brew a potion
 • potions list - Available potions
 • potions ingredients - View ingredient store
 
-"I can teach you how to bottle fame, brew glory, even stopper death."`;
+I can teach you how to bottle fame, brew glory, even stopper death.`;
             }
 
             const action = args[0].toLowerCase();
 
             if (action === 'list') {
-                return `
-📚 POTIONS COMPENDIUM 📚
+                return `POTIONS COMPENDIUM
 
 Beginner Potions:
 • Sleeping Draught - Induces sleep
@@ -1010,14 +788,13 @@ Advanced Potions:
 • Wolfsbane Potion - Helps werewolves
 • Elixir of Life - Grants immortality
 
-"Turn to page 394."`;
+Turn to page 394.`;
             }
 
             if (action === 'brew') {
                 const potion = args[1] ? args[1].toLowerCase() : '';
                 const potionResults = {
-                    'felix': `
-🍀 BREWING FELIX FELICIS 🍀
+                    'felix': `BREWING FELIX FELICIS
 
 *Adding Ashwinder egg...*
 *Stirring clockwise...*
@@ -1025,13 +802,12 @@ Advanced Potions:
 *Counter-clockwise stir...*
 
 SUCCESS! You've brewed Liquid Luck!
-⚡ Effect: Everything goes your way for 12 hours
-⚠️ Warning: Toxic in large quantities
+Effect: Everything goes your way for 12 hours
+Warning: Toxic in large quantities
 
-"Desperately tricky to make, and disastrous to get wrong."`,
+Desperately tricky to make, and disastrous to get wrong.`,
 
-                    'polyjuice': `
-🔄 BREWING POLYJUICE POTION 🔄
+                    'polyjuice': `BREWING POLYJUICE POTION
 
 *Adding lacewing flies...*
 *Leeches... knotgrass...*
@@ -1041,12 +817,11 @@ SUCCESS! You've brewed Liquid Luck!
 
 SUCCESS! Polyjuice Potion complete!
 Duration: 1 hour
-⚠️ Note: Very difficult, takes 1 month to brew
+Note: Very difficult, takes 1 month to brew
 
-"This is the most complex potion I've ever seen."`,
+This is the most complex potion I've ever seen.`,
 
-                    'veritaserum': `
-💧 BREWING VERITASERUM 💧
+                    'veritaserum': `BREWING VERITASERUM
 
 *Hellebore syrup...*
 *Jobberknoll feathers...*
@@ -1056,15 +831,14 @@ SUCCESS! Truth Serum complete!
 Effect: Forces drinker to tell the truth
 Potency: 3 drops will do
 
-"Use it well, it took a full lunar month to mature."`
+Use it well, it took a full lunar month to mature.`
                 };
 
                 return potionResults[potion] || `❌ Unknown potion "${potion}". Check the compendium!`;
             }
 
             if (action === 'ingredients') {
-                return `
-🏪 POTIONS INGREDIENTS STORE 🏪
+                return `POTIONS INGREDIENTS STORE
 
 Common Ingredients:
 • Ashwinder Eggs - 5 Galleons
@@ -1078,19 +852,18 @@ Rare Ingredients:
 • Dragon Blood - 17 Galleons/ounce
 • Basilisk Venom - PRICELESS
 
-"These ingredients are not for amateur potioneers!"`;
+These ingredients are not for amateur potioneers!`;
             }
 
             return "Unknown potions command. Try 'potions list' or 'potions brew felix'.";
         },
 
         'diagon': () => {
-            return `
-🏪 DIAGON ALLEY 🏪
+            return `DIAGON ALLEY
 
 Welcome to the wizarding shopping district!
 
-🪄 SHOPS:
+SHOPS:
 • Ollivanders - Fine wands since 382 BC
 • Flourish & Blotts - Books and literature  
 • Madam Malkin's - Robes for all occasions
@@ -1098,15 +871,15 @@ Welcome to the wizarding shopping district!
 • Weasleys' Wizard Wheezes - Joke shop
 • Knockturn Alley - Dark artifacts (dangerous!)
 
-🏛️ GRINGOTTS BANK:
-"Fortius Quo Fidelius" - Strength through loyalty
+GRINGOTTS BANK:
+Fortius Quo Fidelius - Strength through loyalty
 Guarded by goblins and dragons
 Vault 713: Recently emptied by Hagrid
 
-🍦 FLOREAN FORTESCUE'S ICE CREAM:
+FLOREAN FORTESCUE'S ICE CREAM:
 Magical flavors available!
 
-"Welcome to Diagon Alley! Mind the pickpockets and don't feed the Nifflers!"`;
+Welcome to Diagon Alley! Mind the pickpockets and don't feed the Nifflers!`;
         },
 
         // Cybersecurity Commands
@@ -2061,6 +1834,75 @@ Memory usage per kernel:
                     return "Unknown Jupyter command. Try 'jupyter notebook' or 'jupyter lab'.";
             }
         },
+        'pacman': (args) => {
+            if (!args || args.length === 0) {
+                return `Usage: pacman -S [package_name]
+       pacman -Ss [search_term] (to search packages)
+Example: pacman -S neofetch`;
+            }
+
+            const action = args[0];
+            const packageName = args.length > 1 ? args.slice(1).join(' ') : null;
+
+            if (action === '-S') {
+                if (!packageName) {
+                    return `Usage: pacman -S [package_name]`;
+                }
+
+                if (availablePackages[packageName]) {
+                    const pkg = availablePackages[packageName];
+                    let output = `:: Synchronizing package databases...\n`;
+                    output += `resolving dependencies...\n`;
+                    if (pkg.dependencies && pkg.dependencies.length > 0) {
+                        output += `looking for conflicting packages...\n`;
+                        output += `Dependencies for ${packageName}:\n`;
+                        pkg.dependencies.forEach(dep => {
+                            output += `  - ${dep}\n`;
+                        });
+                    }
+                    output += `\nPackages (1) ${packageName}-${pkg.version}\n\n`;
+                    output += `Total Download Size:   ${pkg.size || '0.00 MiB'}\n`;
+                    output += `Total Installed Size:  ${pkg.size || '0.00 MiB'}\n\n`;
+                    output += `:: Proceed with installation? [Y/n] Y\n`; // Simulating user input 'Y'
+                    output += `:: Retrieving packages...\n`;
+                    output += ` ${packageName}-${pkg.version}-any.pkg.tar.xz... 100.0% ${pkg.size || '0.00 MiB'}/s 00:00 [######################] 100%\n`;
+                    output += `(1/1) checking keys in keyring                               [######################] 100%\n`;
+                    output += `(1/1) checking package integrity                             [######################] 100%\n`;
+                    output += `(1/1) loading package files                                  [######################] 100%\n`;
+                    output += `(1/1) checking for file conflicts                            [######################] 100%\n`;
+                    output += `(1/1) checking available disk space                          [######################] 100%\n`;
+                    output += `:: Processing package changes...\n`;
+                    output += `(1/1) installing ${packageName}                                  [######################] 100%\n`;
+                    output += `:: Running post-transaction hooks...\n`;
+                    output += `   Arming ConditionNeedsUpdate...\n`;
+                    output += `   Refreshing PackageKit...\n`;
+                    output += `Successfully installed ${packageName}.\n\n${pkg.description}`;
+                    return output;
+                } else {
+                    return `error: target not found: ${packageName}`;
+                }
+            } else if (action === '-Ss') {
+                if (!packageName) {
+                    return `Usage: pacman -Ss [search_term]`;
+                }
+                let output = `Available packages matching "${packageName}":\n`;
+                let found = false;
+                for (const pkgName in availablePackages) {
+                    if (pkgName.includes(packageName) || (availablePackages[pkgName].description && availablePackages[pkgName].description.toLowerCase().includes(packageName.toLowerCase()))) {
+                        output += `  ${pkgName} ${availablePackages[pkgName].version}\n    ${availablePackages[pkgName].description}\n`;
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    return `No packages found matching "${packageName}".`;
+                }
+                return output;
+            } else {
+                return `Invalid option. Use '-S' to install or '-Ss' to search packages.
+Usage: pacman -S [package_name]
+       pacman -Ss [search_term]`;
+            }
+        },
 
         'pandas': (args) => {
             if (!args || args.length === 0) {
@@ -2618,7 +2460,7 @@ tmpfs           64G     1G    63G     2%
             }
 
             if (current.contents[targetName].type === 'directory' && !forceRemove) {
-                appendToConsole(`Do you really want to delete the directory '${targetName}'? (y/yes, n/no)`);
+                appendToConsole(`Do you really want to delete the directory '${targetName}'? (y/yes, n/no)`, true, { charByChar: true, delay: 10 });
 
                 window.waitingForRmConfirmation = {
                     directoryName: targetName,
@@ -2994,12 +2836,45 @@ Wind: Variable at 13.37 km/h
         }
     };
 
-    function appendToConsole(text) {
-        const line = document.createElement('div');
-        line.textContent = text;
-        line.style.color = currentTextColor;
-        consoleContent.appendChild(line);
-        consoleContent.scrollTop = consoleContent.scrollHeight;
+    function appendToConsole(text, isCommandOutput = true, options = {}) {
+        const { charByChar, lineByLine, delay = 50 } = options;
+
+        if (charByChar && isCommandOutput) {
+            const line = document.createElement('div');
+            line.style.color = currentTextColor;
+            consoleContent.appendChild(line);
+            let i = 0;
+            function typeChar() {
+                if (i < text.length) {
+                    line.textContent += text.charAt(i);
+                    i++;
+                    consoleContent.scrollTop = consoleContent.scrollHeight;
+                    setTimeout(typeChar, delay);
+                }
+            }
+            typeChar();
+        } else if (lineByLine && isCommandOutput) {
+            const lines = text.split('\n');
+            let lineIndex = 0;
+            function typeLine() {
+                if (lineIndex < lines.length) {
+                    const lineElement = document.createElement('div');
+                    lineElement.textContent = lines[lineIndex];
+                    lineElement.style.color = currentTextColor;
+                    consoleContent.appendChild(lineElement);
+                    consoleContent.scrollTop = consoleContent.scrollHeight;
+                    lineIndex++;
+                    setTimeout(typeLine, delay);
+                }
+            }
+            typeLine();
+        } else {
+            const line = document.createElement('div');
+            line.textContent = text;
+            line.style.color = currentTextColor;
+            consoleContent.appendChild(line);
+            consoleContent.scrollTop = consoleContent.scrollHeight;
+        }
     }
 
 
@@ -3152,63 +3027,60 @@ Wind: Variable at 13.37 km/h
         if (viMode) return;
 
         if (e.key === 'Enter') {
-            const command = consoleInput.value.trim();
-
-            // Add non-empty commands to history
-            if (command !== '') {
-                commandHistory.push(command);
-                historyIndex = commandHistory.length;
-            }
-
+            e.preventDefault();
+            const commandLine = consoleInput.value.trim();
+            // Echo the command itself (typically no special animation here, or handled by appendToConsole's default)
+            appendToConsole(`hacker@localhost:~${formatPathString()}$ ${commandLine}`, false);
             consoleInput.value = '';
 
-            if (window.waitingForRmConfirmation) {
-                // Existing rm confirmation code
-                const response = command.toLowerCase();
-                const { directoryName, directory } = window.waitingForRmConfirmation;
-
-                if (response === 'y' || response === 'yes') {
-                    delete directory.contents[directoryName];
-                    appendToConsole(`Directory '${directoryName}' removed.`);
-                } else if (response === 'n' || response === 'no') {
-                    appendToConsole(`Directory '${directoryName}' not removed.`);
-                } else {
-                    appendToConsole("Invalid input. Please type 'y/yes' or 'n/no'.");
-                    return;
-                }
-
-                window.waitingForRmConfirmation = null;
+            if (commandLine === '') {
+                consoleContent.scrollTop = consoleContent.scrollHeight;
                 return;
             }
 
-            // Rest of your existing Enter key code
-            const promptPath = formatPathString();
-            const displayPath = promptPath === '/home/hacker' ? '~' : promptPath;
-            const commandLine = document.createElement('div');
-            commandLine.innerHTML = `<span class="console-prompt">hacker@localhost:${displayPath}$</span> ${command}`;
-            consoleContent.appendChild(commandLine);
+            const [cmd, ...args] = commandLine.split(/\s+/);
+            let output; // Variable to store command output
 
-            const parts = command.split(' ');
-            const cmd = parts[0].toLowerCase();
-            const args = parts.slice(1);
+            // Add non-empty commands to history
+            if (commandLine !== '') {
+                commandHistory.push(commandLine);
+                historyIndex = commandHistory.length;
+            }
 
-            if (cmd === '') {
-            } else if (commands[cmd]) {
-                const output = commands[cmd](args);
-                if (output) {
-                    const outputElement = document.createElement('div');
-                    outputElement.textContent = output;
-                    consoleContent.appendChild(outputElement);
+            if (commands[cmd]) {
+                try {
+                    output = commands[cmd](args);
+                    if (cmd === 'clear') { // Special handling for clear, as it modifies consoleContent directly
+                        consoleContent.scrollTop = consoleContent.scrollHeight;
+                        return; // Output is already handled by the command itself
+                    }
+                } catch (error) {
+                    output = `Error: ${error.message}`;
                 }
             } else {
-                const outputElement = document.createElement('div');
-                outputElement.textContent = `command not found: ${cmd}`;
-                consoleContent.appendChild(outputElement);
+                output = `Command not found: ${cmd}. Type 'help' for available commands.`;
+            }
+
+            // Process and display the output with animation
+            if (output) { // Check if there is any output to display
+                if (typeof output === 'string') {
+                    const animationOptions = {};
+                    if (output.includes('\n')) {
+                        animationOptions.lineByLine = true;
+                    } else if (output.trim() !== "") { // Apply charByChar only if there's non-whitespace content
+                        animationOptions.charByChar = true;
+                    }
+                    // Pass true for isCommandOutput to enable animations if options are set
+                    appendToConsole(output, true, animationOptions);
+                } else {
+                    // If output is not a string (e.g., some commands might return other types or handle their own output)
+                    // appendToConsole's default behavior will handle String(output)
+                    appendToConsole(String(output));
+                }
             }
 
             consoleContent.scrollTop = consoleContent.scrollHeight;
-        }
-        else if (e.key === 'ArrowUp') {
+        } else if (e.key === "ArrowUp") {
             e.preventDefault();
             if (historyIndex > 0) {
                 historyIndex--;
