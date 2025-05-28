@@ -1053,10 +1053,37 @@ Wind: Variable at 13.37 km/h
             currentTextColor = color;
         }
 
-
+        // Muda a cor de todos os elementos existentes no terminal
         Array.from(consoleContent.children).forEach(child => {
-            child.style.color = currentTextColor;
+            // Se o elemento contém o prompt, preserva a cor do prompt mas muda o resto
+            if (child.innerHTML && child.innerHTML.includes('hacker@localhost:')) {
+                const promptSpan = child.querySelector('.console-prompt');
+                if (promptSpan) {
+                    // Mantém a cor original do prompt
+                    promptSpan.style.color = '#B8BB26';
+                }
+                // Aplica a nova cor ao elemento, mas o prompt já tem sua cor preservada
+                child.style.color = currentTextColor;
+            } else {
+                // Para elementos sem prompt, aplica a nova cor normalmente
+                child.style.color = currentTextColor;
+            }
         });
+
+        // Atualiza também o estilo padrão para novos elementos
+        const style = document.getElementById('dynamic-terminal-style') || document.createElement('style');
+        style.id = 'dynamic-terminal-style';
+        style.textContent = `
+        .console-content div {
+            color: ${currentTextColor} !important;
+        }
+        .console-prompt {
+            color: #B8BB26 !important;
+        }
+    `;
+        if (!document.getElementById('dynamic-terminal-style')) {
+            document.head.appendChild(style);
+        }
 
         return `Text color changed to ${color}`;
     };
