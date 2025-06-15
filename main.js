@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    let isScrollingFromClick = false;
+
     window.toggleMenu = function() {
         const navLinks = document.getElementById('navLinks');
         navLinks.classList.toggle('active');
@@ -27,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
 
+            isScrollingFromClick = true;
+
             window.scrollTo({
                 top: targetElement.offsetTop - 80,
                 behavior: 'smooth'
@@ -38,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.classList.remove('active');
             });
             this.classList.add('active');
+
+            setTimeout(() => {
+                isScrollingFromClick = false;
+            }, 1000);
         });
     });
 
@@ -55,14 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealProjects();
 
-
     window.addEventListener('scroll', revealProjects);
 
-
     window.addEventListener('scroll', () => {
+        if (isScrollingFromClick) {
+            return;
+        }
+
         let current = '';
         const sections = document.querySelectorAll('section');
-        const scrollPosition = window.scrollY + 150; 
+        const scrollPosition = window.scrollY + 150;
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
