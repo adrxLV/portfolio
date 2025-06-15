@@ -32,10 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth'
             });
 
-            // Close mobile menu if open
             document.getElementById('navLinks').classList.remove('active');
 
-            // Update active link
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Reveal projects on scroll
     const revealProjects = () => {
         const projects = document.querySelectorAll('.project-card');
         const windowHeight = window.innerHeight;
@@ -56,25 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Initial check for projects in view
     revealProjects();
 
-    // Check for projects on scroll
+
     window.addEventListener('scroll', revealProjects);
 
-    // Active navigation link based on scroll position
+
     window.addEventListener('scroll', () => {
         let current = '';
         const sections = document.querySelectorAll('section');
+        const scrollPosition = window.scrollY + 150; 
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
+            const sectionBottom = sectionTop + sectionHeight;
 
-            if (window.scrollY >= (sectionTop - 100)) {
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
                 current = section.getAttribute('id');
             }
         });
+
+        if (!current && sections.length > 0) {
+            const lastSection = sections[sections.length - 1];
+            const lastSectionTop = lastSection.offsetTop;
+            if (scrollPosition >= lastSectionTop) {
+                current = lastSection.getAttribute('id');
+            }
+        }
 
         document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
@@ -84,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Page transition effect
     window.addEventListener('beforeunload', function() {
         document.body.classList.add('fade-out');
     });
