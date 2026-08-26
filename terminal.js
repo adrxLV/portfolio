@@ -46,10 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         'archive.zip': {
                                             type: 'file',
                                             content: '[Binary content: archive.zip]'
-                                        },
-                                        'lightsaber_blueprint.pdf': {
-                                            type: 'file',
-                                            content: '[Jedi Archives] Confidential lightsaber construction manual. Property of the Jedi Order.'
                                         }
                                     }
                                 },
@@ -91,15 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     content: '# J.A.R.V.I.S.\nJust A Rather Very Intelligent System - A personal AI assistant.\n\nFeatures:\n- Natural language processing\n- Task automation\n- Smart home integration\n- Voice recognition'
                                                 }
                                             }
-                                        },
-                                        'hogwarts-ai': {
-                                            type: 'directory',
-                                            contents: {
-                                                'README.md': {
-                                                    type: 'file',
-                                                    content: '# Hogwarts AI\nMagical AI system for sorting students and predicting magical aptitude.\n\nFeatures:\n- Sorting Hat algorithm\n- Spell recognition\n- Magical creature classification'
-                                                }
-                                            }
                                         }
                                     }
                                 },
@@ -113,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 },
                                 '.bash_history': {
                                     type: 'file',
-                                    content: "ls -la\ncd Projects\ncat portfolio.txt\nneofetch\ncd ..\ngrep 'secret' *.txt\nwhoami\nsudo rm -rf /\n^C\nhistory -c\njedi --help\nsortinghat gryffindor\nforce-scan rebel_base"
+                                    content: "ls -la\ncd Projects\ncat portfolio.txt\nneofetch\ncd ..\ngrep 'secret' *.txt\nwhoami\nsudo rm -rf /\n^C\nhistory -c"
                                 }
                             }
                         }
@@ -124,11 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     contents: {
                         'passwd': {
                             type: 'file',
-                            content: 'root:x:0:0:root:/root:/bin/bash\nhacker:x:1000:1000:Hacker:/home/hacker:/bin/bash\nobi-wan:x:1977:1977:Jedi Master:/home/obi-wan:/bin/bash\nharry:x:1980:1980:The Boy Who Lived:/home/harry:/bin/bash'
-                        },
-                        'jedi_council.conf': {
-                            type: 'file',
-                            content: 'Jedi Council Configuration\nMaster Yoda: yoda@jedi.org\nMaster Windu: mwindu@jedi.org\nMaster Obi-Wan: obi-wan@jedi.org'
+                            content: 'root:x:0:0:root:/root:/bin/bash\nhacker:x:1000:1000:Hacker:/home/hacker:/bin/bash'
                         }
                     }
                 }
@@ -262,24 +245,6 @@ System Commands:
     - df: Display disk space usage
     - ps: Display current processes
 
-Star Wars Commands:
-    - jedi [info|council|training]: Access Jedi archives and training
-    - force [scan|push|heal]: Use Force abilities
-    - lightsaber [ignite|duel]: Lightsaber commands
-    - rebel [mission|intel]: Rebel Alliance operations
-    - empire [status|fleet]: Imperial operations
-    - cantina: Visit the Mos Eisley Cantina
-    - deathstar: Access Death Star plans
-
- Harry Potter Commands:
-    - sortinghat [house]: Get sorted into a Hogwarts house
-    - spell [list|cast]: Magic spells and incantations
-    - quidditch [stats|play]: Quidditch game information
-    - marauders: Activate the Marauder's Map
-    - patronus: Cast your Patronus charm
-    - potions [brew|list]: Potion making
-    - diagon: Visit Diagon Alley
-
 Cybersecurity Commands:
     - nmap [target]: Network scanning simulation
     - metasploit [modules|search]: Penetration testing framework
@@ -310,579 +275,12 @@ AI Commands:
        |\\   :     / |          GPU: NVIDIA 9060 Ti
        \\ \`) '   (\`  /_         Battery: 98% [Eternal Power Mode]
      _)\\\`\`".____,.'"\\\` (_       Most used phrase: i use arch btw
-     )     )'--'(     (        🏰 House: Ravenclaw
-      '---\`      \`---\`         🔒 Security Access: Jedi Council
+     )     )'--'(     (        🐚 Shell: zsh 5.9
+      '---\`      \`---\`         🔒 Security Access: Root
                                🤖 L.L.Models: 42 loaded`;
         },
 
-// Star Wars Commands - Without Quotes
-        'jedi': (args) => {
-            if (!args || args.length === 0) {
-                return `
-╔══════════════════════════════════════╗
-║           JEDI ARCHIVES              ║
-╠══════════════════════════════════════╣
-║ Available commands:                  ║
-║ • jedi info     - Jedi information   ║
-║ • jedi council  - Council members    ║
-║ • jedi training - Training modules   ║
-║ • jedi code     - The Jedi Code      ║
-╚══════════════════════════════════════╝`;
-            }
 
-            const subCmd = args[0].toLowerCase();
-            switch(subCmd) {
-                case 'info':
-                    return `
-JEDI ORDER INFORMATION
-
-Founded: 25,000 BBY
-Headquarters: Jedi Temple, Coruscant
-Current Status: Rebuilding after Order 66
-
-Philosophy: Peace, knowledge, serenity, harmony
-Code: There is no emotion, there is peace...
-
-Force Abilities:
-• Telekinesis    • Mind tricks
-• Precognition   • Lightsaber combat
-• Force healing  • Force lightning (Dark Side)`;
-
-                case 'council':
-                    return `
-JEDI HIGH COUNCIL
-
-Active Members:
-• Master Yoda (Grand Master)
-• Master Mace Windu
-• Master Obi-Wan Kenobi
-• Master Ki-Adi-Mundi
-• Master Plo Koon`;
-
-                case 'training':
-                    return `
-JEDI TRAINING MODULES
-
-Youngling Training:
-□ Basic Force Sensitivity
-□ Lightsaber Forms I-III
-□ Meditation Techniques
-
-Padawan Training:
-□ Advanced Combat Forms
-□ Mission Experience
-□ Master-Apprentice Bond
-
-Knight Trials:
-□ Trial of Skill
-□ Trial of Courage
-□ Trial of the Flesh
-□ Trial of Spirit`;
-
-                case 'code':
-                    return `
-THE JEDI CODE
-
-There is no emotion, there is peace.
-There is no ignorance, there is knowledge.
-There is no passion, there is serenity.
-There is no chaos, there is harmony.
-There is no death, there is the Force.`;
-
-                default:
-                    return "Unknown Jedi command. Use 'jedi' to see available options.";
-            }
-        },
-
-        'rebel': (args) => {
-            if (!args || args.length === 0) {
-                return `
-REBEL ALLIANCE COMMAND
-
-Available operations:
-• rebel mission  - Current missions
-• rebel intel    - Intelligence reports  
-• rebel fleet    - Fleet status
-• rebel heroes   - Notable members`;
-            }
-
-            const operation = args[0].toLowerCase();
-            switch(operation) {
-                case 'mission':
-                    return `
-ACTIVE REBEL MISSIONS
-
-MISSION ALPHA-7: Steal Death Star plans
-Status: COMPLETED (Rogue One)
-Casualty Level: Heavy
-
-MISSION BETA-12: Destroy Death Star
-Status: COMPLETED (Luke Skywalker)
-Death Star Status: DESTROYED
-
-MISSION GAMMA-3: Evacuate Echo Base
-Status: COMPLETED 
-Base Status: Compromised
-
-CURRENT PRIORITY: Rescue Han Solo from Jabba's Palace`;
-
-                case 'intel':
-                    return `
-INTELLIGENCE REPORT
-
-CLASSIFIED - EYES ONLY
-
-• Second Death Star under construction
-• Emperor will be personally overseeing completion
-• Rebel fleet position may be compromised
-• Imperial trap suspected
-• Recommend extreme caution`;
-
-                case 'fleet':
-                    return `
-REBEL FLEET STATUS
-
-Capital Ships:
-• Mon Calamari Cruisers: 12 operational
-• Nebulon-B Frigates: 8 operational  
-• Corellian Corvettes: 15 operational
-
-Starfighters:
-• X-wing squadrons: Red, Gold, Blue
-• Y-wing bombers: 24 operational
-• A-wing interceptors: 18 operational
-
-Fleet Status: Ready for assault
-Morale: High`;
-
-                case 'heroes':
-                    return `
-REBEL HEROES
-
-Princess Leia Organa - Leader, Diplomat
-Luke Skywalker - Jedi Knight, Pilot
-Han Solo - Smuggler, General
-Chewbacca - Co-pilot, Warrior
-Lando Calrissian - Baron Administrator
-Admiral Ackbar - Fleet Commander
-Mon Mothma - Chief of State`;
-
-                default:
-                    return "Unknown rebel operation.";
-            }
-        },
-
-        'empire': (args) => {
-            if (!args || args.length === 0) {
-                return `
-IMPERIAL COMMAND CENTER
-ACCESS RESTRICTED
-
-Available operations:
-• empire status  - Imperial status
-• empire fleet   - Fleet deployment
-• empire vader   - Lord Vader's orders`;
-            }
-
-            const operation = args[0].toLowerCase();
-            switch(operation) {
-                case 'status':
-                    return `
-GALACTIC EMPIRE STATUS
-
-Territory: Entire Known Galaxy
-Capital: Coruscant, Imperial Center
-Supreme Leader: Emperor Palpatine
-Military Commander: Darth Vader
-
-Recent Setbacks:
-• Death Star I: Destroyed
-• Rebel Alliance: Still active
-• Jedi Survivor: Luke Skywalker
-
-Status: Iron grip on galaxy, some Rebel resistance`;
-
-                case 'fleet':
-                    return `
-IMPERIAL FLEET DEPLOYMENT
-
-Star Destroyers: 25,000 operational
-Super Star Destroyers: 13 operational
-TIE Fighter Squadrons: Countless
-Death Star II: 60% complete
-
-Current Deployment:
-• Endor System: Death Star protection
-• Outer Rim: Rebel hunting
-• Core Worlds: Security patrol`;
-
-                case 'vader':
-                    return `
-LORD VADER'S ORDERS
-
-Find the Rebel base.
-Bring me the Death Star plans.
-The Emperor wants Luke Skywalker alive.
-You have failed me for the last time.
-
-Current Priority: Convert Luke Skywalker to the Dark Side`;
-
-                default:
-                    return "Unknown Imperial operation.";
-            }
-        },
-
-        'cantina': () => {
-            return `
-MOS EISLEY CANTINA
-
-*Jizz music plays in the background*
-
-Patrons present:
-• Greedo (Bounty Hunter)
-• Figrin D'an and the Modal Nodes (Band)
-• Ponda Baba (Aqualish thug) 
-• Dr. Evazan (Wanted criminal)
-• Various smugglers and scoundrels
-
-Drinks Available:
-• Blue Milk
-• Corellian Ale  
-• Jawa Juice
-• Bantha Beer`;
-        },
-
-        'deathstar': () => {
-            return `
-DEATH STAR TECHNICAL SPECIFICATIONS
-
-CLASSIFIED IMPERIAL DOCUMENT
-
-Diameter: 120 kilometers
-Crew: 1,186,295 personnel
-Armament: Superlaser capable of destroying planets
-Defenses: Ray shielding, deflector shields
-Weakness: Small thermal exhaust port
-
-Status: DESTROYED by Rebel Alliance
-
-Design Flaw: Intentionally placed by Galen Erso
-Destroyed by: Luke Skywalker (X-wing, proton torpedoes)
-
-This workstation is now operating under Rebel control.`;
-        },
-
-// Harry Potter Commands - Improved Version
-        'sortinghat': (args) => {
-            const houses = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'];
-            const houseDescriptions = {
-                'gryffindor': 'Brave, daring, and chivalrous! You belong in GRYFFINDOR!',
-                'hufflepuff': 'Loyal, patient, and kind! You belong in HUFFLEPUFF!',
-                'ravenclaw': 'Intelligent, witty, and wise! You belong in RAVENCLAW!',
-                'slytherin': 'Ambitious, cunning, and resourceful! You belong in SLYTHERIN!'
-            };
-
-            if (args && args.length > 0) {
-                const requestedHouse = args[0].toLowerCase();
-                if (houseDescriptions[requestedHouse]) {
-                    return `THE SORTING HAT
-
-Hmm... ${requestedHouse.toUpperCase()}? An interesting choice...
-
-${houseDescriptions[requestedHouse]}
-
-House Qualities:
-${requestedHouse === 'gryffindor' ? 'Courage • Bravery • Determination • Daring' :
-                        requestedHouse === 'hufflepuff' ? 'Loyalty • Patience • Hard Work • Dedication' :
-                            requestedHouse === 'ravenclaw' ? 'Intelligence • Wisdom • Wit • Learning' :
-                                'Ambition • Cunning • Leadership • Resourcefulness'}
-
-Better be... ${requestedHouse.toUpperCase()}!`;
-                }
-            }
-
-            const randomHouse = houses[Math.floor(Math.random() * houses.length)].toLowerCase();
-            return `THE SORTING HAT
-
-Hmm... difficult, very difficult...
-I see courage... intelligence... loyalty... ambition...
-But where to put you?
-
-*The hat contemplates deeply*
-
-Better be... ${randomHouse.toUpperCase()}!
-
-${houseDescriptions[randomHouse]}`;
-        },
-
-        'quidditch': (args) => {
-            if (!args || args.length === 0) {
-                return `QUIDDITCH HEADQUARTERS
-
-• quidditch stats - View league standings
-• quidditch play - Play a quick match
-• quidditch rules - Game rules
-• quidditch teams - Famous teams
-
-Quidditch is played by two teams of seven people on broomsticks.`;
-            }
-
-            const action = args[0].toLowerCase();
-            switch(action) {
-                case 'stats':
-                    return `HOGWARTS QUIDDITCH LEAGUE
-
-Current Standings:
-1. Gryffindor - 420 points
-2. Slytherin - 380 points  
-3. Ravenclaw - 340 points
-4. Hufflepuff - 290 points
-
-Top Scorer: Harry Potter (Gryffindor Seeker)
-Fastest Snitch Catch: 3 minutes, 47 seconds
-Most Goals: Katie Bell (Gryffindor Chaser)
-
-Next Match: Gryffindor vs Slytherin`;
-
-                case 'play':
-                    const outcomes = [
-                        'You caught the Golden Snitch! Gryffindor wins 150-140!',
-                        'Slytherin caught the Snitch! They win 160-80!',
-                        'Amazing comeback! You caught the Snitch in the final seconds!',
-                        'Match postponed due to severe weather conditions!',
-                        'Your Patronus distracted the Dementors! Gryffindor wins!'
-                    ];
-                    return `QUIDDITCH MATCH SIMULATION
-
-*You mount your Nimbus 2000*
-*The crowd roars as you take to the sky*
-
-${outcomes[Math.floor(Math.random() * outcomes.length)]}
-
-I've seen you fly. You're a natural seeker!`;
-
-                case 'rules':
-                    return `QUIDDITCH RULES
-
-Teams: 7 players each
-• 3 Chasers (score with Quaffle)
-• 2 Beaters (hit Bludgers)  
-• 1 Keeper (guard goal posts)
-• 1 Seeker (catch Golden Snitch)
-
-Scoring:
-• Quaffle through hoops: 10 points
-• Golden Snitch: 150 points + game ends
-
-Equipment:
-• Quaffles (1) • Bludgers (2) • Golden Snitch (1)
-• Broomsticks • Bats • Goal hoops
-
-Catch the Snitch or die trying!`;
-
-                case 'teams':
-                    return `FAMOUS QUIDDITCH TEAMS
-
-Professional:
-• Chudley Cannons
-• Holyhead Harpies
-• Wimbourne Wasps
-• Bulgarian National Team
-
-Hogwarts Houses:
-• Gryffindor Lions
-• Slytherin Serpents
-• Ravenclaw Eagles  
-• Hufflepuff Badgers
-
-The Irish National Team has the best Chasers in the world!`;
-
-                default:
-                    return "Unknown Quidditch command. Try 'quidditch stats' or 'quidditch play'.";
-            }
-        },
-
-        'marauders': () => {
-            return `THE MARAUDER'S MAP
-
-I solemnly swear that I am up to no good.
-
-*The map reveals...*
-
-CURRENT LOCATIONS:
-• Harry Potter - Gryffindor Common Room
-• Hermione Granger - Library (as usual)
-• Ron Weasley - Great Hall (eating)
-• Severus Snape - Potions Dungeon  
-• Argus Filch - Third Floor Corridor
-• Peeves - Everywhere and nowhere
-
-SECRET PASSAGES:
-• Behind Gregory the Smarmy
-• One-eyed witch statue (Honeyduke's)
-• Mirror on 4th floor
-• Portrait of Ariana Dumbledore
-
-WARNING: Dementors detected near the castle gates
-
-Mischief managed.`;
-        },
-
-        'patronus': () => {
-            const patronuses = [
-                'Stag',
-                'Otter',
-                'Jack Russell Terrier',
-                'Doe',
-                'Phoenix',
-                'Dragon',
-                'Wolf',
-                'Cat',
-                'Rabbit',
-                'Eagle'
-            ];
-
-            const myPatronus = patronuses[Math.floor(Math.random() * patronuses.length)];
-
-            return `EXPECTO PATRONUM!
-
-*You concentrate on your happiest memory*
-*A silvery mist erupts from your wand*
-*The mist takes shape...*
-
-Your Patronus is: ${myPatronus}
-
-A Patronus is a kind of positive force, a projection of the very things that the Dementor feeds upon — hope, happiness, the desire to survive.
-
-The silvery guardian bounds around you protectively, driving away all dark creatures!`;
-        },
-
-        'potions': (args) => {
-            if (!args || args.length === 0) {
-                return `PROFESSOR SNAPE'S POTIONS CLASS
-
-• potions brew [potion] - Brew a potion
-• potions list - Available potions
-• potions ingredients - View ingredient store
-
-I can teach you how to bottle fame, brew glory, even stopper death.`;
-            }
-
-            const action = args[0].toLowerCase();
-
-            if (action === 'list') {
-                return `POTIONS COMPENDIUM
-
-Beginner Potions:
-• Sleeping Draught - Induces sleep
-• Pepperup Potion - Cures common cold
-• Antidote to Common Poisons
-
-Intermediate Potions:  
-• Polyjuice Potion - Transform into another person
-• Veritaserum - Truth serum
-• Love Potion - Creates artificial attraction
-
-Advanced Potions:
-• Felix Felicis - Liquid luck
-• Wolfsbane Potion - Helps werewolves
-• Elixir of Life - Grants immortality
-
-Turn to page 394.`;
-            }
-
-            if (action === 'brew') {
-                const potion = args[1] ? args[1].toLowerCase() : '';
-                const potionResults = {
-                    'felix': `BREWING FELIX FELICIS
-
-*Adding Ashwinder egg...*
-*Stirring clockwise...*
-*Adding Horklump juice...*
-*Counter-clockwise stir...*
-
-SUCCESS! You've brewed Liquid Luck!
-Effect: Everything goes your way for 12 hours
-Warning: Toxic in large quantities
-
-Desperately tricky to make, and disastrous to get wrong.`,
-
-                    'polyjuice': `BREWING POLYJUICE POTION
-
-*Adding lacewing flies...*
-*Leeches... knotgrass...*
-*Fluxweed picked at full moon...*
-*Boomslang skin...*
-*Hair of the person you want to become...*
-
-SUCCESS! Polyjuice Potion complete!
-Duration: 1 hour
-Note: Very difficult, takes 1 month to brew
-
-This is the most complex potion I've ever seen.`,
-
-                    'veritaserum': `BREWING VERITASERUM
-
-*Hellebore syrup...*
-*Jobberknoll feathers...*
-*Full moon brewing...*
-
-SUCCESS! Truth Serum complete!
-Effect: Forces drinker to tell the truth
-Potency: 3 drops will do
-
-Use it well, it took a full lunar month to mature.`
-                };
-
-                return potionResults[potion] || `❌ Unknown potion "${potion}". Check the compendium!`;
-            }
-
-            if (action === 'ingredients') {
-                return `POTIONS INGREDIENTS STORE
-
-Common Ingredients:
-• Ashwinder Eggs - 5 Galleons
-• Boomslang Skin - 17 Galleons  
-• Powdered Moonstone - 3 Galleons
-• Lacewing Flies - 8 Galleons
-
-Rare Ingredients:
-• Unicorn Hair - 21 Galleons
-• Phoenix Feather - 50 Galleons
-• Dragon Blood - 17 Galleons/ounce
-• Basilisk Venom - PRICELESS
-
-These ingredients are not for amateur potioneers!`;
-            }
-
-            return "Unknown potions command. Try 'potions list' or 'potions brew felix'.";
-        },
-
-        'diagon': () => {
-            return `DIAGON ALLEY
-
-Welcome to the wizarding shopping district!
-
-SHOPS:
-• Ollivanders - Fine wands since 382 BC
-• Flourish & Blotts - Books and literature  
-• Madam Malkin's - Robes for all occasions
-• Quality Quidditch Supplies - Sporting goods
-• Weasleys' Wizard Wheezes - Joke shop
-• Knockturn Alley - Dark artifacts (dangerous!)
-
-GRINGOTTS BANK:
-Fortius Quo Fidelius - Strength through loyalty
-Guarded by goblins and dragons
-Vault 713: Recently emptied by Hagrid
-
-FLOREAN FORTESCUE'S ICE CREAM:
-Magical flavors available!
-
-Welcome to Diagon Alley! Mind the pickpockets and don't feed the Nifflers!`;
-        },
-
-        // Cybersecurity Commands
         'nmap': (args) => {
             if (!args || args.length === 0) {
                 return "Usage: nmap [target]";
@@ -933,7 +331,7 @@ msf6 > Available commands:
 
 Exploits: 2,176 available
 • Windows: 1,021 exploits
-• Linux: 385 exploits  
+• Linux: 385 exploits
 • Multi-platform: 770 exploits
 
 Payloads: 592 available
@@ -1009,7 +407,7 @@ Data rate: 156.3 KB/s
 
 Protocol breakdown:
 • TCP: 78.2% (12,030 packets)
-• UDP: 12.1% (1,861 packets)  
+• UDP: 12.1% (1,861 packets)
 • HTTP: 6.4% (984 packets)
 • HTTPS: 2.8% (431 packets)
 • DNS: 0.5% (78 packets)
@@ -1042,7 +440,7 @@ Packets matching: 984
 
 Sample ${protocol.toUpperCase()} traffic:
 • GET /index.html HTTP/1.1
-• POST /login.php HTTP/1.1  
+• POST /login.php HTTP/1.1
 • GET /admin/config.php HTTP/1.1 (⚠️ Suspicious)
 
 Use display filters to refine analysis.`;
@@ -1096,7 +494,7 @@ CUDA Cores: 16,384
 
 Hash Type Performance:
 • MD5: 65.2 GH/s
-• SHA-1: 22.1 GH/s  
+• SHA-1: 22.1 GH/s
 • SHA-256: 11.4 GH/s
 • bcrypt: 156.8 kH/s
 • NTLM: 98.7 GH/s
@@ -1308,7 +706,7 @@ VULNERABLE! SQL injection found:
 • Parameter: artist (GET)
 • Type: boolean-based blind
 • Title: AND boolean-based blind - WHERE or HAVING clause
-• Payload: artist=1' AND 1=1-- 
+• Payload: artist=1' AND 1=1--
 
 Database: MySQL 5.7.29
 Web application technology: PHP 7.2.34, Apache 2.4.41
@@ -1332,7 +730,7 @@ Available databases:
 
 Tables in 'acuart':
 • artists (8 columns)
-• carts (5 columns)  
+• carts (5 columns)
 • users (4 columns)
 
 "Database compromise successful!"`;
@@ -1364,7 +762,6 @@ Sample data:
             }
         },
 
-        // AI Commands
         'tensorflow': (args) => {
             if (!args || args.length === 0) {
                 return `
@@ -1389,7 +786,7 @@ Model architecture:
 • Input layer: 784 neurons (28x28 pixels)
 • Hidden layer 1: 128 neurons (ReLU)
 • Dropout: 0.2
-• Hidden layer 2: 64 neurons (ReLU)  
+• Hidden layer 2: 64 neurons (ReLU)
 • Output layer: 10 neurons (Softmax)
 
 Total parameters: 101,770
@@ -1472,11 +869,11 @@ class NeuralNetwork(nn.Module):
         self.stack = nn.Sequential(
             nn.Linear(28*28, 512),
             nn.ReLU(),
-            nn.Linear(512, 512),  
+            nn.Linear(512, 512),
             nn.ReLU(),
             nn.Linear(512, 10)
         )
-    
+
     def forward(self, x):
         return self.stack(x)
 
@@ -1493,7 +890,7 @@ Training ResNet-50 on CIFAR-10...
 Epoch [1/100] Batch [100/500]
 Loss: 2.3456 | Accuracy: 12.34%
 
-Epoch [50/100] Batch [500/500]  
+Epoch [50/100] Batch [500/500]
 Loss: 0.4567 | Accuracy: 85.67%
 
 Epoch [100/100] Batch [500/500]
@@ -1718,7 +1115,7 @@ Your Stats:
 
 Top Datasets:
 • FIFA World Cup (2022) - Sports analytics
-• Netflix Movies and TV Shows - Streaming data  
+• Netflix Movies and TV Shows - Streaming data
 • COVID-19 Open Research Dataset - Medical research
 • New York City Taxi Trip Duration - Transportation
 • Pokemon Dataset - Gaming data
@@ -1747,7 +1144,7 @@ Trending Notebooks:
 
 Languages:
 • Python: 85% of notebooks
-• R: 12% of notebooks  
+• R: 12% of notebooks
 • SQL: 3% of notebooks
 
 "Share knowledge through code and collaboration!"`;
@@ -1782,7 +1179,7 @@ Languages:
 
 Open notebooks:
 • data_analysis.ipynb - Last modified 2 hours ago
-• ml_experiment.ipynb - Last modified 1 day ago  
+• ml_experiment.ipynb - Last modified 1 day ago
 • cybersec_research.ipynb - Last modified 3 hours ago
 
 Kernels running: 3
@@ -1989,11 +1386,11 @@ Cleaning operations performed:
 3. Data type conversions:
    • date_column: string → datetime
    • salary: string → float64
-   
+
 4. Outlier detection:
    • Z-score method applied
    • 45 outliers flagged
-   
+
 5. Standardization:
    • Column names: lowercase
    • Text data: stripped whitespace
@@ -2204,16 +1601,12 @@ After: 10,000 rows, 95% quality
                     ? ['/', ...filename.split('/').filter(s => s).slice(0, -1)]
                     : currentPath), targetFileName];
 
-
                 viFileContent = targetDir.contents[targetFileName].content;
-
 
                 viMode = true;
 
-
                 const savedConsoleContent = consoleContent.innerHTML;
                 consoleContent.innerHTML = '';
-
 
                 viEditorElement = document.createElement('textarea');
                 viEditorElement.className = 'vi-editor';
@@ -2256,7 +1649,6 @@ After: 10,000 rows, 95% quality
                         e.preventDefault();
                     }
                 });
-
 
                 viStatusElement.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
@@ -2837,7 +2229,7 @@ Wind: Variable at 13.37 km/h
     };
 
     function appendToConsole(text, isCommandOutput = true, options = {}) {
-        const { charByChar, lineByLine, delay = 50 } = options;
+        const { charByChar, lineByLine, delay = 4 } = options;
 
         if (charByChar && isCommandOutput) {
             const line = document.createElement('div');
@@ -2849,7 +2241,7 @@ Wind: Variable at 13.37 km/h
                     line.textContent += text.charAt(i);
                     i++;
                     consoleContent.scrollTop = consoleContent.scrollHeight;
-                    setTimeout(typeChar, delay);
+                    setTimeout(typeChar, Math.min(delay, 2));
                 }
             }
             typeChar();
@@ -2864,7 +2256,7 @@ Wind: Variable at 13.37 km/h
                     consoleContent.appendChild(lineElement);
                     consoleContent.scrollTop = consoleContent.scrollHeight;
                     lineIndex++;
-                    setTimeout(typeLine, delay);
+                    setTimeout(typeLine, Math.min(delay, 5));
                 }
             }
             typeLine();
@@ -2876,7 +2268,6 @@ Wind: Variable at 13.37 km/h
             consoleContent.scrollTop = consoleContent.scrollHeight;
         }
     }
-
 
     commands['history'] = (args) => {
         if (commandHistory.length === 0) {
@@ -2993,7 +2384,6 @@ Wind: Variable at 13.37 km/h
         consoleInput.focus();
 
         consoleContent.innerHTML = "Welcome to HackerOS v1.0.0\nType 'help' for available commands.";
-
 
         const commandLine = document.createElement('div');
         commandLine.innerHTML = `<span class="console-prompt">hacker@localhost:~$</span> ls`;

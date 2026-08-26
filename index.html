@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adriano Vilhena | Portfolio</title>
+    <title>Adriano Vilhena | Software Developer & Systems Builder</title>
+    <meta name="description" content="Adriano Vilhena - Software developer and Information Systems & Technologies student at NOVA IMS in Lisbon, Portugal.">
+    <meta name="author" content="Adriano Vilhena">
+    <meta name="theme-color" content="#282828">
     <link rel="stylesheet" href="new-styles.css">
     <link rel="stylesheet" href="terminal-styles.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <div class="nav-wrapper">
         <nav class="navbar">
+            <div class="nav-brand">
+                <span class="prompt-symbol">~</span><span class="brand-name">/adrx</span>
+            </div>
             <div class="nav-links" id="navLinks">
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#about" class="nav-link">About</a>
@@ -19,87 +24,101 @@
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <div class="menu-icon" onclick="toggleMenu()">
+            <div class="menu-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu">
                 <span class="material-icons">menu</span>
             </div>
         </nav>
     </div>
 
-    <!-- Home Section -->
     <section id="home" class="section">
         <div class="main-wrapper">
             <div class="hero-header">
-                <img src="images/profile.png" alt="Adriano Vilhena" class="profile-picture">
+                <div class="avatar-wrapper">
+                    <img src="images/profile.png" alt="Adriano Vilhena" class="profile-picture">
+                </div>
                 <div class="hero-text">
                     <h1>Adriano Vilhena</h1>
-                    <div class="location">
-                        <span class="material-icons">location_on</span>
-                        <span>Lisbon, Portugal</span>
+                    <div class="hero-submeta">
+                        <div class="location">
+                            <span class="material-icons">location_on</span>
+                            <span>Lisbon, Portugal</span>
+                        </div>
+                        <span class="meta-dot">•</span>
+                        <div class="education-badge" title="NOVA Information Management School - Information Systems and Technologies">
+                            <span class="material-icons edu-icon">school</span>
+                            <span class="edu-title">NOVA IMS <span class="edu-degree">(STI)</span></span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <ul>
-                <li>Pursuing the course of <span class="highlight">Computer Systems Management and Programming Technician</span>.</li>
-                <li style="
-    padding-bottom: 7px;
-">First Global 24' - <span class="highlight">Team Portugal</span>. <a class="find-more-btn" href="#projects">Find out more</a></li>
-                <li>First Global 25' - <span class="highlight">Team Portugal</span>. <a class="find-more-btn" href="https://first.global/2025-nations/portugal-2025/">Find out more</a></li>
-                <li>Focusing in <span class="highlight">Web Development</span> and <span class="highlight">AI integration</span>.</li>
+            <ul class="hero-list">
+                <li>Studying <span class="highlight">Information Systems and Technologies (STI)</span> at NOVA IMS.</li>
+                <li>FIRST Global 2024 - <span class="highlight">Team Portugal</span> <a class="find-more-btn" href="#projects">find out more →</a></li>
+                <li>FIRST Global 2025 - <span class="highlight">Team Portugal</span> <a class="find-more-btn" href="https://first.global/2025-nations/portugal-2025/" target="_blank" rel="noopener noreferrer">find out more ↗</a></li>
             </ul>
-        </div>
-        <div class="contact-buttons-main-wrapper">
-            <a href="mailto:adrianolop.v@icloud.com" class="button primary">
-                <img src="images/email-mail-message-svgrepo-com.svg" alt="Email">
-                Email
-            </a>
-            <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" class="button secondary">
-                <img src="images/Linkedin.svg" alt="LinkedIn">
-                LinkedIn
-            </a>
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="section">
         <div class="section-content">
-            <h2>About Me</h2>
-            <div class="bio-content">
-                <p>I'm a software developer focused on building efficient and user-friendly digital solutions. With experience in both frontend and backend development, I approach complex challenges methodically and aim to create clear, practical results.</p>
-                <p>My current interests include web development and projects involving AI integration, where I actively improve my skills and apply them to real-world problems.</p>
-                <p>Outside of development, I often explore emerging technologies and occasionally contribute to open-source initiatives. I also do Fencing!</p>
+            <div class="section-heading-bar">
+                <h2>About Me</h2>
+            </div>
+
+            <div class="terminal-card">
+                <div class="terminal-card-header">
+                    <div class="window-controls">
+                        <span class="control-dot red"></span>
+                        <span class="control-dot yellow"></span>
+                        <span class="control-dot green"></span>
+                    </div>
+                    <span class="card-title">profile.md</span>
+                </div>
+                <div class="terminal-card-body">
+                    <p>I am a technology student and software builder with a background in Systems and Computer Programming, currently pursuing my degree in <span class="highlight">Information Systems and Technologies (STI)</span> at NOVA IMS. I am driven by a deep curiosity about how systems work under the hood, with long-term ambitions in <span class="highlight">Cybersecurity and Artificial Intelligence</span>.</p>
+                    <p>Technologically, I enjoy exploring beyond abstractions, working across Python, Linux environments, systems programming, and hardware-software integration. I have a strong builder-oriented mindset: rather than stopping at theory, I focus on turning concepts into modular, functioning tools, from autonomous AI agents and automated workflows to custom computing setups and robotics.</p>
+                    <p>Academically and personally, I prioritize continuous optimization and practical impact. Outside of software engineering, I practice Fencing, learn piano, and explore how accessible technology can solve real-world challenges across European and African contexts.</p>
+                </div>
             </div>
 
             <div class="tech-stack-section">
-                <h2>Tech Stack</h2>
+                <div class="section-heading-bar">
+                    <h2>Tech Stack</h2>
+                </div>
                 <div class="tech-stack-container">
                     <div class="tech-category">
-                        <h3>Languages</h3>
+                        <span class="category-title">Languages</span>
                         <div class="tech-items">
-                            <span class="tech-item blue">JavaScript</span>
-                            <span class="tech-item blue">HTML5</span>
-                            <span class="tech-item blue">CSS</span>
+                            <span class="tech-item blue">Python</span>
                             <span class="tech-item blue">C#</span>
                             <span class="tech-item blue">C++</span>
                             <span class="tech-item blue">C</span>
+                            <span class="tech-item blue">JavaScript</span>
+                            <span class="tech-item blue">HTML5 / CSS</span>
                             <span class="tech-item blue">Java</span>
-                            <span class="tech-item blue">Python</span>
+                            <span class="tech-item blue">Bash</span>
                         </div>
                     </div>
                     <div class="tech-category">
-                        <h3>Frameworks & Libraries</h3>
+                        <span class="category-title">Systems & Frameworks</span>
                         <div class="tech-items">
+                            <span class="tech-item green">Linux</span>
                             <span class="tech-item green">.NET</span>
                             <span class="tech-item green">React</span>
                             <span class="tech-item green">DevExpress</span>
+                            <span class="tech-item green">Razor</span>
+                            <span class="tech-item green">Robotics Control</span>
                         </div>
                     </div>
                     <div class="tech-category">
-                        <h3>Tools & Technologies</h3>
+                        <span class="category-title">Tools & Workflow</span>
                         <div class="tech-items">
                             <span class="tech-item yellow">Git</span>
-                            <span class="tech-item yellow">Figma</span>
+                            <span class="tech-item yellow">GitHub</span>
                             <span class="tech-item yellow">VS Code</span>
-                            <span class="tech-item yellow">LLMs</span>
+                            <span class="tech-item yellow">Linux CLI</span>
+                            <span class="tech-item yellow">Obsidian</span>
+                            <span class="tech-item yellow">Figma</span>
                         </div>
                     </div>
                 </div>
@@ -107,50 +126,57 @@
         </div>
     </section>
 
-    <!-- Experience Section -->
     <section id="experience" class="section">
         <div class="section-content">
-            <h2>Experience</h2>
+            <div class="section-heading-bar">
+                <h2>Experience</h2>
+            </div>
             <div class="experience-section">
-                <div class="toggle-wrapper">
-                    <button class="toggle-btn active" data-target="work">Work/Projects</button>
-                    <button class="toggle-btn" data-target="education">School/Education</button>
+                <div class="toggle-wrapper" role="tablist">
+                    <button class="toggle-btn active" data-target="work" role="tab" aria-selected="true">Work & Projects</button>
+                    <button class="toggle-btn" data-target="education" role="tab" aria-selected="false">Education</button>
                 </div>
-                <div class="experience-content" id="work-content">
+                <div class="experience-content" id="work-content" role="tabpanel">
                     <div class="timeline-content">
                         <div class="timeline-item">
-                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Logo" />
-                            <div class="timeline-date">03/2025 ― 11/2025</div>
-                            <div class="timeline-title">First Global 25' Team Portugal</div>
+                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Global Logo">
+                            <div class="timeline-date">03/2025 - 11/2025</div>
+                            <div class="timeline-title">FIRST Global Challenge 2025 - Team Portugal</div>
                             <div class="timeline-company">FIRST</div>
                         </div>
                         <div class="timeline-item">
-                            <img class="company-logo" src="images/ceiia.svg" alt="Ceiia Logo" />
-                            <div class="timeline-date">07/2025 ― 08/2025</div>
-                            <div class="timeline-title">Innovator / SLI</div>
+                            <img class="company-logo" src="images/ceiia.svg" alt="CEiiA Logo">
+                            <div class="timeline-date">07/2025 - 08/2025</div>
+                            <div class="timeline-title">Innovator / Summer Leadership Immersion</div>
                             <div class="timeline-company">CEiiA</div>
                         </div>
                         <div class="timeline-item">
-                            <img class="company-logo" src="images/ceiia.svg" alt="Ceiia Logo" />
-                            <div class="timeline-date">05/2025 ― 07/2025</div>
-                            <div class="timeline-title">Web Development<br/>Internship</div>
+                            <img class="company-logo" src="images/ceiia.svg" alt="CEiiA Logo">
+                            <div class="timeline-date">05/2025 - 07/2025</div>
+                            <div class="timeline-title">Web Development Internship</div>
                             <div class="timeline-company">CEiiA</div>
                         </div>
                         <div class="timeline-item">
-                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Logo" />
-                            <div class="timeline-date">05/2024 ― 10/2024</div>
-                            <div class="timeline-title">First Global 24' Team Portugal</div>
+                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Global Logo">
+                            <div class="timeline-date">05/2024 - 10/2024</div>
+                            <div class="timeline-title">FIRST Global Challenge 2024 - Team Portugal</div>
                             <div class="timeline-company">FIRST</div>
                         </div>
                     </div>
                 </div>
-                <div class="experience-content hidden" id="education-content">
+                <div class="experience-content hidden" id="education-content" role="tabpanel">
                     <div class="timeline-content">
                         <div class="timeline-item">
-                            <img class="company-logo round" src="images/ipe.svg" alt="Instituto Logo" />
-                            <div class="timeline-date">09/2023 ― 07/2026</div>
-                            <div class="timeline-title">Technician in Management and Programming of Computer Systems</div>
-                            <div class="timeline-company">Instituto Dos Pupilos Do Exército</div>
+                            <img class="company-logo" src="images/novaims.png" alt="NOVA IMS Logo">
+                            <div class="timeline-date">2025 - Present</div>
+                            <div class="timeline-title">Information Systems and Technologies (STI)</div>
+                            <div class="timeline-company">NOVA IMS Information Management School</div>
+                        </div>
+                        <div class="timeline-item">
+                            <img class="company-logo round" src="images/ipe.svg" alt="Instituto dos Pupilos do Exército Logo">
+                            <div class="timeline-date">09/2023 - 07/2026</div>
+                            <div class="timeline-title">Computer Systems Management and Programming Technician</div>
+                            <div class="timeline-company">Instituto dos Pupilos do Exército</div>
                         </div>
                     </div>
                 </div>
@@ -158,54 +184,50 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
     <section id="projects" class="section">
         <div class="section-content">
-            <h2>My Projects</h2>
+            <div class="section-heading-bar">
+                <h2>Featured Projects</h2>
+            </div>
             <div class="projects-container">
-                
-
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="images/IMG_0990.JPG" alt="First Global Challenge 2025 Project">
+                        <img src="images/IMG_0990.JPG" alt="FIRST Global Challenge 2025 Project">
                     </div>
                     <div class="project-content">
                         <div class="project-header">
                             <h3 class="project-title">FGC 2025</h3>
-                            <a href="https://first.global/2025-nations/portugal-2025/" class="project-link">Access →</a>
+                            <a href="https://first.global/2025-nations/portugal-2025/" target="_blank" rel="noopener noreferrer" class="project-link">Access ↗</a>
                         </div>
-                        <div class="project-period">03/2025 ― 11/2025</div>
-                        <p class="project-description">Leading the 2025 Portuguese delegation for the FIRST Global Challenge, iterating on robot programming, strategy, and outreach across the March to November season.</p>
-                        <div class="project-client">International Competition, <span class="highlight">FIRST.</span></div>
+                        <div class="project-period">03/2025 - 11/2025</div>
+                        <p class="project-description">Leading the 2025 Portuguese delegation for the FIRST Global Challenge, iterating on autonomous robotics programming, competitive strategy, and technical outreach.</p>
+                        <div class="project-client">International Competition, <span class="highlight">FIRST</span></div>
                         <div class="project-tags">
-                            <span class="tech-item blue">ROBOTICS</span>
-                            <span class="tech-item blue">S.T.E.M.</span>
-                            <span class="tech-item green">ENGINEERING</span>
-                            <span class="tech-item green">LEADERSHIP</span>
-                            <span class="tech-item yellow">COMMUNITY</span>
-                            <span class="tech-item yellow">STRATEGY</span>
+                            <span class="tech-item blue">C++</span>
+                            <span class="tech-item blue">Java</span>
+                            <span class="tech-item green">Control Systems</span>
+                            <span class="tech-item yellow">Outreach</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="images/myhub.png" alt="MyHub Project">
+                        <img src="images/myhub.png" alt="MyHub Platform">
                     </div>
                     <div class="project-content">
                         <div class="project-header">
                             <h3 class="project-title">MyHub</h3>
                         </div>
-                        <div class="project-period">05/2025 ― 07/2025</div>
-                        <p class="project-description">MyHub is the internal platform (similar to an intranet) used by CEiiA to manage its members and collaborators in a centralized and efficient way.</p>
-                        <div class="project-client">Para <span class="highlight">CEiiA</span></div>
+                        <div class="project-period">05/2025 - 07/2025</div>
+                        <p class="project-description">Centralized internal intranet platform developed for CEiiA to manage organizational members and collaborators through an efficient, responsive interface.</p>
+                        <div class="project-client">Developed for <span class="highlight">CEiiA</span></div>
                         <div class="project-tags">
                             <span class="tech-item blue">.NET</span>
                             <span class="tech-item blue">C#</span>
-                            <span class="tech-item green">FRONT-END</span>
-                            <span class="tech-item green">DEVEXPRESS</span>
-                            <span class="tech-item yellow">RAZOR</span>
-                            <span class="tech-item yellow">FIGMA</span>
+                            <span class="tech-item green">DevExpress</span>
+                            <span class="tech-item green">Razor</span>
+                            <span class="tech-item yellow">Figma</span>
                             <span class="tech-item blue">HTML5</span>
                             <span class="tech-item blue">CSS</span>
                         </div>
@@ -214,47 +236,20 @@
 
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="images/firstglobalpicture.png" alt="First Global Challenge Project">
+                        <img src="images/firstglobalpicture.png" alt="FIRST Global Challenge 2024 Project">
                     </div>
                     <div class="project-content">
                         <div class="project-header">
                             <h3 class="project-title">FGC 2024</h3>
-                            <a href="https://first.global/archive/fgc-2024/" class="project-link">Access →</a>
+                            <a href="https://first.global/archive/fgc-2024/" target="_blank" rel="noopener noreferrer" class="project-link">Access ↗</a>
                         </div>
-                        <div class="project-period">05/2024 ― 10/2024</div>
-                        <p class="project-description">Participated in the international robotics competition representing <a class="highlight" href="https://first.global/2024-nations/portugal-2024/">Portugal</a>. Designed and built a robot to solve real-world challenges related to environmental sustainability.</p>
-                        <div class="project-client">International Competition, <span class="highlight">FIRST.</span></div>
+                        <div class="project-period">05/2024 - 10/2024</div>
+                        <p class="project-description">Represented Team Portugal in the international robotics competition. Engineered and programmed a custom robot built to solve real-world environmental sustainability challenges.</p>
+                        <div class="project-client">International Competition, <span class="highlight">FIRST</span></div>
                         <div class="project-tags">
-                            <span class="tech-item blue">ROBOTICS</span>
-                            <span class="tech-item blue">S.T.E.M.</span>
-                            <span class="tech-item green">ENGINEERING</span>
-                            <span class="tech-item green">TEAMWORK</span>
-                            <span class="tech-item yellow">PROBLEM SOLVING</span>
-                            <span class="tech-item yellow">SUSTAINABILITY</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/jarvis.png" alt="JARVIS AI Project">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">J.A.R.V.I.S - AI</h3>
-                            <a href="https://github.com/adrxLV/J.A.R.V.I.S.AI" class="project-link">Access →</a>
-                        </div>
-                        <div class="project-period">01/2024 ― Present</div>
-                        <p class="project-description">A powerful AI-driven virtual assistant inspired by JARVIS, capable of controlling your PC and responding intelligently using Ollama models.</p>
-                        <div class="project-client">Personal Project</div>
-                        <div class="project-tags">
-                            <span class="tech-item blue">PYTHON</span>
-                            <span class="tech-item blue">OLLAMA</span>
-                            <span class="tech-item green">CTkinter</span>
-                            <span class="tech-item green">Tkinter</span>
-                            <span class="tech-item yellow">APIs</span>
-                            <span class="tech-item yellow">TTS</span>
-                            <span class="tech-item yellow">STT</span>
+                            <span class="tech-item blue">C++</span>
+                            <span class="tech-item green">Autonomous Logic</span>
+                            <span class="tech-item yellow">Engineering</span>
                         </div>
                     </div>
                 </div>
@@ -262,55 +257,62 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="section">
         <div class="section-content">
-            <h2>Contact</h2>
-            <p class="contact-intro">If you'd like to get in touch, feel free to reach out via email or LinkedIn.</p>
+            <div class="section-heading-bar">
+                <h2>Contact</h2>
+            </div>
+            <p class="contact-intro">Feel free to reach out directly via email, LinkedIn, or by sending a message through the form below.</p>
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="contact-section">
-                        <h3 class="contact-heading">Contact Information</h3>
+                        <h3 class="contact-heading">Get in Touch</h3>
 
                         <div class="contact-methods">
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <img src="images/email-mail-message-svgrepo-com.svg" alt="Email">
+                            <a href="mailto:adrianolop.v@icloud.com" class="contact-item-link">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <img src="images/email-mail-message-svgrepo-com.svg" alt="Email">
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4>Email</h4>
+                                        <span class="contact-text">adrianolop.v@icloud.com</span>
+                                    </div>
                                 </div>
-                                <div class="contact-details">
-                                    <h4>Email</h4>
-                                    <a href="mailto:adrianolop.v@icloud.com">adrianolop.v@icloud.com</a>
-                                </div>
-                            </div>
+                            </a>
 
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <img src="images/linkedin-linked-in 1.svg" alt="LinkedIn">
+                            <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" class="contact-item-link">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <img src="images/linkedin-linked-in 1.svg" alt="LinkedIn">
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4>LinkedIn</h4>
+                                        <span class="contact-text">Adriano Vilhena ↗</span>
+                                    </div>
                                 </div>
-                                <div class="contact-details">
-                                    <h4>LinkedIn</h4>
-                                    <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank">Adriano Vilhena</a>
-                                </div>
-                            </div>
+                            </a>
 
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <img src="images/github 1.svg" alt="GitHub">
+                            <a href="https://github.com/adrxLV/" target="_blank" rel="noopener noreferrer" class="contact-item-link">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <img src="images/github 1.svg" alt="GitHub">
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4>GitHub</h4>
+                                        <span class="contact-text">adrxLV ↗</span>
+                                    </div>
                                 </div>
-                                <div class="contact-details">
-                                    <h4>GitHub</h4>
-                                    <a href="https://github.com/adrxLV/" target="_blank">adrxLV</a>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
                     <div class="contact-form-container">
-                        <h3 class="contact-heading">Send Me a Message</h3>
+                        <h3 class="contact-heading">Send a Message</h3>
                         <form class="contact-form" action="https://formspree.io/f/mblobann" method="POST">
                             <div class="form-group">
                                 <label for="name">Your Name</label>
-                                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
                             </div>
 
                             <div class="form-group">
@@ -320,12 +322,12 @@
 
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" placeholder="What's this about?">
+                                <input type="text" id="subject" name="subject" placeholder="Project inquiry, collaboration, etc.">
                             </div>
 
                             <div class="form-group">
-                                <label for="message">Your Message</label>
-                                <textarea id="message" name="message" rows="5" placeholder="Tell me about your project, idea, or question" required></textarea>
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
                             </div>
 
                             <button type="submit" class="submit-btn">Send Message</button>
@@ -336,7 +338,12 @@
         </div>
     </section>
 
-    <!-- Consola Easter Egg -->
+    <footer class="footer">
+        <div class="footer-content">
+            <span>© 2026 Adriano Vilhena. Gruvbox dark theme.</span>
+        </div>
+    </footer>
+
     <div class="console-overlay" id="hackConsole">
         <div class="console-header">
             <div class="console-title">Terminal - User: hacker@localhost</div>
@@ -351,9 +358,8 @@
             <input type="text" class="console-input" id="consoleInput" autofocus>
         </div>
     </div>
+
     <script src="terminal.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
-
-
