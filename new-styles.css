@@ -395,6 +395,18 @@ p {
   text-underline-offset: 3px;
 }
 
+.year-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.year-link:hover {
+  color: var(--text-bright);
+}
+
 .terminal-card {
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);

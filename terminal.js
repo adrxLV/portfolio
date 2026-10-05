@@ -52,6 +52,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 'Projects': {
                                     type: 'directory',
                                     contents: {
+                                        'mobi4all': {
+                                            type: 'directory',
+                                            contents: {
+                                                'README.md': {
+                                                    type: 'file',
+                                                    content: '# Mobi4All\\nBuilt during the 48-hour Hack The City: Mobility Challenge at NOVA IMS, where it won 2nd place overall.\\n\\nThe platform uses real-world TML (Transportes Metropolitanos de Lisboa) transit data to track public transport reliability and suggest reliable alternative routes during delays.\\n\\nLink: https://hackthecity2026.devpost.com/'
+                                                }
+                                            }
+                                        },
                                         'portfolio': {
                                             type: 'directory',
                                             contents: {
