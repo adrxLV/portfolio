@@ -1,387 +1,2325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth intro-locked">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adriano Vilhena | Software Developer & Systems Builder</title>
-    <meta name="description" content="Adriano Vilhena - Software developer and Information Systems & Technologies student at NOVA IMS in Lisbon, Portugal.">
-    <meta name="author" content="Adriano Vilhena">
-    <meta name="theme-color" content="#282828">
-    <link rel="stylesheet" href="new-styles.css">
-    <link rel="stylesheet" href="terminal-styles.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adriano Vilhena</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Jim+Nightshade&family=Playfair+Display:ital,wght@0,700;1,700&family=Playwrite+AU+SA:wght@100..400&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #09090b;
+      --surface: #121216;
+      --ink: #f4f4f0;
+      --muted: #9ca3af;
+      --accent: #e11d48;
+      --accent-2: #38bdf8;
+      --amber: #f59e0b;
+      --border: rgba(244, 244, 240, 0.14);
+    }
+
+    /* Strict zero border-radius everywhere */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      overflow-x: clip;
+    }
+
+    html.intro-locked,
+    body.intro-locked {
+      overflow: hidden !important;
+      height: 100vh;
+      height: 100dvh;
+      overscroll-behavior: none;
+    }
+
+    @media (pointer: fine) {
+      body.custom-cursor-active, body.custom-cursor-active * {
+        cursor: none !important;
+      }
+    }
+
+    .font-serif-editorial { font-family: 'Instrument Serif', serif; }
+    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+    .font-brutal { font-family: 'Syne', sans-serif; }
+    .font-space { font-family: 'Space Grotesk', sans-serif; }
+    .font-playwrite { font-family: 'Playwrite AU SA', cursive; }
+    .font-nightshade { font-family: 'Jim Nightshade', cursive; }
+
+    /* Magic UI Smooth Cursor (SVG Pointer + Dynamic Black/White Contrast) */
+    #smooth-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 10001;
+      transform: translate(-4px, -4px);
+      transition: transform 0.08s ease-out;
+      will-change: left, top, transform;
+    }
+    #smooth-cursor svg path {
+      transition: fill 0.18s ease, stroke 0.18s ease;
+    }
+
+    /* In-place Preloader Backdrop */
+    #intro-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: #050507;
+      pointer-events: all;
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #intro-backdrop.backdrop-cleared {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Zero-snap character spans: natural kerning & metrics once settled */
+    .anomaly-char {
+      display: inline-block;
+      transition: transform 0.08s ease, color 0.08s ease;
+    }
+    .anomaly-char.char-settled {
+      display: inline;
+      transform: none !important;
+    }
+
+    /* Elements that slide in around the stationary #hero-adriano-line */
+    .slide-reveal {
+      opacity: 0;
+      transform: translateY(38px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body.intro-complete .slide-reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Frankie Mills Hero Wordmark Blur + Random [-10deg, +10deg] Angled Reel */
+    .hero-wordmark-wrap {
+      position: relative;
+      z-index: 50;
+    }
+    .hero-wordmark {
+      transition: filter 0.55s ease, opacity 0.55s ease, transform 0.55s ease;
+    }
+    .hero-loop-reel {
+      position: absolute;
+      inset: -24px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      body.intro-complete .hero-wordmark-wrap:hover .hero-wordmark {
+        filter: blur(12px);
+        opacity: 0.16;
+        transform: scale(0.97);
+      }
+      body.intro-complete .hero-wordmark-wrap:hover .hero-loop-reel {
+        opacity: 1;
+      }
+    }
+    body.intro-complete .hero-wordmark-wrap.reel-active .hero-wordmark {
+      filter: blur(12px);
+      opacity: 0.16;
+      transform: scale(0.97);
+    }
+    body.intro-complete .hero-wordmark-wrap.reel-active .hero-loop-reel {
+      opacity: 1;
+    }
+    #hero-reel-frame {
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Hero Chiaroscuro Background Portrait (Option 4) */
+    #hero-bg-portrait {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #hero-bg-parallax {
+      width: min(94vw, 920px);
+      aspect-ratio: 1024 / 656;
+      transform: translate3d(0, -2%, 0);
+      transition: transform 0.25s ease-out;
+      will-change: transform;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 6%, rgba(0, 0, 0, 1) 68%, rgba(0, 0, 0, 0.35) 84%, rgba(0, 0, 0, 0) 96%);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 6%, rgba(0, 0, 0, 1) 68%, rgba(0, 0, 0, 0.35) 84%, rgba(0, 0, 0, 0) 96%);
+    }
+    #hero-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+      filter: grayscale(100%) contrast(1.18) brightness(0.9);
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1), transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+      -webkit-mask-image: radial-gradient(ellipse 44% 58% at 44% 32%, rgba(0, 0, 0, 1) 38%, rgba(0, 0, 0, 0.82) 58%, rgba(0, 0, 0, 0.35) 78%, rgba(0, 0, 0, 0) 95%);
+      mask-image: radial-gradient(ellipse 44% 58% at 44% 32%, rgba(0, 0, 0, 1) 38%, rgba(0, 0, 0, 0.82) 58%, rgba(0, 0, 0, 0.35) 78%, rgba(0, 0, 0, 0) 95%);
+    }
+    body.intro-complete #hero-bg-img {
+      opacity: 0.28;
+      transform: scale(1);
+    }
+
+    /* Borderless Caravan Hover / Tap Player */
+    .caravan-drawer {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, margin-top 0.25s ease;
+    }
+    .caravan-widget:hover .caravan-drawer,
+    .caravan-widget:focus-within .caravan-drawer,
+    .caravan-widget.caravan-open .caravan-drawer {
+      max-height: 110px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+
+    /* Ultra-subtle Volume Range Slider Knob */
+    input[type="range"].caravan-vol {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 1.5px;
+      background: rgba(244, 244, 240, 0.22);
+      outline: none;
+    }
+    input[type="range"].caravan-vol::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 3px;
+      height: 9px;
+      background: rgba(244, 244, 240, 0.75);
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    input[type="range"].caravan-vol:hover::-webkit-slider-thumb {
+      background: #f59e0b;
+      transform: scaleY(1.2);
+    }
+    input[type="range"].caravan-vol::-moz-range-thumb {
+      width: 3px;
+      height: 9px;
+      border: none;
+      background: rgba(244, 244, 240, 0.75);
+      cursor: pointer;
+    }
+
+    /* Magic UI Text Highlighter */
+    .magic-hl {
+      position: relative;
+      display: inline-block;
+      padding: 0 5px;
+      margin: 0 1px;
+      color: #ffffff;
+      font-weight: 500;
+      z-index: 1;
+    }
+    .magic-hl::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 100%;
+      height: 86%;
+      z-index: -1;
+      transform: scaleX(0) skewX(-8deg);
+      transform-origin: left center;
+      transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+      background: linear-gradient(90deg, rgba(225, 29, 72, 0.78) 0%, rgba(225, 29, 72, 0.48) 100%);
+      border-bottom: 1.5px solid #fb7185;
+    }
+    .magic-hl.hl-amber::before {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.72) 0%, rgba(245, 158, 11, 0.42) 100%);
+      border-bottom-color: #fbbf24;
+    }
+    .magic-hl.hl-sky::before {
+      background: linear-gradient(90deg, rgba(14, 165, 233, 0.75) 0%, rgba(56, 189, 248, 0.42) 100%);
+      border-bottom-color: #38bdf8;
+    }
+    .magic-hl.hl-visible::before {
+      transform: scaleX(1) skewX(-8deg);
+    }
+
+    /* B&W 35% Opacity Hover Rule */
+    .palette-gallery .palette-item {
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+    }
+    .palette-gallery.hovering-bw .palette-item[data-palette="color"] {
+      opacity: 0.35;
+      filter: saturate(0.35);
+    }
+    .palette-gallery.hovering-bw .palette-item[data-palette="bw"] {
+      opacity: 1;
+    }
+    .palette-gallery.hovering-color .palette-item[data-palette="bw"] {
+      opacity: 0.35;
+    }
+    .palette-gallery.hovering-color .palette-item[data-palette="color"] {
+      opacity: 1;
+    }
+
+    /* 3D Tilt (+15% stronger motion, no spotlight) */
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.16s ease-out;
+      will-change: transform;
+    }
+
+    /* "My photography" Interactive Title (Red Underline + Arrow) */
+    .photo-heading-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 6px;
+    }
+    .photo-heading-btn::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 3px;
+      background: #e11d48;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .photo-heading-btn:hover::after {
+      transform: scaleX(1);
+    }
+    .photo-heading-arrow {
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
+    }
+    .photo-heading-btn:hover .photo-heading-arrow {
+      transform: translate(5px, -5px);
+      color: #e11d48;
+    }
+
+    /* Motion-Primitives Style Airy Accordion */
+    .mp-accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .mp-accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+    }
+    .mp-accordion-item.open .mp-accordion-content {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+    .mp-accordion-inner {
+      overflow: hidden;
+    }
+    .mp-chevron {
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mp-accordion-item.open .mp-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Equalizer Bars */
+    @keyframes eq-bar {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1); }
+    }
+    .eq-playing .eq-1 { animation: eq-bar 0.85s ease-in-out infinite; transform-origin: bottom; }
+    .eq-playing .eq-2 { animation: eq-bar 0.6s ease-in-out 0.2s infinite; transform-origin: bottom; }
+    .eq-playing .eq-3 { animation: eq-bar 1.05s ease-in-out 0.35s infinite; transform-origin: bottom; }
+    .eq-playing .eq-4 { animation: eq-bar 0.72s ease-in-out 0.1s infinite; transform-origin: bottom; }
+    .eq-paused span { transform: scaleY(0.35); }
+
+    /* Pin Label Banner Unfurl from Map Pin */
+    #map-flag-banner {
+      position: absolute;
+      pointer-events: none;
+      z-index: 30;
+      display: flex;
+      align-items: stretch;
+      background: #09090b;
+      border: 1px solid rgba(244, 244, 240, 0.28);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.75);
+      transform-origin: left center;
+      transform: translate(8px, -50%) scaleX(0);
+      opacity: 0;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      white-space: nowrap;
+    }
+    #map-flag-banner.flag-open {
+      transform: translate(8px, -50%) scaleX(1);
+      opacity: 1;
+    }
+
+    /* Morphing Dialog & Full Gallery Overlay */
+    #morph-modal, #full-gallery-modal {
+      transition: opacity 0.3s ease;
+    }
+    #morph-modal-card {
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+    }
+    #morph-modal.modal-open #morph-modal-card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    #morph-modal:not(.modal-open) #morph-modal-card {
+      transform: scale(0.94) translateY(16px);
+      opacity: 0;
+    }
+  </style>
 </head>
-<body>
-    <div class="nav-wrapper">
-        <nav class="navbar">
-            <div class="nav-brand">
-                <span class="prompt-symbol">~</span><span class="brand-name">/adrx</span>
-            </div>
-            <div class="nav-links" id="navLinks">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <div class="menu-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-                <span class="material-icons">menu</span>
-            </div>
-        </nav>
+<body class="antialiased selection:bg-rose-600 selection:text-white intro-locked">
+
+  <!-- Magic UI Smooth Cursor (Dynamic Black/White Contrast) -->
+  <div id="smooth-cursor" class="hidden md:block">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path id="cursor-arrow-path" d="M4.5 3.5L21.5 11.5L13.5 14L10.5 22L4.5 3.5Z" fill="#f4f4f0" stroke="#09090b" stroke-width="1.5" stroke-linejoin="miter" />
+    </svg>
+  </div>
+
+  <!-- Fixed Intro Backdrop (Fades out while #hero-adriano-line stays locked in place without snapping) -->
+  <div id="intro-backdrop" aria-hidden="true"></div>
+
+  <!-- HERO SECTION -->
+  <section id="hero-section" class="relative min-h-screen supports-[min-height:100dvh]:min-h-[100dvh] flex flex-col justify-between pt-6 sm:pt-8 pb-12 sm:pb-16 px-5 sm:px-12 overflow-hidden border-b border-[var(--border)]">
+    <!-- Chiaroscuro Background Portrait (Option 4) -->
+    <div id="hero-bg-portrait" aria-hidden="true">
+      <div id="hero-bg-parallax">
+        <img id="hero-bg-img" src="assets/hero-rover.jpg" alt="" />
+      </div>
     </div>
 
-    <section id="home" class="section">
-        <div class="main-wrapper">
-            <div class="hero-header">
-                <div class="avatar-wrapper">
-                    <img src="images/profile.png" alt="Adriano Vilhena" class="profile-picture">
-                </div>
-                <div class="hero-text">
-                    <h1>Adriano Vilhena</h1>
-                    <div class="hero-submeta">
-                        <div class="location">
-                            <span class="material-icons">location_on</span>
-                            <span>Lisbon, Portugal</span>
-                        </div>
-                        <span class="meta-dot">•</span>
-                        <div class="education-badge" title="NOVA Information Management School - Information Systems and Technologies">
-                            <span class="material-icons edu-icon">school</span>
-                            <span class="edu-title">NOVA IMS <span class="edu-degree">(STI)</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ul class="hero-list">
-                <li>Studying <span class="highlight">Information Systems and Technologies (STI)</span> at NOVA IMS.</li>
-                <li>FIRST Global <a class="year-link" href="https://first.global/2025-nations/portugal-2025/" target="_blank" rel="noopener noreferrer">2025</a> &amp; <a class="year-link" href="https://first.global/2026-nations/portugal-2026/" target="_blank" rel="noopener noreferrer">2026</a> - <span class="highlight">Team Portugal</span> <a class="find-more-btn" href="#project-fgc-2025">find out more →</a></li>
-            </ul>
+    <!-- Top Right: Borderless CARAVAN Interactive Widget (Strictly constrained to icon + title width) -->
+    <div class="relative z-30 flex justify-end slide-reveal">
+      <div class="caravan-widget inline-grid justify-items-stretch text-right py-2">
+        <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none py-1">
+          <div id="eq-bars" class="flex items-end gap-[2px] h-3.5 eq-playing shrink-0">
+            <span class="w-[2px] h-full bg-amber-400 eq-1"></span>
+            <span class="w-[2px] h-full bg-amber-400 eq-2"></span>
+            <span class="w-[2px] h-full bg-amber-400 eq-3"></span>
+            <span class="w-[2px] h-full bg-amber-400 eq-4"></span>
+          </div>
+          <span id="track-title" class="font-mono-tech text-xs tracking-widest text-zinc-200">CARAVAN</span>
         </div>
+
+        <!-- Hover / Tap Controls (Constrained to exact width of #caravan-header-row) -->
+        <div class="caravan-drawer w-0 min-w-full">
+          <div class="flex items-center justify-between pt-2 w-full">
+            <button type="button" id="audio-prev-btn" aria-label="Previous track" class="p-1.5 sm:p-0.5 text-zinc-400 hover:text-white transition-colors">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                <rect x="5" y="4" width="2" height="16"></rect>
+              </svg>
+            </button>
+            <button type="button" id="audio-play-btn" aria-label="Play or pause" class="p-1.5 sm:p-0.5 text-amber-400 hover:text-amber-300 transition-colors">
+              <svg id="icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+              <svg id="icon-play" class="hidden" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="6 4 20 12 6 20 6 4"></polygon>
+              </svg>
+            </button>
+            <button type="button" id="audio-next-btn" aria-label="Next track" class="p-1.5 sm:p-0.5 text-zinc-400 hover:text-white transition-colors">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                <rect x="17" y="4" width="2" height="16"></rect>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2 w-full">
+            <input id="audio-volume" type="range" min="0" max="100" value="25" aria-label="Volume" class="caravan-vol w-full block" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Centerpiece: THE SINGLE STATIONARY #hero-adriano-line ELEMENT -->
+    <div class="relative z-50 my-auto py-8 sm:py-12 flex flex-col items-center text-center">
+      <div id="hero-wordmark-wrap" class="hero-wordmark-wrap px-2 sm:px-6 py-4 cursor-pointer">
+        <h1 class="hero-wordmark font-brutal text-[2.65rem] sm:text-7xl md:text-[7.5rem] leading-[0.9] tracking-tighter font-extrabold">
+          <span id="hero-adriano-line" class="inline-block select-none">ADRIANO</span><br />
+          <span class="slide-reveal font-nightshade font-normal text-rose-500 lowercase tracking-normal text-5xl sm:text-7xl md:text-8xl block mt-2">vilhena</span>
+        </h1>
+        <!-- Random [-10deg, +10deg] Angled Reel on Hover / Tap -->
+        <div class="hero-loop-reel">
+          <div id="hero-reel-frame" class="w-64 sm:w-96 h-44 sm:h-60 overflow-hidden shadow-2xl">
+            <img id="hero-reel-img" src="assets/fotografia/DSCN0697.jpg" alt="Visual reel" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+
+      <p class="slide-reveal mt-8 sm:mt-10 max-w-2xl text-sm sm:text-base text-zinc-300 leading-relaxed text-center">
+        <span class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> Technology, music, photography, whatever comes next: if something grabs my attention, I'll poke at it until I understand how it works. My proudest solutions came when two things I was into at the same time turned out to share a similar problem, and <span class="magic-hl">solving one said something about the other</span>.
+      </p>
+    </div>
+
+    <div class="h-4"></div>
+  </section>
+
+  <!-- REST OF THE PAGE -->
+  <div class="slide-reveal">
+
+    <!-- CONTROLLED CHAOS SECTION (Left side stays pinned while right side scrolls up until the divider) -->
+    <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto border-b border-[var(--border)]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-stretch">
+        <!-- Pinned Left Column (Compact sticky bar on mobile, vertically centered full-height on desktop) -->
+        <div class="lg:col-span-5 sticky top-0 z-20 bg-[var(--bg)]/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center py-5 lg:py-0 space-y-3 sm:space-y-6">
+          <h2 class="font-brutal text-3xl sm:text-5xl leading-[0.95] tracking-tight">
+            Controlled<br />
+            <span class="font-serif-editorial italic font-normal text-sky-400">Chaos.</span>
+          </h2>
+          <p id="pinned-dynamic-quote" class="text-sm sm:text-lg text-zinc-300 leading-relaxed border-l-2 border-rose-500 pl-4 transition-all duration-300">
+            Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.
+          </p>
+        </div>
+
+        <!-- Scrolling Right Column -->
+        <div class="lg:col-span-7 py-10 lg:py-32 space-y-16 lg:space-y-28">
+          <article class="pinned-beat space-y-5" data-beat="0">
+            <div class="tilt-card overflow-hidden cursor-pointer" onclick="openMorphModal('fencing')">
+              <img src="assets/IMG_1471.jpg" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full h-60 sm:h-96 object-cover" />
+            </div>
+            <div class="sm:pl-16 max-w-lg">
+              <h3 class="font-space text-xl sm:text-2xl font-bold">Distance, Feint, Counter-Measure</h3>
+              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+                On the piste, you have milliseconds to read an opponent's shoulder before committing to a lunge. <span class="magic-hl">Cybersecurity and systems architecture</span> operate on the same way: preventive behaviour and critical reasoning.
+              </p>
+            </div>
+          </article>
+
+          <article class="pinned-beat space-y-5" data-beat="1">
+            <div class="tilt-card overflow-hidden cursor-pointer" onclick="openMorphModal('piano')">
+              <img src="assets/piano.jpg" alt="Big band piano keys" class="w-full h-60 sm:h-96 object-cover" />
+            </div>
+            <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
+              <h3 class="font-space text-xl sm:text-2xl font-bold">Teamwork playing Jazz</h3>
+              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+                Playing piano in a big band taught me more about leadership than any textbook: knowing when to drive the brass section, when to lock with the bass, and when to <span class="magic-hl hl-amber">leave space for someone else's solo</span>.
+              </p>
+            </div>
+          </article>
+
+          <article class="pinned-beat space-y-5" data-beat="2">
+            <div class="tilt-card overflow-hidden cursor-pointer" onclick="openMorphModal('cosmos')">
+              <img src="assets/IMG_7252.jpeg" alt="From Luanda to the World and Above" class="w-full h-60 sm:h-96 object-cover" />
+            </div>
+            <div class="sm:pl-12 max-w-lg">
+              <h3 class="font-space text-xl sm:text-2xl font-bold">From Luanda to the World and Above</h3>
+              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+                Across SLI, FGC 2024 and 2025, we explored how robotics and lunar technology can improve life on Earth. I’ve started building in Luanda and arrived at Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section id="about" class="section">
-        <div class="section-content">
-            <div class="section-heading-bar">
-                <h2>About Me</h2>
-            </div>
-
-            <div class="terminal-card">
-                <div class="terminal-card-header">
-                    <div class="window-controls">
-                        <span class="control-dot red"></span>
-                        <span class="control-dot yellow"></span>
-                        <span class="control-dot green"></span>
-                    </div>
-                    <span class="card-title">profile.md</span>
-                </div>
-                <div class="terminal-card-body">
-                    <p>I study <span class="highlight">Information Systems and Technologies (STI)</span> at NOVA IMS, with a background in systems and computer programming. I've always wanted to understand how systems work at a low level, and my long-term focus is in <span class="highlight">cybersecurity and AI</span>.</p>
-                    <p>I work across web development, Linux, systems engineering, and hardware-software integration. I prefer building tools that actually run over staying in theory, whether that's autonomous AI agents, automated workflows, custom computing setups, or robotics.</p>
-                    <p>Outside of software, I practice photography, play in <span class="highlight">TUIMS</span> (Tuna Universitária da Information Management School), and explore how accessible technology can address real-world challenges across European and African contexts.</p>
-                </div>
-            </div>
-
-            <div class="tech-stack-section">
-                <div class="section-heading-bar">
-                    <h2>Tech Stack</h2>
-                </div>
-                <div class="tech-stack-container">
-                    <div class="tech-category">
-                        <span class="category-title">Languages</span>
-                        <div class="tech-items">
-                            <span class="tech-item blue">Python</span>
-                            <span class="tech-item blue">C#</span>
-                            <span class="tech-item blue">C++</span>
-                            <span class="tech-item blue">C</span>
-                            <span class="tech-item blue">JavaScript</span>
-                            <span class="tech-item blue">HTML5 / CSS</span>
-                            <span class="tech-item blue">Java</span>
-                            <span class="tech-item blue">Bash</span>
-                        </div>
-                    </div>
-                    <div class="tech-category">
-                        <span class="category-title">Systems & Frameworks</span>
-                        <div class="tech-items">
-                            <span class="tech-item green">Linux</span>
-                            <span class="tech-item green">.NET</span>
-                            <span class="tech-item green">React</span>
-                            <span class="tech-item green">DevExpress</span>
-                            <span class="tech-item green">Razor</span>
-                            <span class="tech-item green">Robotics Control</span>
-                        </div>
-                    </div>
-                    <div class="tech-category">
-                        <span class="category-title">Tools & Workflow</span>
-                        <div class="tech-items">
-                            <span class="tech-item yellow">Git</span>
-                            <span class="tech-item yellow">GitHub</span>
-                            <span class="tech-item yellow">VS Code</span>
-                            <span class="tech-item yellow">Linux CLI</span>
-                            <span class="tech-item yellow">Obsidian</span>
-                            <span class="tech-item yellow">Figma</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- WHAT I BRING TO THE TABLE (Before Photography, Closed Accordions + Programming Languages) -->
+    <section id="skills-accordion" class="py-16 sm:py-28 px-5 sm:px-12 max-w-4xl mx-auto border-b border-[var(--border)]">
+      <div class="mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+        <div class="tilt-card relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 border border-[var(--border)] bg-zinc-900 overflow-hidden shadow-2xl group">
+          <img src="assets/profile.png" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" />
         </div>
+        <div class="flex-1">
+          <h2 class="font-brutal text-3xl sm:text-5xl">What I bring to the table</h2>
+          <p class="text-sm sm:text-base text-zinc-400 mt-4 leading-relaxed">
+            I speak a few languages — Portuguese and English — and write systems in <span class="magic-hl">C#, .NET, Blazor, Python, JavaScript/TypeScript, HTML/CSS, and SQL</span>, bridging embedded robotics hardware with web architecture and AI.
+          </p>
+        </div>
+      </div>
+
+      <div id="accordion-list" class="border-t border-[var(--border)]">
+        <div class="mp-accordion-item py-5">
+          <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
+            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              Hackathons, Rapid Prototyping &amp; Product Strategy
+            </span>
+            <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="mp-accordion-content">
+            <div class="mp-accordion-inner pt-3 text-sm sm:text-base text-zinc-400 space-y-3 leading-relaxed">
+              <p>
+                Won <span class="magic-hl">2nd place at Hack The City: Mobility Challenge</span> (NOVA IMS) over 48 intense hours using real-world public transport data from TML, building <strong class="text-zinc-200">Mobi4All</strong> to measure transit reliability and give commuters smarter routes.
+              </p>
+              <p>
+                Finished in <span class="magic-hl hl-amber">3rd place at Grona’s Growth Marketing Hackathon</span> (hosted at 42 Lisboa, supported by Google for Startups &amp; Google AI), where André Escarigo and I built a single-day AI-driven campaign to introduce <strong class="text-zinc-200">FORGe 2027</strong> — the upcoming hackathon edition we are building at <strong class="text-zinc-200">NOVAe</strong> — and pitched it to the judges in two minutes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mp-accordion-item py-5">
+          <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
+            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              Full-Stack Engineering
+            </span>
+            <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="mp-accordion-content">
+            <div class="mp-accordion-inner pt-3 text-sm sm:text-base text-zinc-400 space-y-3 leading-relaxed">
+              <p>
+                Built production features in C#, .NET, and Blazor for <strong class="text-zinc-200">MyHub</strong> at <a href="https://www.ceiia.com/" target="_blank" rel="noopener noreferrer" class="text-zinc-200 font-semibold underline decoration-rose-500/80 underline-offset-4 hover:text-rose-400 transition-colors">CEiiA</a> (overhauling performance, Means/Benefits workflows, and authoring the Function/Role Manual alongside Design and HR).
+              </p>
+              <p>
+                Currently pursuing Information Systems (STI) at NOVA IMS with a trajectory toward <span class="magic-hl hl-sky">Space Cybersecurity at ESA</span>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mp-accordion-item py-5">
+          <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
+            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              Robotics, Hardware Integration &amp; Team Leadership
+            </span>
+            <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="mp-accordion-content">
+            <div class="mp-accordion-inner pt-3 text-sm sm:text-base text-zinc-400 space-y-3 leading-relaxed">
+              <p>
+                Collaborated on <strong class="text-zinc-200">Team LunaMotion</strong> at TerraLuna (SLI 25'), designing a modular lunar rover prototype for exploration, medical support, and Earth-side sustainability.
+              </p>
+              <p>
+                Competed twice at the <a href="https://first.global/" target="_blank" rel="noopener noreferrer" class="text-zinc-200 font-semibold underline decoration-rose-500/80 underline-offset-4 hover:text-rose-400 transition-colors">FIRST Global Challenge</a> (Athens 2024 &amp; Panama City 2025 <em>Eco-Equilibrium</em>), serving as <span class="magic-hl hl-amber">Team Captain &amp; Programmer for Team Portugal at FGC 2025</span>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mp-accordion-item py-5">
+          <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
+            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              Music, Sports and Photography
+            </span>
+            <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="mp-accordion-content">
+            <div class="mp-accordion-inner pt-3 text-sm sm:text-base text-zinc-400 space-y-3 leading-relaxed">
+              <p>
+                Big band pianist, Fencer, Self-Taught Photographer Since 2023 and <span id="military-decrypt" class="cursor-pointer text-zinc-200 underline decoration-rose-500/70 decoration-dotted underline-offset-4 hover:text-rose-400 transition-colors" data-default="graduate of a Military School" data-target="graduate at Instituto dos Pupilos do Exército">graduate of a Military School</span>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="experience" class="section">
-        <div class="section-content">
-            <div class="section-heading-bar">
-                <h2>Experience</h2>
-            </div>
-            <div class="experience-section">
-                <div class="toggle-wrapper" role="tablist">
-                    <button class="toggle-btn active" data-target="work" role="tab" aria-selected="true">Work & Projects</button>
-                    <button class="toggle-btn" data-target="education" role="tab" aria-selected="false">Education</button>
-                </div>
-                <div class="experience-content" id="work-content" role="tabpanel">
-                    <div class="timeline-content">
-                        <div class="timeline-item">
-                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Global Logo">
-                            <div class="timeline-date">03/2025 - 11/2025</div>
-                            <div class="timeline-title">FIRST Global Challenge 2025 - Team Portugal</div>
-                            <div class="timeline-company">FIRST</div>
-                        </div>
-                        <div class="timeline-item">
-                            <img class="company-logo" src="images/ceiia.svg" alt="CEiiA Logo">
-                            <div class="timeline-date">07/2025 - 08/2025</div>
-                            <div class="timeline-title">Innovator / Summer Leadership Immersion</div>
-                            <div class="timeline-company">CEiiA</div>
-                        </div>
-                        <div class="timeline-item">
-                            <img class="company-logo" src="images/ceiia.svg" alt="CEiiA Logo">
-                            <div class="timeline-date">05/2025 - 07/2025</div>
-                            <div class="timeline-title">Web Development Internship</div>
-                            <div class="timeline-company">CEiiA</div>
-                        </div>
-                        <div class="timeline-item">
-                            <img class="company-logo" src="images/firstglobalicon.svg" alt="FIRST Global Logo">
-                            <div class="timeline-date">05/2024 - 10/2024</div>
-                            <div class="timeline-title">FIRST Global Challenge 2024 - Team Portugal</div>
-                            <div class="timeline-company">FIRST</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="experience-content hidden" id="education-content" role="tabpanel">
-                    <div class="timeline-content">
-                        <div class="timeline-item">
-                            <img class="company-logo" src="images/novaims.png" alt="NOVA IMS Logo">
-                            <div class="timeline-date">2026 - Present</div>
-                            <div class="timeline-title">Information Systems and Technologies (STI)</div>
-                            <div class="timeline-company">NOVA IMS Information Management School</div>
-                        </div>
-                        <div class="timeline-item">
-                            <img class="company-logo round" src="images/ipe.svg" alt="Instituto dos Pupilos do Exército Logo">
-                            <div class="timeline-date">09/2023 - 07/2026</div>
-                            <div class="timeline-title">Computer Systems Management and Programming Technician</div>
-                            <div class="timeline-company">Instituto dos Pupilos do Exército</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + ARROW) + OVERLAPPING DIAGONAL -> BENTO MOSAIC WITH 3D TILT -->
+    <section id="photography-morph-section" class="relative h-[220vh] md:h-[320vh] border-b border-[var(--border)] bg-[var(--surface)]">
+      <div class="sticky top-0 h-screen supports-[height:100dvh]:h-[100dvh] w-full overflow-hidden flex flex-col justify-between py-6 sm:py-10 px-5 sm:px-12">
+        <!-- Clickable Fixed Title with Red Underline Hover & Arrow -->
+        <div class="z-20">
+          <button type="button" onclick="openFullGalleryModal()" class="photo-heading-btn font-brutal text-2xl sm:text-5xl text-left text-white">
+            <span>My photography</span>
+            <svg class="photo-heading-arrow w-6 h-6 sm:w-9 sm:h-9 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </button>
         </div>
+
+        <!-- Morphing Stage (Dynamically populated with 9–15 randomized photos into a Justified Bento Mosaic) -->
+        <div id="photo-morph-stage" class="palette-gallery relative w-full max-w-6xl mx-auto flex-1 my-4 sm:my-6"></div>
+      </div>
     </section>
 
-    <section id="projects" class="section">
-        <div class="section-content">
-            <div class="section-heading-bar">
-                <h2>Featured Projects</h2>
-            </div>
-            <div class="projects-container">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/mobi4all.jpg" alt="Mobi4All - Hack The City: Mobility Challenge">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">Mobi4All</h3>
-                            <a href="https://hackthecity2026.devpost.com/" target="_blank" rel="noopener noreferrer" class="project-link">Access ↗</a>
-                        </div>
-                        <div class="project-period">09/2026</div>
-                        <p class="project-description">Built during the 48-hour Hack The City: Mobility Challenge at NOVA IMS, where it won 2nd place overall. The platform uses real-world TML (Transportes Metropolitanos de Lisboa) transit data to track public transport reliability and suggest reliable alternative routes during delays.</p>
-                        <div class="project-client">Hack The City Hackathon (2nd Place 🥈), <span class="highlight">NOVA IMS &amp; TML</span></div>
-                        <div class="project-tags">
-                            <span class="tech-item blue">Python</span>
-                            <span class="tech-item blue">Transit Data</span>
-                            <span class="tech-item green">Urban Analytics</span>
-                            <span class="tech-item green">Mobility</span>
-                            <span class="tech-item yellow">Dashboard</span>
-                            <span class="tech-item yellow">48h Hackathon</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card" id="project-fgc-2025">
-                    <div class="project-image">
-                        <img src="images/IMG_0990.JPG" alt="FIRST Global Challenge 2025 Project">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">FGC 2025</h3>
-                            <a href="https://first.global/2025-nations/portugal-2025/" target="_blank" rel="noopener noreferrer" class="project-link">Access ↗</a>
-                        </div>
-                        <div class="project-period">03/2025 - 11/2025</div>
-                        <p class="project-description">Leading the 2025 Portuguese delegation for the FIRST Global Challenge, iterating on autonomous robotics programming, competitive strategy, and technical outreach.</p>
-                        <div class="project-client">International Competition, <span class="highlight">FIRST</span></div>
-                        <div class="project-tags">
-                            <span class="tech-item blue">C++</span>
-                            <span class="tech-item blue">Java</span>
-                            <span class="tech-item green">Control Systems</span>
-                            <span class="tech-item yellow">Outreach</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/myhub.png" alt="MyHub Platform">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">MyHub</h3>
-                        </div>
-                        <div class="project-period">05/2025 - 07/2025</div>
-                        <p class="project-description">Centralized internal intranet platform developed for CEiiA to manage organizational members and collaborators through an efficient, responsive interface.</p>
-                        <div class="project-client">Developed for <span class="highlight">CEiiA</span></div>
-                        <div class="project-tags">
-                            <span class="tech-item blue">.NET</span>
-                            <span class="tech-item blue">C#</span>
-                            <span class="tech-item green">DevExpress</span>
-                            <span class="tech-item green">Razor</span>
-                            <span class="tech-item yellow">Figma</span>
-                            <span class="tech-item blue">HTML5</span>
-                            <span class="tech-item blue">CSS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/firstglobalpicture.png" alt="FIRST Global Challenge 2024 Project">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">FGC 2024</h3>
-                            <a href="https://first.global/archive/fgc-2024/" target="_blank" rel="noopener noreferrer" class="project-link">Access ↗</a>
-                        </div>
-                        <div class="project-period">05/2024 - 10/2024</div>
-                        <p class="project-description">Represented Team Portugal in the international robotics competition. Engineered and programmed a custom robot built to solve real-world environmental sustainability challenges.</p>
-                        <div class="project-client">International Competition, <span class="highlight">FIRST</span></div>
-                        <div class="project-tags">
-                            <span class="tech-item blue">C++</span>
-                            <span class="tech-item green">Autonomous Logic</span>
-                            <span class="tech-item yellow">Engineering</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- FOOTER: SOCIAL LINKS + RESUME + DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS -->
+    <footer class="py-12 sm:py-16 px-5 sm:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+      <div class="md:col-span-5 space-y-4 font-mono-tech text-xs text-zinc-400">
+        <p class="text-white font-space text-xl font-bold">Adriano Lopes de Vilhena</p>
+        <p>
+          <a href="mailto:AdrianoLop.V@icloud.com" class="hover:text-rose-400 transition-colors">AdrianoLop.V@icloud.com</a>
+        </p>
+        <div class="flex flex-wrap items-center gap-5 pt-2 text-zinc-300">
+          <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" class="hover:text-rose-400 underline underline-offset-4 transition-colors">LinkedIn</a>
+          <a href="https://github.com/adrxlv" target="_blank" rel="noopener noreferrer" class="hover:text-rose-400 underline underline-offset-4 transition-colors">GitHub</a>
+          <a href="https://www.tiktok.com/@adrx_lv" target="_blank" rel="noopener noreferrer" class="hover:text-rose-400 underline underline-offset-4 transition-colors">TikTok (@adrx_lv)</a>
+          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" class="hover:text-rose-400 underline underline-offset-4 transition-colors">Download Resume</a>
         </div>
-    </section>
+      </div>
 
-    <section id="contact" class="section">
-        <div class="section-content">
-            <div class="section-heading-bar">
-                <h2>Contact</h2>
+      <div class="md:col-span-7 relative">
+        <div id="dotted-map-wrapper" class="relative w-full h-64 sm:h-72 overflow-hidden flex items-center justify-center">
+          <div id="dotted-map-container" class="w-full h-full flex items-center justify-center"></div>
+          <!-- Minimalist Slide-Out Country Name Tag from Pin -->
+          <div id="map-flag-banner">
+            <div class="px-2.5 py-1 font-mono-tech text-[10px] tracking-wider text-white uppercase flex items-center gap-1.5">
+              <span id="map-flag-name"></span>
             </div>
-            <p class="contact-intro">Feel free to reach out directly via email, LinkedIn, or by sending a message through the form below.</p>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-section">
-                        <h3 class="contact-heading">Get in Touch</h3>
-
-                        <div class="contact-methods">
-                            <a href="mailto:adrianolop.v@icloud.com" class="contact-item-link">
-                                <div class="contact-item">
-                                    <div class="contact-icon">
-                                        <img src="images/email-mail-message-svgrepo-com.svg" alt="Email">
-                                    </div>
-                                    <div class="contact-details">
-                                        <h4>Email</h4>
-                                        <span class="contact-text">adrianolop.v@icloud.com</span>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="https://www.linkedin.com/in/adriano-vilhena/" target="_blank" rel="noopener noreferrer" class="contact-item-link">
-                                <div class="contact-item">
-                                    <div class="contact-icon">
-                                        <img src="images/linkedin-linked-in 1.svg" alt="LinkedIn">
-                                    </div>
-                                    <div class="contact-details">
-                                        <h4>LinkedIn</h4>
-                                        <span class="contact-text">Adriano Vilhena ↗</span>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="https://github.com/adrxLV/" target="_blank" rel="noopener noreferrer" class="contact-item-link">
-                                <div class="contact-item">
-                                    <div class="contact-icon">
-                                        <img src="images/github 1.svg" alt="GitHub">
-                                    </div>
-                                    <div class="contact-details">
-                                        <h4>GitHub</h4>
-                                        <span class="contact-text">adrxLV ↗</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="contact-form-container">
-                        <h3 class="contact-heading">Send a Message</h3>
-                        <form class="contact-form" action="https://formspree.io/f/mblobann" method="POST">
-                            <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" placeholder="Project inquiry, collaboration, etc.">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
-                            </div>
-
-                            <button type="submit" class="submit-btn">Send Message</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <span>© 2026 Adriano Vilhena. Gruvbox dark theme.</span>
-        </div>
+      </div>
     </footer>
 
-    <div class="console-overlay" id="hackConsole">
-        <div class="console-header">
-            <div class="console-title">Terminal - User: hacker@localhost</div>
-            <div class="console-close" id="closeConsole">×</div>
-        </div>
-        <div class="console-content" id="consoleContent">
-            Welcome to HackerOS v1.0.0
-            Type 'help' for available commands.
-        </div>
-        <div class="console-input-line">
-            <div class="console-prompt">hacker@localhost:~$</div>
-            <input type="text" class="console-input" id="consoleInput" autofocus>
-        </div>
+  </div>
+
+  <!-- FULL PHOTO GALLERY OVERLAY (Opened by clicking "My photography" header) -->
+  <div id="full-gallery-modal" class="fixed inset-0 z-[9985] hidden flex-col bg-[#070709]/95 backdrop-blur-xl overflow-y-auto">
+    <div class="sticky top-0 z-20 flex items-center justify-between gap-4 px-5 sm:px-12 py-5 sm:py-6 bg-[#070709]/90 border-b border-[var(--border)]">
+      <h2 class="font-brutal text-xl sm:text-4xl">Complete Photography Archive</h2>
+      <button type="button" onclick="closeFullGalleryModal()" class="px-4 py-2 border border-white/20 font-mono-tech text-xs text-white hover:bg-rose-600 hover:border-rose-600 transition-colors shrink-0">
+        CLOSE [ESC]
+      </button>
     </div>
 
-    <script src="terminal.js"></script>
-    <script src="main.js"></script>
+    <div id="full-archive-grid" class="palette-gallery max-w-7xl mx-auto w-full px-5 sm:px-12 py-8 sm:py-12 flex flex-col gap-3 sm:gap-4">
+      <!-- Populated dynamically by JS with shuffled picture-only Justified Bento Mosaic rows -->
+    </div>
+  </div>
+
+  <!-- MORPHING DIALOG MODAL (Single Frame Context / Lightbox Viewer) -->
+  <div id="morph-modal" class="fixed inset-0 z-[9990] hidden items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md" role="dialog" aria-modal="true">
+    <div id="morph-modal-card" class="w-full max-w-3xl max-h-[92dvh] overflow-y-auto border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+      <div class="relative bg-zinc-950">
+        <img id="morph-modal-img" src="" alt="" class="w-full h-52 sm:h-80 object-cover" />
+        <button type="button" onclick="closeMorphModal()" aria-label="Close modal" class="absolute top-4 right-4 w-9 h-9 bg-black/75 text-white border border-white/20 flex items-center justify-center hover:bg-rose-600 transition-colors font-mono-tech text-sm">
+          &times;
+        </button>
+      </div>
+      <div id="morph-modal-body" class="p-6 sm:p-8 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span id="morph-modal-meta" class="font-mono-tech text-[11px] text-zinc-400"></span>
+        </div>
+        <h3 id="morph-modal-title" class="font-brutal text-2xl sm:text-3xl"></h3>
+        <p id="morph-modal-desc" class="text-sm sm:text-base text-zinc-300 leading-relaxed"></p>
+        <div id="morph-modal-pills" class="flex flex-wrap gap-2 pt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== DATA ====================
+    const GALLERY_PHOTOS = [
+      {"src":"assets/fotografia/DSCN0406.jpg","filename":"DSCN0406.jpg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0536.jpg","filename":"DSCN0536.jpg","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0547.jpg","filename":"DSCN0547.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0658.jpg","filename":"DSCN0658.jpg","palette":"color","aspect":1.334},
+      {"src":"assets/fotografia/DSCN0678.jpg","filename":"DSCN0678.jpg","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0693.jpg","filename":"DSCN0693.jpg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0697.jpg","filename":"DSCN0697.jpg","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/DSCN0712.jpg","filename":"DSCN0712.jpg","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0728.jpg","filename":"DSCN0728.jpg","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/DSCN0746.jpg","filename":"DSCN0746.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0756.jpg","filename":"DSCN0756.jpg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0787.jpg","filename":"DSCN0787.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0791.jpg","filename":"DSCN0791.jpg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0831.jpg","filename":"DSCN0831.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0049.jpeg","filename":"IMG_0049.jpeg","palette":"color","aspect":1.779},
+      {"src":"assets/fotografia/IMG_0107.jpg","filename":"IMG_0107.jpg","palette":"color","aspect":1.336},
+      {"src":"assets/fotografia/IMG_0111.jpg","filename":"IMG_0111.jpg","palette":"color","aspect":1.336},
+      {"src":"assets/fotografia/IMG_0351_SnapseedCopy.jpg","filename":"IMG_0351_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0393_SnapseedCopy.jpg","filename":"IMG_0393_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0465_Copia.jpg","filename":"IMG_0465_Copia.jpg","palette":"color","aspect":1.401},
+      {"src":"assets/fotografia/IMG_0467_Copia.jpg","filename":"IMG_0467_Copia.jpg","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0498_SnapseedCopy.jpg","filename":"IMG_0498_SnapseedCopy.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0500_SnapseedCopy.jpg","filename":"IMG_0500_SnapseedCopy.jpg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/IMG_0534_SnapseedCopy.jpg","filename":"IMG_0534_SnapseedCopy.jpg","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/IMG_0538.jpg","filename":"IMG_0538.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0542_SnapseedCopy.jpg","filename":"IMG_0542_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0548_SnapseedCopy.jpg","filename":"IMG_0548_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0555_SnapseedCopy.jpg","filename":"IMG_0555_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0563_SnapseedCopy.jpg","filename":"IMG_0563_SnapseedCopy.jpg","palette":"bw","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0570_SnapseedCopy.jpg","filename":"IMG_0570_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0582_SnapseedCopy.jpg","filename":"IMG_0582_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0600_SnapseedCopy.jpg","filename":"IMG_0600_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0644_SnapseedCopy.jpg","filename":"IMG_0644_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0652_SnapseedCopy.jpg","filename":"IMG_0652_SnapseedCopy.jpg","palette":"bw","aspect":0.8},
+      {"src":"assets/fotografia/IMG_0765_SnapseedCopy.jpg","filename":"IMG_0765_SnapseedCopy.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0772_SnapseedCopy.jpg","filename":"IMG_0772_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0934_Copia.jpg","filename":"IMG_0934_Copia.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_1403.jpg","filename":"IMG_1403.jpg","palette":"bw","aspect":1.779},
+      {"src":"assets/fotografia/IMG_1407_SnapseedCopy.jpg","filename":"IMG_1407_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_1408.jpg","filename":"IMG_1408.jpg","palette":"bw","aspect":0.754},
+      {"src":"assets/fotografia/IMG_1471.jpg","filename":"IMG_1471.jpg","palette":"bw","aspect":1.499},
+      {"src":"assets/fotografia/IMG_1474.jpg","filename":"IMG_1474.jpg","palette":"bw","aspect":1.333},
+      {"src":"assets/fotografia/IMG_1476.jpg","filename":"IMG_1476.jpg","palette":"bw","aspect":0.751},
+      {"src":"assets/fotografia/IMG_1478.jpg","filename":"IMG_1478.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/IMG_1479.jpg","filename":"IMG_1479.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/IMG_1592_SnapseedCopy.jpg","filename":"IMG_1592_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_1597_SnapseedCopy.jpg","filename":"IMG_1597_SnapseedCopy.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_2946.jpg","filename":"IMG_2946.jpg","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_2947.jpg","filename":"IMG_2947.jpg","palette":"color","aspect":0.748},
+      {"src":"assets/fotografia/IMG_6742.jpg","filename":"IMG_6742.jpg","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/IMG_6800.jpg","filename":"IMG_6800.jpg","palette":"color","aspect":1.496},
+      {"src":"assets/fotografia/IMG_6813.jpg","filename":"IMG_6813.jpg","palette":"color","aspect":1.496},
+      {"src":"assets/fotografia/IMG_6820.jpg","filename":"IMG_6820.jpg","palette":"bw","aspect":1.496},
+      {"src":"assets/fotografia/IMG_6831.jpg","filename":"IMG_6831.jpg","palette":"color","aspect":1.496},
+      {"src":"assets/fotografia/IMG_7178.jpg","filename":"IMG_7178.jpg","palette":"bw","aspect":1.334},
+      {"src":"assets/fotografia/IMG_7493.jpg","filename":"IMG_7493.jpg","palette":"color","aspect":0.714},
+      {"src":"assets/fotografia/IMG_7542.jpg","filename":"IMG_7542.jpg","palette":"bw","aspect":0.714},
+      {"src":"assets/fotografia/IMG_7548.jpg","filename":"IMG_7548.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_7717.jpg","filename":"IMG_7717.jpg","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_7780.jpg","filename":"IMG_7780.jpg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/IMG_8360_SnapseedCopy.jpg","filename":"IMG_8360_SnapseedCopy.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_8436.jpg","filename":"IMG_8436.jpg","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9045.jpeg","filename":"IMG_9045.jpeg","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9110.jpg","filename":"IMG_9110.jpg","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9138.jpg","filename":"IMG_9138.jpg","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9222.jpg","filename":"IMG_9222.jpg","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_9240.jpg","filename":"IMG_9240.jpg","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_9266.jpg","filename":"IMG_9266.jpg","palette":"bw","aspect":1.333},
+      {"src":"assets/fotografia/IMG_9295.jpg","filename":"IMG_9295.jpg","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_9354.jpg","filename":"IMG_9354.jpg","palette":"bw","aspect":1.335},
+      {"src":"assets/fotografia/IMG_9412.jpg","filename":"IMG_9412.jpg","palette":"bw","aspect":1.334},
+      {"src":"assets/fotografia/IMG_9424.jpg","filename":"IMG_9424.jpg","palette":"bw","aspect":1.336},
+      {"src":"assets/fotografia/Snapseed_2.jpg","filename":"Snapseed_2.jpg","palette":"bw","aspect":1.5},
+      {"src":"assets/fotografia/Snapseed.jpg","filename":"Snapseed.jpg","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/YTL00324.jpg","filename":"YTL00324.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00349.jpg","filename":"YTL00349.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00360.jpg","filename":"YTL00360.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00389.jpg","filename":"YTL00389.jpg","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/YTL00420.jpg","filename":"YTL00420.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00425.jpg","filename":"YTL00425.jpg","palette":"color","aspect":1.401},
+      {"src":"assets/fotografia/YTL00435.jpg","filename":"YTL00435.jpg","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00440.jpg","filename":"YTL00440.jpg","palette":"color","aspect":1.4},
+      {"src":"assets/fotografia/YTL00450.jpg","filename":"YTL00450.jpg","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/YTL00463.jpg","filename":"YTL00463.jpg","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/YTL00482.jpg","filename":"YTL00482.jpg","palette":"bw","aspect":1.5},
+      {"src":"assets/fotografia/ld-export-0c7e5e14-10182025.jpg","filename":"ld-export-0c7e5e14-10182025.jpg","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy.jpg","filename":"ld-export-31497c87-10112025_SnapseedCopy.jpg","palette":"bw","aspect":1.333},
+      {"src":"assets/fotografia/ld-export-81eddb7a-10112025.jpeg","filename":"ld-export-81eddb7a-10112025.jpeg","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/ld-export-844af384-10112025.jpg","filename":"ld-export-844af384-10112025.jpg","palette":"bw","aspect":1.496}
+    ];
+
+    const EXCLUDED_GALLERY_FILES = new Set(["piano.jpg", "img_7252.jpeg"]);
+    const IMAGE_EXT_RE = /\.(jpe?g|png|webp|avif|gif)$/i;
+
+    function isValidGalleryEntry(p) {
+      return Boolean(p && p.filename && IMAGE_EXT_RE.test(p.filename) && !EXCLUDED_GALLERY_FILES.has(String(p.filename).toLowerCase()));
+    }
+
+    function normalizePhotoPath(urlOrPath) {
+      if (!urlOrPath) return "";
+      try {
+        const u = new URL(urlOrPath, window.location.href);
+        const idx = u.pathname.indexOf("assets/fotografia/");
+        const rel = idx >= 0 ? u.pathname.slice(idx) : u.pathname.replace(/^\/+/, "");
+        return decodeURI(rel);
+      } catch {
+        return decodeURI(String(urlOrPath).replace(/^\/+/, ""));
+      }
+    }
+
+    const KNOWN_PHOTO_MAP = new Map(
+      GALLERY_PHOTOS.filter(isValidGalleryEntry).map((p) => [p.filename.toLowerCase(), { ...p }])
+    );
+
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    let ACTIVE_PHOTOS = shuffleArray(GALLERY_PHOTOS.filter(isValidGalleryEntry));
+    let ARCHIVE_PHOTOS = shuffleArray(ACTIVE_PHOTOS);
+
+    const MORPH_CONTROLLER = { rebuild: null, layout: null, onPrune: null };
+    const HERO_REEL_CONTROLLER = { refresh: null };
+    const ARCHIVE_CONTROLLER = { render: null };
+
+    function detectImagePalette(img) {
+      try {
+        const w = 12;
+        const h = 12;
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        if (!ctx) return "color";
+        ctx.drawImage(img, 0, 0, w, h);
+        const data = ctx.getImageData(0, 0, w, h).data;
+        let diffSum = 0;
+        const pixels = w * h;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          diffSum += Math.max(r, g, b) - Math.min(r, g, b);
+        }
+        return (diffSum / pixels) < 8 ? "bw" : "color";
+      } catch {
+        return "color";
+      }
+    }
+
+    function probeImageMeta(src, filename) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.decoding = "async";
+        img.onload = () => {
+          const aspect = img.naturalHeight > 0
+            ? Number((img.naturalWidth / img.naturalHeight).toFixed(3))
+            : 1.333;
+          const palette = detectImagePalette(img);
+          resolve({ src, filename, palette, aspect });
+        };
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    }
+
+    function parseDirectoryListing(htmlText) {
+      if (!htmlText || /Adriano Vilhena —/i.test(htmlText)) return [];
+      const doc = new DOMParser().parseFromString(htmlText, "text/html");
+      const anchors = Array.from(doc.querySelectorAll("a[href]"));
+      const seen = new Set();
+      const files = [];
+      for (const a of anchors) {
+        const rawHref = (a.getAttribute("href") || "").split("?")[0].split("#")[0];
+        if (!rawHref || rawHref === "../" || rawHref.startsWith("?") || rawHref.endsWith("/")) continue;
+        const titleAttr = (a.getAttribute("title") || "").trim();
+        let hrefLeaf = "";
+        try {
+          hrefLeaf = decodeURIComponent(rawHref.replace(/\.preview$/i, "").split("/").filter(Boolean).pop() || "");
+        } catch {
+          hrefLeaf = rawHref.replace(/\.preview$/i, "").split("/").filter(Boolean).pop() || "";
+        }
+        const candidate = IMAGE_EXT_RE.test(titleAttr) ? titleAttr : hrefLeaf;
+        if (!candidate || !IMAGE_EXT_RE.test(candidate)) continue;
+        const key = candidate.toLowerCase();
+        if (EXCLUDED_GALLERY_FILES.has(key) || seen.has(key)) continue;
+        seen.add(key);
+        files.push(candidate);
+      }
+      return files;
+    }
+
+    function pruneBrokenPhoto(brokenSrc) {
+      const targetNorm = normalizePhotoPath(brokenSrc);
+      if (!targetNorm || !targetNorm.includes("assets/fotografia/")) return false;
+      const beforeActive = ACTIVE_PHOTOS.length;
+      const beforeArchive = ARCHIVE_PHOTOS.length;
+      ACTIVE_PHOTOS = ACTIVE_PHOTOS.filter((p) => normalizePhotoPath(p.src) !== targetNorm);
+      ARCHIVE_PHOTOS = ARCHIVE_PHOTOS.filter((p) => normalizePhotoPath(p.src) !== targetNorm);
+      if (ACTIVE_PHOTOS.length === beforeActive && ARCHIVE_PHOTOS.length === beforeArchive) return false;
+      MORPH_CONTROLLER.onPrune?.(targetNorm);
+      ARCHIVE_CONTROLLER.render?.();
+      HERO_REEL_CONTROLLER.refresh?.();
+      return true;
+    }
+
+    async function discoverFotografiaPhotos() {
+      const registerManifestEntries = (arr) => {
+        if (!Array.isArray(arr)) return [];
+        const valid = arr.filter(isValidGalleryEntry);
+        valid.forEach((p) => KNOWN_PHOTO_MAP.set(p.filename.toLowerCase(), { ...p }));
+        return valid;
+      };
+
+      const buildFromFilenames = async (filenames) => {
+        const resolved = [];
+        const unknowns = [];
+        for (const filename of filenames) {
+          const known = KNOWN_PHOTO_MAP.get(filename.toLowerCase());
+          const src = encodeURI(`assets/fotografia/${filename}`);
+          if (known) {
+            resolved.push({ ...known, src, filename });
+          } else {
+            unknowns.push({ src, filename });
+          }
+        }
+        if (unknowns.length > 0) {
+          const probed = await Promise.all(unknowns.map((u) => probeImageMeta(u.src, u.filename)));
+          probed.forEach((meta) => {
+            if (meta) {
+              KNOWN_PHOTO_MAP.set(meta.filename.toLowerCase(), meta);
+              resolved.push(meta);
+            }
+          });
+        }
+        return resolved;
+      };
+
+      let manifestItems = null;
+      const manifestPromise = fetch("assets/fotografia/manifest.json", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => (Array.isArray(data) ? registerManifestEntries(data) : null))
+        .catch(() => null);
+
+      try {
+        const dirRes = await fetch("assets/fotografia/", { cache: "no-store" });
+        if (dirRes.ok) {
+          const html = await dirRes.text();
+          const dirFiles = parseDirectoryListing(html);
+          if (dirFiles.length > 0) {
+            await manifestPromise;
+            const resolved = await buildFromFilenames(dirFiles);
+            if (resolved.length > 0) {
+              ACTIVE_PHOTOS = shuffleArray(resolved);
+              ARCHIVE_PHOTOS = shuffleArray(resolved);
+              return ACTIVE_PHOTOS;
+            }
+          }
+        }
+      } catch {
+        // Directory listing unavailable (e.g., GitHub Pages or file://)
+      }
+
+      manifestItems = await manifestPromise;
+
+      const isRemoteProd = /github\.io|adrxlv\.dev/i.test(window.location.hostname);
+      if (isRemoteProd) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 1200);
+        try {
+          const ghRes = await fetch(
+            "https://api.github.com/repos/adrxLV/portfolio/contents/assets/fotografia",
+            { cache: "no-store", signal: controller.signal }
+          );
+          if (ghRes.ok) {
+            const entries = await ghRes.json();
+            if (Array.isArray(entries)) {
+              const ghFiles = entries
+                .filter((e) => e && e.type === "file" && IMAGE_EXT_RE.test(e.name) && !EXCLUDED_GALLERY_FILES.has(e.name.toLowerCase()))
+                .map((e) => e.name);
+              if (ghFiles.length > 0) {
+                const resolved = await buildFromFilenames(ghFiles);
+                if (resolved.length > 0) {
+                  ACTIVE_PHOTOS = shuffleArray(resolved);
+                  ARCHIVE_PHOTOS = shuffleArray(resolved);
+                  return ACTIVE_PHOTOS;
+                }
+              }
+            }
+          }
+        } catch {
+          // Fall back to manifest.json
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      if (manifestItems && manifestItems.length > 0) {
+        ACTIVE_PHOTOS = shuffleArray(manifestItems);
+        ARCHIVE_PHOTOS = shuffleArray(manifestItems);
+        return ACTIVE_PHOTOS;
+      }
+
+      const fallback = GALLERY_PHOTOS.filter(isValidGalleryEntry);
+      ACTIVE_PHOTOS = shuffleArray(fallback);
+      ARCHIVE_PHOTOS = shuffleArray(fallback);
+      return ACTIVE_PHOTOS;
+    }
+
+    const IMAGES = {
+      fencing: "assets/IMG_1471.jpg",
+      piano: "assets/piano.jpg",
+      cosmos: "assets/IMG_7252.jpeg"
+    };
+
+    const STORIES = {
+      fencing: {
+        img: IMAGES.fencing,
+        palette: "bw",
+        meta: "Fencing Foil & Épée",
+        title: "Distance, Feint, Counter-Measure",
+        desc: "On the piste, you have milliseconds to read an opponent's shoulder before committing to a lunge. Cybersecurity and systems architecture operate on the same way: preventive behaviour and critical reasoning.",
+        pills: ["Spatial Timing", "Discipline", "Fencing"]
+      },
+      piano: {
+        img: IMAGES.piano,
+        palette: "bw",
+        meta: "Caravan // Big Band Ensemble",
+        title: "Teamwork playing Jazz",
+        desc: "Playing piano in my school's big band taught me real-time teamwork: holding harmonic structure for 15+ musicians while keeping the pocket tight. Music is the hidden metronome behind my code and photography.",
+        pills: ["Teamwork", "Caravan", "Big Band"]
+      },
+      cosmos: {
+        img: IMAGES.cosmos,
+        palette: "color",
+        meta: "SLI & FGC 2024–2025",
+        title: "From Luanda to the World and Above",
+        desc: "Across SLI, FGC 2024 and 2025, we explored how robotics and lunar technology can improve life on Earth. I've started building in Luanda and arrived at Portugal, aiming to work in Space-Applied Cybersecurity.",
+        pills: ["SLI", "FGC 2024 & 2025", "Space Cybersecurity"]
+      }
+    };
+
+    // All 12 Flown Countries with Pin Coordinates and ISO numeric codes (country names only, except Dubai · UAE)
+    const FLOWN_DESTINATIONS = [
+      { code: "620", name: "Portugal", defaultRed: true, coords: [-9.14, 38.72] },
+      { code: "024", name: "Angola", defaultRed: true, coords: [13.23, -8.83] },
+      { code: "591", name: "Panama", defaultRed: false, coords: [-79.52, 8.99] },
+      { code: "300", name: "Greece", defaultRed: false, coords: [23.72, 37.98] },
+      { code: "528", name: "Netherlands", defaultRed: false, coords: [4.90, 52.37] },
+      { code: "784", name: "Dubai · UAE", defaultRed: false, coords: [55.27, 25.20] },
+      { code: "076", name: "Brazil", defaultRed: false, coords: [-47.88, -15.79] },
+      { code: "710", name: "South Africa", defaultRed: false, coords: [28.04, -26.20] },
+      { code: "516", name: "Namibia", defaultRed: false, coords: [17.08, -22.56] },
+      { code: "756", name: "Switzerland", defaultRed: false, coords: [8.05, 47.45] },
+      { code: "250", name: "France", defaultRed: false, coords: [2.35, 48.00] },
+      { code: "276", name: "Germany", defaultRed: false, coords: [9.50, 50.50] }
+    ];
+
+    // ==================== 1. ZERO-SNAP IN-PLACE PRELOADER ON #hero-adriano-line ====================
+    const CIPHER_CHARS = "!@#$%^&*_+-=<>?/0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const ANARCHY_FONTS = [
+      "'Syne', sans-serif",
+      "'Instrument Serif', serif",
+      "'JetBrains Mono', monospace",
+      "'Playfair Display', serif",
+      "'Space Grotesk', sans-serif"
+    ];
+
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    const navEntry = performance.getEntriesByType("navigation")[0];
+    const isPageReload = navEntry && navEntry.type === "reload";
+    let savedScrollY = isPageReload
+      ? Math.max(window.scrollY, Number(sessionStorage.getItem("portfolio_saved_scroll_y") || 0))
+      : window.scrollY;
+    let scrollTrackingReady = false;
+    const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);
+
+    function blockScrollDuringIntro(e) {
+      if (document.body.classList.contains("intro-locked")) {
+        e.preventDefault();
+      }
+    }
+
+    window.addEventListener("wheel", blockScrollDuringIntro, { passive: false });
+    window.addEventListener("touchmove", blockScrollDuringIntro, { passive: false });
+    window.addEventListener("keydown", (e) => {
+      if (document.body.classList.contains("intro-locked") && SCROLL_KEYS.has(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    window.addEventListener("scroll", () => {
+      if (document.body.classList.contains("intro-locked")) {
+        if (window.scrollY !== 0) {
+          window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        }
+        return;
+      }
+      if (scrollTrackingReady && document.body.classList.contains("intro-complete")) {
+        sessionStorage.setItem("portfolio_saved_scroll_y", String(window.scrollY));
+      }
+    }, { passive: true });
+    window.addEventListener("beforeunload", () => {
+      if (scrollTrackingReady && document.body.classList.contains("intro-complete")) {
+        sessionStorage.setItem("portfolio_saved_scroll_y", String(window.scrollY));
+      }
+    });
+
+    function runInPlaceIntro() {
+      if (window.scrollY > 0) {
+        savedScrollY = Math.max(savedScrollY, window.scrollY);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+      const wordEl = document.getElementById("hero-adriano-line");
+      const backdrop = document.getElementById("intro-backdrop");
+      const sourceWord = "Anomaly";
+      const targetWord = "ADRIANO";
+
+      wordEl.innerHTML = sourceWord.split("").map((ch, idx) =>
+        `<span class="anomaly-char" id="achar-${idx}">${CIPHER_CHARS[idx % CIPHER_CHARS.length]}</span>`
+      ).join("");
+
+      const startTime = performance.now();
+      const totalDuration = 3500;
+
+      const interval = setInterval(() => {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(1, elapsed / totalDuration);
+
+        targetWord.split("").forEach((finalChar, i) => {
+          const span = document.getElementById(`achar-${i}`);
+          if (!span) return;
+
+          if (progress < 0.25) {
+            span.classList.remove("char-settled");
+            span.textContent = CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)];
+            span.style.fontFamily = "'JetBrains Mono', monospace";
+            span.style.color = "#e11d48";
+          } else if (progress < 0.70) {
+            span.classList.remove("char-settled");
+            span.textContent = sourceWord[i];
+            span.style.fontFamily = ANARCHY_FONTS[Math.floor(Math.random() * ANARCHY_FONTS.length)];
+            span.style.fontStyle = Math.random() > 0.55 ? "italic" : "normal";
+            span.style.color = Math.random() > 0.8 ? "#38bdf8" : "#ffffff";
+            span.style.transform = `translateY(${(Math.random() - 0.5) * 4}px) rotate(${(Math.random() - 0.5) * 6}deg)`;
+          } else {
+            const settleThreshold = 0.70 + (i / targetWord.length) * 0.22;
+            if (progress < settleThreshold) {
+              span.classList.remove("char-settled");
+              span.textContent = CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)];
+              span.style.fontFamily = ANARCHY_FONTS[Math.floor(Math.random() * ANARCHY_FONTS.length)];
+              span.style.color = "#e11d48";
+            } else {
+              // Settled character: inherits exact parent Syne 800 metrics & inline kerning so zero snap occurs at 100%
+              span.textContent = finalChar;
+              span.classList.add("char-settled");
+              span.style.fontFamily = "inherit";
+              span.style.fontWeight = "inherit";
+              span.style.fontStyle = "normal";
+              span.style.color = "inherit";
+              span.style.transform = "none";
+            }
+          }
+        });
+
+        if (progress >= 1) {
+          clearInterval(interval);
+          // Keep the settled spans intact so DOM layout does not jump a single pixel
+          backdrop.classList.add("backdrop-cleared");
+          document.documentElement.classList.remove("intro-locked");
+          document.body.classList.remove("intro-locked");
+          document.body.classList.add("intro-complete");
+
+          if (savedScrollY > 40) {
+            setTimeout(() => {
+              scrollTrackingReady = true;
+              window.scrollTo({ top: savedScrollY, behavior: "smooth" });
+            }, 450);
+          } else {
+            scrollTrackingReady = true;
+          }
+        }
+      }, 65);
+    }
+
+    // ==================== 2. MAGIC UI SMOOTH CURSOR (Dynamic Black/White Contrast) ====================
+    (function initSmoothCursor() {
+      if (!window.matchMedia("(pointer: fine)").matches) return;
+      document.body.classList.add("custom-cursor-active");
+      const cursor = document.getElementById("smooth-cursor");
+      const arrowPath = document.getElementById("cursor-arrow-path");
+
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let curX = mouseX, curY = mouseY;
+      let prevX = mouseX, prevY = mouseY;
+
+      function parseRgb(str) {
+        const m = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        if (!m) return null;
+        return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+      }
+
+      function getEffectiveLuminance(el) {
+        let node = el;
+        while (node && node !== document.documentElement) {
+          const bg = getComputedStyle(node).backgroundColor;
+          const rgb = parseRgb(bg);
+          if (rgb && rgb.a > 0.35) {
+            return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+          }
+          node = node.parentElement;
+        }
+        return 0.05;
+      }
+
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        const elUnder = document.elementFromPoint(mouseX, mouseY);
+        if (elUnder) {
+          const lum = getEffectiveLuminance(elUnder);
+          if (lum > 0.55) {
+            arrowPath.setAttribute("fill", "#09090b");
+            arrowPath.setAttribute("stroke", "#f4f4f0");
+          } else {
+            arrowPath.setAttribute("fill", "#f4f4f0");
+            arrowPath.setAttribute("stroke", "#09090b");
+          }
+        }
+      });
+
+      function tick() {
+        curX += (mouseX - curX) * 0.22;
+        curY += (mouseY - curY) * 0.22;
+        const vx = curX - prevX;
+        prevX = curX;
+        prevY = curY;
+        const tilt = Math.max(-18, Math.min(18, vx * 1.1));
+        cursor.style.left = `${curX}px`;
+        cursor.style.top = `${curY}px`;
+        cursor.style.transform = `translate(-4px, -4px) rotate(${tilt.toFixed(1)}deg)`;
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    // ==================== 3. HERO WORDMARK REEL (Random -10° to +10°) + AUTO-PLAY CARAVAN ====================
+    (function initHeroAndAudio() {
+      // Strictly landscape-only photos (width > height) from the active photography pool
+      function getLandscapeReelList() {
+        return shuffleArray(
+          ACTIVE_PHOTOS
+            .filter((p) => p && p.aspect > 1.0 && !EXCLUDED_GALLERY_FILES.has(String(p.filename || "").toLowerCase()))
+            .map((p) => p.src)
+        );
+      }
+
+      let reelList = getLandscapeReelList();
+      const reelImg = document.getElementById("hero-reel-img");
+      const reelFrame = document.getElementById("hero-reel-frame");
+      const wordmarkWrap = document.getElementById("hero-wordmark-wrap");
+      const isFineHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      let reelIdx = 0;
+      let reelTimer = null;
+      let touchReelTimeout = null;
+
+      if (reelImg) {
+        reelImg.addEventListener("error", () => {
+          const badSrc = reelImg.getAttribute("src") || reelImg.src;
+          pruneBrokenPhoto(badSrc);
+          reelList = getLandscapeReelList();
+          if (reelList.length > 0) {
+            reelIdx = 0;
+            reelImg.src = reelList[0];
+          }
+        });
+      }
+
+      HERO_REEL_CONTROLLER.refresh = () => {
+        reelList = getLandscapeReelList();
+        if (reelList.length > 0 && reelImg) {
+          reelIdx = 0;
+          reelImg.src = reelList[0];
+        }
+      };
+      HERO_REEL_CONTROLLER.refresh();
+
+      function applyRandomAngle() {
+        const angle = (Math.random() * 20 - 10).toFixed(2);
+        reelFrame.style.transform = `rotate(${angle}deg)`;
+      }
+
+      function startReel() {
+        clearInterval(reelTimer);
+        // Always randomized order on every hover
+        reelList = getLandscapeReelList();
+        if (reelList.length === 0) return;
+        reelIdx = 0;
+        reelImg.src = reelList[reelIdx];
+        applyRandomAngle();
+        reelTimer = setInterval(() => {
+          if (reelList.length === 0) return;
+          reelIdx = (reelIdx + 1) % reelList.length;
+          if (reelIdx === 0) reelList = getLandscapeReelList();
+          if (reelList.length > 0) {
+            reelImg.src = reelList[reelIdx];
+            applyRandomAngle();
+          }
+        }, 280);
+      }
+
+      function stopReel() {
+        clearInterval(reelTimer);
+        reelTimer = null;
+      }
+
+      const heroSection = document.getElementById("hero-section");
+      const heroBgParallax = document.getElementById("hero-bg-parallax");
+      if (heroSection && heroBgParallax && isFineHover()) {
+        heroSection.addEventListener("mousemove", (e) => {
+          const rect = heroSection.getBoundingClientRect();
+          const nx = (e.clientX - rect.left) / rect.width - 0.5;
+          const ny = (e.clientY - rect.top) / rect.height - 0.5;
+          const dx = (nx * 28).toFixed(2);
+          const dy = (ny * 20).toFixed(2);
+          heroBgParallax.style.transform = `translate3d(${dx}px, calc(-5% + ${dy}px), 0)`;
+        });
+        heroSection.addEventListener("mouseleave", () => {
+          heroBgParallax.style.transform = "translate3d(0, -5%, 0)";
+        });
+      }
+
+      wordmarkWrap.addEventListener("mouseenter", () => {
+        if (!isFineHover()) return;
+        startReel();
+      });
+      wordmarkWrap.addEventListener("mouseleave", () => {
+        if (!isFineHover()) return;
+        stopReel();
+      });
+
+      wordmarkWrap.addEventListener("click", () => {
+        if (isFineHover() || !document.body.classList.contains("intro-complete")) return;
+        if (wordmarkWrap.classList.contains("reel-active")) {
+          clearTimeout(touchReelTimeout);
+          wordmarkWrap.classList.remove("reel-active");
+          stopReel();
+        } else {
+          wordmarkWrap.classList.add("reel-active");
+          startReel();
+          clearTimeout(touchReelTimeout);
+          touchReelTimeout = setTimeout(() => {
+            wordmarkWrap.classList.remove("reel-active");
+            stopReel();
+          }, 1800);
+        }
+      });
+
+      // Caravan Audio Player (Real MP3 playback, 25% default volume)
+      const TRACKS = [
+        { name: "CARAVAN", src: "assets/Caravan.mp3" },
+        { name: "TAKE FIVE", src: encodeURI("assets/Dave Brubeck, The Dave Brubeck Quartet - Take Five (Audio).mp3") },
+        { name: "WHIPLASH", src: "assets/Whiplash.mp3" }
+      ];
+      let trackIdx = 0;
+      let isPlaying = false;
+      let wantsAutoplay = true;
+      let currentVolume = 0.25;
+
+      const audio = new Audio();
+      audio.preload = "auto";
+      audio.volume = currentVolume;
+      audio.src = TRACKS[0].src;
+
+      const caravanWidget = document.querySelector(".caravan-widget");
+      const caravanHeaderRow = document.getElementById("caravan-header-row");
+      const titleEl = document.getElementById("track-title");
+      const playBtn = document.getElementById("audio-play-btn");
+      const prevBtn = document.getElementById("audio-prev-btn");
+      const nextBtn = document.getElementById("audio-next-btn");
+      const iconPause = document.getElementById("icon-pause");
+      const iconPlay = document.getElementById("icon-play");
+      const eqBars = document.getElementById("eq-bars");
+      const volSlider = document.getElementById("audio-volume");
+
+      caravanHeaderRow.addEventListener("click", (e) => {
+        e.stopPropagation();
+        caravanWidget.classList.toggle("caravan-open");
+      });
+      caravanHeaderRow.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          caravanWidget.classList.toggle("caravan-open");
+        }
+      });
+      document.addEventListener("click", (e) => {
+        if (caravanWidget && !caravanWidget.contains(e.target)) {
+          caravanWidget.classList.remove("caravan-open");
+        }
+      });
+
+      function updatePlayUI() {
+        iconPause.classList.toggle("hidden", !isPlaying);
+        iconPlay.classList.toggle("hidden", isPlaying);
+        eqBars.classList.toggle("eq-playing", isPlaying);
+        eqBars.classList.toggle("eq-paused", !isPlaying);
+      }
+
+      function onFirstInteraction(e) {
+        if (e.type === "pointerdown" && e.target.closest("#audio-play-btn, #audio-prev-btn, #audio-next-btn")) {
+          return;
+        }
+        if (wantsAutoplay && audio.paused) {
+          tryPlay();
+        }
+      }
+
+      function removeUnlockListeners() {
+        window.removeEventListener("pointerdown", onFirstInteraction);
+        window.removeEventListener("keydown", onFirstInteraction);
+      }
+
+      function tryPlay() {
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          playPromise
+            .then(() => {
+              isPlaying = true;
+              wantsAutoplay = false;
+              removeUnlockListeners();
+              updatePlayUI();
+            })
+            .catch(() => {
+              isPlaying = false;
+              updatePlayUI();
+            });
+        } else {
+          isPlaying = !audio.paused;
+          wantsAutoplay = false;
+          removeUnlockListeners();
+          updatePlayUI();
+        }
+      }
+
+      audio.addEventListener("play", () => {
+        isPlaying = true;
+        updatePlayUI();
+      });
+      audio.addEventListener("pause", () => {
+        isPlaying = false;
+        updatePlayUI();
+      });
+      audio.addEventListener("ended", () => {
+        switchTrack(1, true);
+      });
+
+      function togglePlay() {
+        wantsAutoplay = false;
+        removeUnlockListeners();
+        if (audio.paused) {
+          tryPlay();
+        } else {
+          audio.pause();
+        }
+      }
+
+      function switchTrack(dir, forcePlay = false) {
+        trackIdx = (trackIdx + dir + TRACKS.length) % TRACKS.length;
+        titleEl.textContent = TRACKS[trackIdx].name;
+        const shouldPlay = forcePlay || !audio.paused || wantsAutoplay;
+        audio.src = TRACKS[trackIdx].src;
+        audio.currentTime = 0;
+        if (shouldPlay) {
+          tryPlay();
+        } else {
+          isPlaying = false;
+          updatePlayUI();
+        }
+      }
+
+      playBtn.addEventListener("click", togglePlay);
+      prevBtn.addEventListener("click", () => switchTrack(-1));
+      nextBtn.addEventListener("click", () => switchTrack(1));
+      volSlider.addEventListener("input", (e) => {
+        const val = Number(e.target.value);
+        currentVolume = val / 100;
+        audio.volume = currentVolume;
+      });
+
+      window.addEventListener("pointerdown", onFirstInteraction);
+      window.addEventListener("keydown", onFirstInteraction);
+      updatePlayUI();
+      tryPlay();
+    })();
+
+    // ==================== 4. PINNED CONTROLLED CHAOS SCROLL & MAGIC HIGHLIGHTER ====================
+    const BEAT_QUOTES = [
+      "Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.",
+      "Big band piano taught me how to hold structure for an ensemble — the same instinct that powers Team Portugal in robotics.",
+      "From Luanda, to Lisbon, Porto, Athens and Panama City, building STEM projects with international teams with a focus to software and cybersecurity."
+    ];
+    window.addEventListener("scroll", () => {
+      const beats = document.querySelectorAll(".pinned-beat");
+      const quoteEl = document.getElementById("pinned-dynamic-quote");
+      if (quoteEl && beats.length) {
+        let activeIdx = 0;
+        beats.forEach((b, i) => {
+          if (b.getBoundingClientRect().top < window.innerHeight * 0.55) activeIdx = i;
+        });
+        quoteEl.textContent = BEAT_QUOTES[activeIdx];
+      }
+    }, { passive: true });
+
+    const hlObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("hl-visible");
+        }
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll(".magic-hl").forEach((el) => hlObserver.observe(el));
+
+    // ==================== 5. SCROLL-LINKED DIAGONAL -> DYNAMIC JUSTIFIED BENTO MOSAIC MORPH ====================
+    (function initPhotographyMorph() {
+      const section = document.getElementById("photography-morph-section");
+      const stage = document.getElementById("photo-morph-stage");
+      if (!section || !stage) return;
+
+      let morphItems = [];
+      let morphEls = [];
+      let diagStart = [];
+      let bentoSlots = [];
+
+      function pickMorphBatch(desiredCount) {
+        const valid = ACTIVE_PHOTOS.filter(isValidGalleryEntry);
+        if (valid.length === 0) return [];
+        const minCount = Math.min(valid.length, 9);
+        const maxCount = Math.min(valid.length, 15);
+        const target = desiredCount
+          ? Math.max(minCount, Math.min(maxCount, desiredCount))
+          : minCount + Math.floor(Math.random() * (maxCount - minCount + 1));
+        return shuffleArray(valid).slice(0, target);
+      }
+
+      function computeDynamicBentoSlots(items, stageW, stageH, isMobile) {
+        const n = items.length;
+        if (n === 0) return [];
+        const gap = isMobile ? 6 : 10;
+        const W = Math.max(280, stageW);
+        const H = Math.max(240, stageH);
+
+        const pref = new Float64Array(n + 1);
+        for (let i = 0; i < n; i++) {
+          const a = Number(items[i].aspect) > 0.1 ? Number(items[i].aspect) : 1.333;
+          pref[i + 1] = pref[i] + a;
+        }
+        const totalAspect = pref[n];
+
+        const minR = Math.min(n, isMobile ? (n >= 9 ? 3 : 2) : (n >= 9 ? 3 : 2));
+        const maxR = Math.min(n, isMobile ? 7 : 5);
+
+        let bestLayout = null;
+        let bestScore = -Infinity;
+
+        for (let R = Math.max(1, minR); R <= maxR; R++) {
+          const targetA = totalAspect / R;
+          const dp = Array.from({ length: R + 1 }, () => new Float64Array(n + 1).fill(Infinity));
+          const prev = Array.from({ length: R + 1 }, () => new Int16Array(n + 1).fill(-1));
+          dp[0][0] = 0;
+
+          for (let r = 1; r <= R; r++) {
+            for (let i = r; i <= n - (R - r); i++) {
+              for (let j = r - 1; j <= i - 1; j++) {
+                if (!Number.isFinite(dp[r - 1][j])) continue;
+                const k = i - j;
+                const rowA = pref[i] - pref[j];
+                const singlePenalty = (k === 1 && n >= R + 2) ? (targetA * targetA * 1.4) : 0;
+                const cost = dp[r - 1][j] + Math.pow(rowA - targetA, 2) + singlePenalty;
+                if (cost < dp[r][i]) {
+                  dp[r][i] = cost;
+                  prev[r][i] = j;
+                }
+              }
+            }
+          }
+
+          if (prev[R][n] === -1) continue;
+
+          const rows = [];
+          let cur = n;
+          for (let r = R; r >= 1; r--) {
+            const start = prev[r][cur];
+            rows.unshift({ start, end: cur, k: cur - start, aspectSum: pref[cur] - pref[start] });
+            cur = start;
+          }
+
+          let invSum = 0;
+          let gapFactorSum = 0;
+          for (const row of rows) {
+            invSum += 1 / row.aspectSum;
+            gapFactorSum += (row.k - 1) / row.aspectSum;
+          }
+
+          const availH = Math.max(80, H - (R - 1) * gap);
+          const maxWidthByHeight = (availH + gap * gapFactorSum) / invSum;
+          const wEff = Math.min(W, maxWidthByHeight);
+          if (wEff < 120) continue;
+
+          let totalH = (R - 1) * gap;
+          let minRowH = Infinity;
+          let maxRowH = 0;
+          let valid = true;
+          const rowHeights = [];
+
+          for (const row of rows) {
+            const usableW = wEff - (row.k - 1) * gap;
+            if (usableW <= 20) { valid = false; break; }
+            const h = usableW / row.aspectSum;
+            if (h < 32) { valid = false; break; }
+            rowHeights.push(h);
+            totalH += h;
+            minRowH = Math.min(minRowH, h);
+            maxRowH = Math.max(maxRowH, h);
+          }
+          if (!valid) continue;
+
+          const fillRatio = (wEff * totalH) / (W * H);
+          const heightBalancePenalty = (maxRowH / Math.max(1, minRowH) - 1) * 0.14;
+          const tinyTilePenalty = minRowH < (isMobile ? 52 : 76) ? 0.3 : 0;
+          const score = fillRatio - heightBalancePenalty - tinyTilePenalty;
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestLayout = { rows, rowHeights, wEff, totalH, gap };
+          }
+        }
+
+        if (!bestLayout) {
+          const cols = isMobile ? 2 : Math.min(4, Math.ceil(Math.sqrt(n * 1.5)));
+          const rows = [];
+          for (let i = 0; i < n; i += cols) {
+            const end = Math.min(n, i + cols);
+            rows.push({ start: i, end, k: end - i, aspectSum: pref[end] - pref[i] });
+          }
+          let invSum = 0;
+          let gapFactorSum = 0;
+          rows.forEach((r) => { invSum += 1 / r.aspectSum; gapFactorSum += (r.k - 1) / r.aspectSum; });
+          const availH = Math.max(80, H - (rows.length - 1) * gap);
+          const wEff = Math.min(W, (availH + gap * gapFactorSum) / invSum);
+          const rowHeights = rows.map((r) => Math.max(24, (wEff - (r.k - 1) * gap) / r.aspectSum));
+          const totalH = (rows.length - 1) * gap + rowHeights.reduce((s, v) => s + v, 0);
+          bestLayout = { rows, rowHeights, wEff, totalH, gap };
+        }
+
+        const slots = new Array(n);
+        const offsetX = (W - bestLayout.wEff) / 2;
+        const offsetY = (H - bestLayout.totalH) / 2;
+        let curY = offsetY;
+
+        bestLayout.rows.forEach((row, rIdx) => {
+          const h = bestLayout.rowHeights[rIdx];
+          let curX = offsetX;
+          for (let i = row.start; i < row.end; i++) {
+            const a = Number(items[i].aspect) > 0.1 ? Number(items[i].aspect) : 1.333;
+            const w = h * a;
+            slots[i] = { x: curX, y: curY, w, h };
+            curX += w + bestLayout.gap;
+          }
+          curY += h + bestLayout.gap;
+        });
+
+        return slots;
+      }
+
+      function computeDynamicDiagStart(items, stageW, stageH, isMobile) {
+        const n = items.length;
+        if (n === 0) return [];
+        const W = Math.max(280, stageW);
+        const H = Math.max(240, stageH);
+        const rots = [-4.5, 3.2, -2.6, 3.8, -3.4, 2.4, -4.0, 2.9, -2.1, 4.2, -3.1, 2.8, -4.8, 3.5, -2.4];
+
+        const targetH = isMobile ? H * 0.25 : H * 0.39;
+        const maxW = isMobile ? W * 0.48 : W * 0.31;
+        const minW = isMobile ? W * 0.22 : W * 0.14;
+
+        return items.map((item, i) => {
+          const a = Number(item.aspect) > 0.1 ? Number(item.aspect) : 1.333;
+          let h = Math.min(targetH, maxW / a);
+          let w = h * a;
+          if (w < minW) {
+            w = Math.min(maxW, minW);
+            h = w / a;
+          }
+          const t = n > 1 ? i / (n - 1) : 0.5;
+          const xSpan = Math.max(20, W * (isMobile ? 0.58 : 0.86) - w);
+          const ySpan = Math.max(20, H * (isMobile ? 0.62 : 0.54) - h);
+          const staggerY = (i % 2 === 0 ? -1 : 1) * (H * (isMobile ? 0.035 : 0.055));
+          const x = W * (isMobile ? 0.04 : 0.06) + t * xSpan;
+          const y = Math.max(8, Math.min(H - h - 8, H * 0.08 + t * ySpan + staggerY));
+          return { x, y, w, h, rot: rots[i % rots.length] };
+        });
+      }
+
+      function renderMorphTiles() {
+        stage.innerHTML = "";
+        morphEls = morphItems.map((photo) => {
+          const tile = document.createElement("div");
+          tile.className = "morph-photo palette-item absolute overflow-hidden bg-zinc-950 border border-white/10 shadow-2xl cursor-pointer group";
+          tile.setAttribute("data-palette", photo.palette || "color");
+          tile.setAttribute("data-photo-src", photo.src);
+
+          const img = document.createElement("img");
+          img.src = photo.src;
+          img.alt = photo.filename || "Photography";
+          img.className = "w-full h-full object-contain block pointer-events-none select-none transition-transform duration-500 group-hover:scale-[1.03]";
+          img.loading = "eager";
+          img.decoding = "async";
+
+          tile.appendChild(img);
+          stage.appendChild(tile);
+          return tile;
+        });
+      }
+
+      function recomputeGeometry() {
+        const isMobile = window.innerWidth < 768;
+        const stageW = stage.clientWidth || Math.min(1152, window.innerWidth - 40);
+        const stageH = stage.clientHeight || Math.max(360, window.innerHeight * 0.68);
+        diagStart = computeDynamicDiagStart(morphItems, stageW, stageH, isMobile);
+        bentoSlots = computeDynamicBentoSlots(morphItems, stageW, stageH, isMobile);
+      }
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function easeInOutCubic(x) {
+        return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      }
+
+      function updateMorph() {
+        if (morphEls.length === 0) return;
+        const isMobile = window.innerWidth < 768;
+        const stageW = stage.clientWidth || Math.min(1152, window.innerWidth - 40);
+        const stageH = stage.clientHeight || Math.max(360, window.innerHeight * 0.68);
+        const driftX = stageW * (isMobile ? 0.06 : 0.14);
+        const driftY = stageH * (isMobile ? 0.05 : 0.08);
+
+        const rect = section.getBoundingClientRect();
+        const scrollable = section.offsetHeight - window.innerHeight;
+        const p = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
+
+        const diagDrift = Math.min(1, p / 0.45);
+        const morphT = p <= 0.45 ? 0 : easeInOutCubic((p - 0.45) / 0.55);
+
+        morphEls.forEach((el, i) => {
+          const d = diagStart[i];
+          const b = bentoSlots[i];
+          if (!d || !b) return;
+
+          const glidedX = d.x - diagDrift * driftX;
+          const glidedY = d.y - diagDrift * driftY;
+
+          const curX = lerp(glidedX, b.x, morphT);
+          const curY = lerp(glidedY, b.y, morphT);
+          const curW = lerp(d.w, b.w, morphT);
+          const curH = lerp(d.h, b.h, morphT);
+          const curRot = lerp(d.rot, 0, morphT);
+
+          el.style.left = `${curX.toFixed(1)}px`;
+          el.style.top = `${curY.toFixed(1)}px`;
+          el.style.width = `${curW.toFixed(1)}px`;
+          el.style.height = `${curH.toFixed(1)}px`;
+          el.style.transform = `rotate(${curRot.toFixed(2)}deg)`;
+          el.style.zIndex = morphT > 0.8 ? 1 : (30 - i);
+        });
+      }
+
+      function rebuildMorphGrid(freshSelection) {
+        if (freshSelection || morphItems.length === 0) {
+          morphItems = pickMorphBatch();
+        }
+        renderMorphTiles();
+        recomputeGeometry();
+        updateMorph();
+      }
+
+      MORPH_CONTROLLER.rebuild = rebuildMorphGrid;
+      MORPH_CONTROLLER.layout = () => {
+        recomputeGeometry();
+        updateMorph();
+      };
+      MORPH_CONTROLLER.onPrune = (brokenNorm) => {
+        const hadBroken = morphItems.some((p) => normalizePhotoPath(p.src) === brokenNorm);
+        if (!hadBroken) return;
+        const currentSet = new Set(morphItems.map((p) => normalizePhotoPath(p.src)));
+        const replacement = ACTIVE_PHOTOS.find(
+          (p) => normalizePhotoPath(p.src) !== brokenNorm && !currentSet.has(normalizePhotoPath(p.src))
+        );
+        morphItems = morphItems.filter((p) => normalizePhotoPath(p.src) !== brokenNorm);
+        if (replacement) morphItems.push(replacement);
+        renderMorphTiles();
+        recomputeGeometry();
+        updateMorph();
+      };
+
+      let morphResizeRaf = null;
+      window.addEventListener("scroll", updateMorph, { passive: true });
+      window.addEventListener("resize", () => {
+        if (morphResizeRaf) cancelAnimationFrame(morphResizeRaf);
+        morphResizeRaf = requestAnimationFrame(() => {
+          recomputeGeometry();
+          updateMorph();
+        });
+      });
+
+      // Delegated click + B&W 35% Opacity Hover Rule + capture-phase broken-image pruning on the Morph Stage
+      stage.addEventListener("click", (e) => {
+        const item = e.target.closest(".morph-photo");
+        if (!item) return;
+        const src = item.getAttribute("data-photo-src");
+        if (src) openMorphModal(src);
+      });
+      stage.addEventListener("mouseover", (e) => {
+        const item = e.target.closest(".palette-item");
+        if (!item) return;
+        const p = item.getAttribute("data-palette");
+        stage.classList.toggle("hovering-bw", p === "bw");
+        stage.classList.toggle("hovering-color", p === "color");
+      });
+      stage.addEventListener("mouseleave", () => {
+        stage.classList.remove("hovering-bw", "hovering-color");
+      });
+      stage.addEventListener("error", (e) => {
+        if (e.target && e.target.tagName === "IMG") {
+          const badSrc = e.target.getAttribute("src") || e.target.src;
+          pruneBrokenPhoto(badSrc);
+        }
+      }, true);
+
+      rebuildMorphGrid(true);
+    })();
+
+    // ==================== 6. 3D TILT (+15% STRONGER MOTION ON POINTER-FINE DEVICES) ====================
+    const hasFineHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    document.addEventListener("mousemove", (e) => {
+      if (!hasFineHover()) return;
+      const card = e.target.closest(".tilt-card");
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      // +15% stronger tilt (9.2 deg max + subtle 1.025 scale lift)
+      card.style.transform = `perspective(850px) rotateX(${(-y * 9.2).toFixed(2)}deg) rotateY(${(x * 9.2).toFixed(2)}deg) scale(1.025)`;
+    });
+    document.addEventListener("mouseout", (e) => {
+      if (!hasFineHover()) return;
+      const card = e.target.closest(".tilt-card");
+      if (card && !card.contains(e.relatedTarget)) {
+        card.style.transform = "";
+      }
+    });
+
+    // ==================== 7. MOTION-PRIMITIVES ACCORDION + MILITARY SCHOOL DECRYPTION ====================
+    document.querySelectorAll(".mp-accordion-trigger").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const item = btn.closest(".mp-accordion-item");
+        const wasOpen = item.classList.contains("open");
+        document.querySelectorAll(".mp-accordion-item").forEach((el) => el.classList.remove("open"));
+        if (!wasOpen) item.classList.add("open");
+      });
+    });
+
+    (function initDecryptText() {
+      document.querySelectorAll("[data-default][data-target]").forEach((el) => {
+        const defaultText = el.getAttribute("data-default");
+        const targetText = el.getAttribute("data-target");
+        let timer = null;
+        let revealed = false;
+
+        function animateDecrypt(toText) {
+          clearInterval(timer);
+          const startText = el.textContent;
+          const maxLen = Math.max(startText.length, toText.length);
+          const totalSteps = 13;
+          let step = 0;
+
+          timer = setInterval(() => {
+            step++;
+            const progress = step / totalSteps;
+            const settledCount = Math.floor(progress * toText.length);
+            const currentLen = Math.round(startText.length + (toText.length - startText.length) * progress);
+
+            let out = "";
+            for (let i = 0; i < currentLen; i++) {
+              if (i < settledCount) {
+                out += toText[i] || "";
+              } else if ((toText[i] || " ") === " ") {
+                out += " ";
+              } else {
+                out += CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)];
+              }
+            }
+            el.textContent = out;
+
+            if (step >= totalSteps || maxLen === 0) {
+              clearInterval(timer);
+              el.textContent = toText;
+            }
+          }, 25);
+        }
+
+        el.addEventListener("mouseenter", () => {
+          if (!hasFineHover()) return;
+          revealed = true;
+          animateDecrypt(targetText);
+        });
+        el.addEventListener("mouseleave", () => {
+          if (!hasFineHover()) return;
+          revealed = false;
+          animateDecrypt(defaultText);
+        });
+        el.addEventListener("click", () => {
+          if (hasFineHover()) return;
+          revealed = !revealed;
+          animateDecrypt(revealed ? targetText : defaultText);
+        });
+      });
+    })();
+
+    // ==================== 8. FULL PHOTO GALLERY OVERLAY & MORPHING DIALOG ====================
+    function getArchiveTargetAspect() {
+      if (window.innerWidth < 640) return 2.4;
+      if (window.innerWidth < 1024) return 3.8;
+      return 5.2;
+    }
+
+    function renderFullArchiveGrid() {
+      const grid = document.getElementById("full-archive-grid");
+      if (!grid) return;
+
+      const targetRowAspect = getArchiveTargetAspect();
+      const maxPerRow = window.innerWidth < 640 ? 3 : (window.innerWidth < 1024 ? 5 : 6);
+      const validPhotos = ARCHIVE_PHOTOS.filter(isValidGalleryEntry);
+
+      const rows = [];
+      let curRow = [];
+      let curSum = 0;
+
+      for (const photo of validPhotos) {
+        const a = Number(photo.aspect) > 0.1 ? Number(photo.aspect) : 1.333;
+        curRow.push({ photo, a });
+        curSum += a;
+        if (curSum >= targetRowAspect * 0.88 || curRow.length >= maxPerRow) {
+          rows.push({ items: curRow, sumA: curSum, complete: true });
+          curRow = [];
+          curSum = 0;
+        }
+      }
+      if (curRow.length > 0) {
+        const complete = curSum >= targetRowAspect * 0.7 || rows.length === 0;
+        rows.push({ items: curRow, sumA: curSum, complete });
+      }
+
+      grid.innerHTML = rows.map((row) => {
+        const rowStyle = row.complete
+          ? ""
+          : `style="width: ${Math.max(24, Math.min(100, (row.sumA / targetRowAspect) * 100)).toFixed(1)}%;"`;
+        const tilesHtml = row.items.map(({ photo, a }) => {
+          const safeSrc = String(photo.src || "").replace(/"/g, "&quot;");
+          const safeAlt = String(photo.filename || "Photography").replace(/"/g, "&quot;");
+          return `
+            <div class="palette-item min-w-0 overflow-hidden bg-zinc-900 border border-white/5 shadow-lg cursor-pointer group" data-palette="${photo.palette || "color"}" data-photo-src="${safeSrc}" style="flex: ${a} 1 0%; aspect-ratio: ${a};">
+              <img src="${safeSrc}" alt="${safeAlt}" class="w-full h-full object-contain block transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+            </div>
+          `;
+        }).join("");
+        return `<div class="flex flex-row gap-3 sm:gap-4 items-stretch" ${rowStyle}>${tilesHtml}</div>`;
+      }).join("");
+
+      if (!grid.dataset.listenersBound) {
+        grid.dataset.listenersBound = "1";
+        grid.addEventListener("click", (e) => {
+          const item = e.target.closest("[data-photo-src]");
+          if (!item) return;
+          openMorphModal(item.getAttribute("data-photo-src"));
+        });
+        grid.addEventListener("mouseover", (e) => {
+          const item = e.target.closest(".palette-item");
+          if (!item) return;
+          const p = item.getAttribute("data-palette");
+          grid.classList.toggle("hovering-bw", p === "bw");
+          grid.classList.toggle("hovering-color", p === "color");
+        });
+        grid.addEventListener("mouseleave", () => {
+          grid.classList.remove("hovering-bw", "hovering-color");
+        });
+        grid.addEventListener("error", (e) => {
+          if (e.target && e.target.tagName === "IMG") {
+            const badSrc = e.target.getAttribute("src") || e.target.src;
+            pruneBrokenPhoto(badSrc);
+          }
+        }, true);
+
+        let lastArchiveTarget = targetRowAspect;
+        window.addEventListener("resize", () => {
+          const nextTarget = getArchiveTargetAspect();
+          if (nextTarget !== lastArchiveTarget) {
+            lastArchiveTarget = nextTarget;
+            renderFullArchiveGrid();
+          }
+        });
+      }
+    }
+
+    ARCHIVE_CONTROLLER.render = renderFullArchiveGrid;
+
+    function openFullGalleryModal() {
+      const modal = document.getElementById("full-gallery-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeFullGalleryModal() {
+      const modal = document.getElementById("full-gallery-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    function openMorphModal(target) {
+      const modal = document.getElementById("morph-modal");
+      const card = document.getElementById("morph-modal-card");
+      const img = document.getElementById("morph-modal-img");
+      const body = document.getElementById("morph-modal-body");
+      if (!modal || !card || !img || !body) return;
+
+      const data = STORIES[target];
+      if (data) {
+        card.className = "w-full max-w-3xl max-h-[92dvh] overflow-y-auto border border-[var(--border)] bg-[var(--surface)] shadow-2xl";
+        img.className = "w-full h-52 sm:h-80 object-cover";
+        body.classList.remove("hidden");
+        img.src = data.img;
+        img.alt = data.title;
+        document.getElementById("morph-modal-meta").textContent = data.meta;
+        document.getElementById("morph-modal-title").textContent = data.title;
+        document.getElementById("morph-modal-desc").textContent = data.desc;
+        document.getElementById("morph-modal-pills").innerHTML = (data.pills || [])
+          .map((p) => `<span class="font-mono-tech text-[11px] px-3 py-1 border border-white/15 bg-white/5">${p}</span>`)
+          .join("");
+      } else if (typeof target === "string" && target.startsWith("assets/")) {
+        card.className = "w-auto max-w-[92vw] max-h-[92dvh] overflow-hidden border border-[var(--border)] bg-zinc-950 shadow-2xl";
+        img.className = "max-w-full max-h-[85dvh] w-auto h-auto object-contain block mx-auto";
+        body.classList.add("hidden");
+        img.src = target;
+        img.alt = "Photography by Adriano Vilhena";
+      } else {
+        return;
+      }
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      requestAnimationFrame(() => modal.classList.add("modal-open"));
+    }
+
+    function closeMorphModal() {
+      const modal = document.getElementById("morph-modal");
+      modal.classList.remove("modal-open");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }, 280);
+    }
+
+    document.getElementById("morph-modal").addEventListener("click", (e) => {
+      if (e.target.id === "morph-modal") closeMorphModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeMorphModal();
+        closeFullGalleryModal();
+      }
+    });
+
+    // ==================== 9. DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS ====================
+    async function initDottedMap() {
+      const wrapper = document.getElementById("dotted-map-wrapper");
+      const container = document.getElementById("dotted-map-container");
+      const banner = document.getElementById("map-flag-banner");
+      const nameEl = document.getElementById("map-flag-name");
+
+      const byCode = {};
+      FLOWN_DESTINATIONS.forEach((d) => { byCode[d.code] = d; });
+
+      try {
+        const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+        const countries = topojson.feature(world, world.objects.countries);
+
+        const width = 640, height = 300;
+        const projection = d3.geoNaturalEarth1().fitSize([width - 10, height - 10], countries).translate([width / 2, height / 2]);
+        const path = d3.geoPath(projection);
+
+        container.innerHTML = "";
+        const svg = d3.select(container)
+          .append("svg")
+          .attr("viewBox", `0 0 ${width} ${height}`)
+          .attr("class", "w-full h-full");
+
+        const defs = svg.append("defs");
+        const baseDots = defs.append("pattern")
+          .attr("id", "dot-matrix-base")
+          .attr("width", 4.8)
+          .attr("height", 4.8)
+          .attr("patternUnits", "userSpaceOnUse");
+        baseDots.append("circle").attr("cx", 1.8).attr("cy", 1.8).attr("r", 0.95).attr("fill", "rgba(244,244,240,0.22)");
+
+        const redDots = defs.append("pattern")
+          .attr("id", "dot-matrix-red")
+          .attr("width", 4.8)
+          .attr("height", 4.8)
+          .attr("patternUnits", "userSpaceOnUse");
+        redDots.append("circle").attr("cx", 1.8).attr("cy", 1.8).attr("r", 1.45).attr("fill", "#e11d48");
+
+        const countryPaths = svg.append("g")
+          .selectAll("path")
+          .data(countries.features)
+          .join("path")
+          .attr("d", path)
+          .attr("data-code", (d) => String(d.id).padStart(3, "0"))
+          .attr("fill", (d) => {
+            const code = String(d.id).padStart(3, "0");
+            return byCode[code] && byCode[code].defaultRed ? "url(#dot-matrix-red)" : "url(#dot-matrix-base)";
+          });
+
+        let activeDest = null;
+
+        function resetHighlight(dest) {
+          if (dest && !dest.defaultRed) {
+            countryPaths
+              .filter((d) => String(d.id).padStart(3, "0") === dest.code)
+              .attr("fill", "url(#dot-matrix-base)");
+          }
+        }
+
+        function showLabelForDest(dest) {
+          if (activeDest && activeDest.code !== dest.code) {
+            resetHighlight(activeDest);
+          }
+          // Highlight country polygon in red
+          countryPaths
+            .filter((d) => String(d.id).padStart(3, "0") === dest.code)
+            .attr("fill", "url(#dot-matrix-red)");
+
+          // Position country name banner next to the pin in wrapper coordinates
+          const svgEl = container.querySelector("svg");
+          const svgRect = svgEl.getBoundingClientRect();
+          const wrapRect = wrapper.getBoundingClientRect();
+          const [px, py] = projection(dest.coords);
+          const scaleX = svgRect.width / width;
+          const scaleY = svgRect.height / height;
+          const leftPx = (svgRect.left - wrapRect.left) + px * scaleX;
+          const topPx = (svgRect.top - wrapRect.top) + py * scaleY;
+
+          nameEl.textContent = dest.name;
+          const bannerWidth = Math.max(banner.offsetWidth || 120, 120);
+          const clampedLeft = Math.max(4, Math.min(wrapRect.width - bannerWidth - 14, leftPx));
+          const clampedTop = Math.max(18, Math.min(wrapRect.height - 18, topPx));
+          banner.style.left = `${clampedLeft}px`;
+          banner.style.top = `${clampedTop}px`;
+          banner.classList.add("flag-open");
+        }
+
+        function hideLabelForDest(dest) {
+          resetHighlight(dest);
+          banner.classList.remove("flag-open");
+        }
+
+        // Hover and tap on country polygons
+        countryPaths
+          .on("mouseenter", function (_, d) {
+            if (!hasFineHover()) return;
+            const code = String(d.id).padStart(3, "0");
+            if (byCode[code]) showLabelForDest(byCode[code]);
+          })
+          .on("mouseleave", function (_, d) {
+            if (!hasFineHover()) return;
+            const code = String(d.id).padStart(3, "0");
+            if (byCode[code] && (!activeDest || activeDest.code !== code)) {
+              hideLabelForDest(byCode[code]);
+            }
+          })
+          .on("click", function (event, d) {
+            const code = String(d.id).padStart(3, "0");
+            if (!byCode[code]) return;
+            event.stopPropagation();
+            if (activeDest && activeDest.code === code) {
+              hideLabelForDest(activeDest);
+              activeDest = null;
+            } else {
+              showLabelForDest(byCode[code]);
+              activeDest = byCode[code];
+            }
+          });
+
+        // Subtle White Pins for all 12 flown countries
+        const pinGroup = svg.append("g")
+          .selectAll("g.map-pin")
+          .data(FLOWN_DESTINATIONS)
+          .join("g")
+          .attr("class", "map-pin cursor-pointer")
+          .attr("transform", (d) => {
+            const [x, y] = projection(d.coords);
+            return `translate(${x}, ${y})`;
+          })
+          .on("mouseenter", (_, d) => {
+            if (!hasFineHover()) return;
+            showLabelForDest(d);
+          })
+          .on("mouseleave", (_, d) => {
+            if (!hasFineHover()) return;
+            if (!activeDest || activeDest.code !== d.code) {
+              hideLabelForDest(d);
+            }
+          })
+          .on("click", (event, d) => {
+            event.stopPropagation();
+            if (activeDest && activeDest.code === d.code) {
+              hideLabelForDest(activeDest);
+              activeDest = null;
+            } else {
+              showLabelForDest(d);
+              activeDest = d;
+            }
+          });
+
+        // Invisible hit-target circle for comfortable hover and mobile tap
+        pinGroup.append("circle")
+          .attr("cx", 0)
+          .attr("cy", -5)
+          .attr("r", 9)
+          .attr("fill", "transparent");
+
+        // Pin stem + head (all pins white, including Portugal and Angola)
+        pinGroup.append("line")
+          .attr("x1", 0).attr("y1", 0)
+          .attr("x2", 0).attr("y2", -7)
+          .attr("stroke", "#f4f4f0")
+          .attr("stroke-width", 1.1);
+
+        pinGroup.append("circle")
+          .attr("cx", 0)
+          .attr("cy", -8.5)
+          .attr("r", 2.8)
+          .attr("fill", "#f4f4f0")
+          .attr("stroke", "#09090b")
+          .attr("stroke-width", 1);
+
+        document.addEventListener("click", () => {
+          if (activeDest) {
+            hideLabelForDest(activeDest);
+            activeDest = null;
+          }
+        });
+      } catch (err) {
+        container.innerHTML = "";
+      }
+    }
+
+    // ==================== INIT ====================
+    window.addEventListener("DOMContentLoaded", () => {
+      runInPlaceIntro();
+      renderFullArchiveGrid();
+      initDottedMap();
+      const initialKeys = new Set(ACTIVE_PHOTOS.map((p) => p.filename.toLowerCase()));
+      discoverFotografiaPhotos().then((resolved) => {
+        const resolvedKeys = new Set((resolved || []).map((p) => p.filename.toLowerCase()));
+        const changed =
+          resolvedKeys.size !== initialKeys.size ||
+          [...resolvedKeys].some((k) => !initialKeys.has(k));
+        if (changed) {
+          MORPH_CONTROLLER.rebuild?.(true);
+          ARCHIVE_CONTROLLER.render?.();
+          HERO_REEL_CONTROLLER.refresh?.();
+        }
+      });
+    });
+    window.addEventListener("load", () => MORPH_CONTROLLER.layout?.());
+  </script>
 </body>
 </html>
