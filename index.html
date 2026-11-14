@@ -458,6 +458,7 @@
             <input id="audio-volume" type="range" min="0" max="100" value="25" aria-label="Volume" class="caravan-vol w-full block" />
           </div>
         </div>
+        <audio id="bg-audio" src="assets/Caravan.mp3" autoplay preload="auto" class="hidden"></audio>
       </div>
     </div>
 
@@ -1391,21 +1392,25 @@
         }
       });
 
-      // Caravan Audio Player (Real MP3 playback, 25% default volume)
+      // Caravan Audio Player (Real MP3 playback, 25% default volume, unmuted autoplay + gesture fallback)
       const TRACKS = [
         { name: "CARAVAN", src: "assets/Caravan.mp3" },
         { name: "TAKE FIVE", src: encodeURI("assets/Dave Brubeck, The Dave Brubeck Quartet - Take Five (Audio).mp3") },
         { name: "WHIPLASH", src: "assets/Whiplash.mp3" }
       ];
       let trackIdx = 0;
-      let isPlaying = false;
       let wantsAutoplay = true;
+      let playPending = false;
       let currentVolume = 0.25;
 
-      const audio = new Audio();
+      const audio = document.getElementById("bg-audio") || new Audio();
       audio.preload = "auto";
+      audio.muted = false;
       audio.volume = currentVolume;
-      audio.src = TRACKS[0].src;
+      if (!audio.getAttribute("src")) {
+        audio.src = TRACKS[0].src;
+      }
+      let isPlaying = !audio.paused;
 
       const caravanWidget = document.querySelector(".caravan-widget");
       const caravanHeaderRow = document.getElementById("caravan-header-row");
@@ -1441,49 +1446,81 @@
         eqBars.classList.toggle("eq-paused", !isPlaying);
       }
 
+      const UNLOCK_EVENTS = ["pointerdown", "mousedown", "click", "touchstart", "keydown"];
+
       function onFirstInteraction(e) {
-        if (e.type === "pointerdown" && e.target.closest("#audio-play-btn, #audio-prev-btn, #audio-next-btn")) {
+        if (
+          (e.type === "pointerdown" || e.type === "mousedown" || e.type === "click") &&
+          e.target &&
+          typeof e.target.closest === "function" &&
+          e.target.closest("#audio-play-btn, #audio-prev-btn, #audio-next-btn")
+        ) {
           return;
         }
         if (wantsAutoplay && audio.paused) {
-          tryPlay();
+          tryPlay(true);
         }
       }
 
       function removeUnlockListeners() {
-        window.removeEventListener("pointerdown", onFirstInteraction);
-        window.removeEventListener("keydown", onFirstInteraction);
+        UNLOCK_EVENTS.forEach((evt) => window.removeEventListener(evt, onFirstInteraction));
       }
 
-      function tryPlay() {
+      function tryPlay(forceRetry = false) {
+        if (playPending && !forceRetry) return;
+        audio.muted = false;
+        audio.volume = currentVolume;
+        if (!audio.paused) {
+          isPlaying = true;
+          wantsAutoplay = false;
+          playPending = false;
+          removeUnlockListeners();
+          updatePlayUI();
+          return;
+        }
+        playPending = true;
         const playPromise = audio.play();
         if (playPromise && typeof playPromise.then === "function") {
           playPromise
             .then(() => {
+              playPending = false;
               isPlaying = true;
               wantsAutoplay = false;
               removeUnlockListeners();
               updatePlayUI();
             })
             .catch(() => {
-              isPlaying = false;
+              playPending = false;
+              isPlaying = !audio.paused;
               updatePlayUI();
             });
         } else {
+          playPending = false;
           isPlaying = !audio.paused;
-          wantsAutoplay = false;
-          removeUnlockListeners();
+          if (isPlaying) {
+            wantsAutoplay = false;
+            removeUnlockListeners();
+          }
           updatePlayUI();
         }
       }
 
       audio.addEventListener("play", () => {
         isPlaying = true;
+        wantsAutoplay = false;
+        removeUnlockListeners();
         updatePlayUI();
       });
       audio.addEventListener("pause", () => {
         isPlaying = false;
         updatePlayUI();
+      });
+      ["loadeddata", "canplay", "canplaythrough"].forEach((evt) => {
+        audio.addEventListener(evt, () => {
+          if (wantsAutoplay && audio.paused) {
+            tryPlay();
+          }
+        });
       });
       audio.addEventListener("ended", () => {
         switchTrack(1, true);
@@ -1493,9 +1530,11 @@
         wantsAutoplay = false;
         removeUnlockListeners();
         if (audio.paused) {
-          tryPlay();
+          tryPlay(true);
         } else {
           audio.pause();
+          isPlaying = false;
+          updatePlayUI();
         }
       }
 
@@ -1503,10 +1542,11 @@
         trackIdx = (trackIdx + dir + TRACKS.length) % TRACKS.length;
         titleEl.textContent = TRACKS[trackIdx].name;
         const shouldPlay = forcePlay || !audio.paused || wantsAutoplay;
+        playPending = false;
         audio.src = TRACKS[trackIdx].src;
         audio.currentTime = 0;
         if (shouldPlay) {
-          tryPlay();
+          tryPlay(true);
         } else {
           isPlaying = false;
           updatePlayUI();
@@ -1522,8 +1562,12 @@
         audio.volume = currentVolume;
       });
 
-      window.addEventListener("pointerdown", onFirstInteraction);
-      window.addEventListener("keydown", onFirstInteraction);
+      UNLOCK_EVENTS.forEach((evt) => window.addEventListener(evt, onFirstInteraction, { passive: true }));
+      window.addEventListener("load", () => {
+        if (wantsAutoplay && audio.paused) {
+          tryPlay();
+        }
+      });
       updatePlayUI();
       tryPlay();
     })();
