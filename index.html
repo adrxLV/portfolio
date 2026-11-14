@@ -2,7 +2,9 @@
 <html lang="en" class="scroll-smooth intro-locked">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="theme-color" content="#09090b" />
+  <meta name="color-scheme" content="dark" />
   <title>Adriano Vilhena</title>
   <link rel="preload" as="audio" href="assets/Caravan.mp3" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -29,6 +31,11 @@
       border-radius: 0 !important;
     }
 
+    html {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -42,13 +49,45 @@
     body.intro-locked {
       overflow: hidden !important;
       height: 100vh;
-      height: 100dvh;
+      height: 100svh;
       overscroll-behavior: none;
+    }
+
+    button, a, [role="button"], input, .morph-photo, .palette-item, .tilt-card {
+      touch-action: manipulation;
+    }
+
+    button, [role="button"], .photo-heading-btn, #hero-wordmark-wrap {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    button, [role="button"] {
+      transition: transform 110ms cubic-bezier(0.22, 1, 0.36, 1), opacity 110ms ease-out, color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    button:active, [role="button"]:active {
+      transform: scale(0.97);
+    }
+
+    #full-gallery-modal, #morph-modal-card {
+      overscroll-behavior: contain;
     }
 
     @media (pointer: fine) {
       body.custom-cursor-active, body.custom-cursor-active * {
         cursor: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+      #hero-bg-parallax, .slide-reveal, .mp-accordion-content, #morph-modal-card {
+        transition-duration: 180ms !important;
       }
     }
 
@@ -186,22 +225,55 @@
       transform: scale(1);
     }
 
+    @media (max-width: 767px) {
+      #hero-bg-portrait {
+        align-items: flex-start;
+        padding-top: max(3rem, calc(env(safe-area-inset-top, 0px) + 2.25rem));
+      }
+      #hero-bg-parallax {
+        width: 138vw;
+        max-width: none;
+        aspect-ratio: 1024 / 656;
+        flex-shrink: 0;
+        transform: translate3d(5.5vw, 0, 0);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 8%, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0.35) 88%, rgba(0, 0, 0, 0) 98%);
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 8%, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0.35) 88%, rgba(0, 0, 0, 0) 98%);
+      }
+      #hero-bg-img {
+        object-position: center 22%;
+        -webkit-mask-image: radial-gradient(ellipse 46% 64% at 45% 36%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.85) 70%, rgba(0, 0, 0, 0.35) 85%, rgba(0, 0, 0, 0) 96%);
+        mask-image: radial-gradient(ellipse 46% 64% at 45% 36%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.85) 70%, rgba(0, 0, 0, 0.35) 85%, rgba(0, 0, 0, 0) 96%);
+      }
+      body.intro-complete #hero-bg-img {
+        opacity: 0.36;
+      }
+    }
+
     /* Borderless Caravan Hover / Tap Player */
     .caravan-drawer {
       max-height: 0;
       opacity: 0;
       overflow: hidden;
+      pointer-events: none;
       transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, margin-top 0.25s ease;
     }
-    .caravan-widget:hover .caravan-drawer,
+    @media (hover: hover) and (pointer: fine) {
+      .caravan-widget:hover .caravan-drawer {
+        max-height: 120px;
+        opacity: 1;
+        margin-top: 8px;
+        pointer-events: auto;
+      }
+    }
     .caravan-widget:focus-within .caravan-drawer,
     .caravan-widget.caravan-open .caravan-drawer {
-      max-height: 110px;
+      max-height: 120px;
       opacity: 1;
       margin-top: 8px;
+      pointer-events: auto;
     }
 
-    /* Ultra-subtle Volume Range Slider Knob */
+    /* Ultra-subtle Volume Range Slider Knob (Touch-friendly hit area on coarse pointers) */
     input[type="range"].caravan-vol {
       -webkit-appearance: none;
       appearance: none;
@@ -219,10 +291,6 @@
       cursor: pointer;
       transition: background-color 0.2s ease, transform 0.2s ease;
     }
-    input[type="range"].caravan-vol:hover::-webkit-slider-thumb {
-      background: #f59e0b;
-      transform: scaleY(1.2);
-    }
     input[type="range"].caravan-vol::-moz-range-thumb {
       width: 3px;
       height: 9px;
@@ -230,41 +298,64 @@
       background: rgba(244, 244, 240, 0.75);
       cursor: pointer;
     }
+    @media (hover: hover) and (pointer: fine) {
+      input[type="range"].caravan-vol:hover::-webkit-slider-thumb {
+        background: #f59e0b;
+        transform: scaleY(1.2);
+      }
+    }
+    @media (pointer: coarse) {
+      input[type="range"].caravan-vol {
+        height: 22px;
+        background: transparent;
+      }
+      input[type="range"].caravan-vol::-webkit-slider-runnable-track {
+        height: 2px;
+        background: rgba(244, 244, 240, 0.3);
+      }
+      input[type="range"].caravan-vol::-webkit-slider-thumb {
+        width: 10px;
+        height: 18px;
+        margin-top: -8px;
+        background: #f59e0b;
+      }
+      input[type="range"].caravan-vol::-moz-range-thumb {
+        width: 10px;
+        height: 18px;
+        background: #f59e0b;
+      }
+    }
 
-    /* Magic UI Text Highlighter */
+    /* Magic UI Text Highlighter (True inline multi-line clone decoration) */
     .magic-hl {
       position: relative;
-      display: inline-block;
-      padding: 0 5px;
+      display: inline;
+      padding: 1px 4px;
       margin: 0 1px;
       color: #ffffff;
       font-weight: 500;
-      z-index: 1;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      background-image:
+        linear-gradient(#fb7185, #fb7185),
+        linear-gradient(90deg, rgba(225, 29, 72, 0.72) 0%, rgba(225, 29, 72, 0.42) 100%);
+      background-repeat: no-repeat;
+      background-position: 0 96%, 0 85%;
+      background-size: 0% 1.5px, 0% 82%;
+      transition: background-size 0.75s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .magic-hl::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 2px;
-      width: 100%;
-      height: 86%;
-      z-index: -1;
-      transform: scaleX(0) skewX(-8deg);
-      transform-origin: left center;
-      transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-      background: linear-gradient(90deg, rgba(225, 29, 72, 0.78) 0%, rgba(225, 29, 72, 0.48) 100%);
-      border-bottom: 1.5px solid #fb7185;
+    .magic-hl.hl-amber {
+      background-image:
+        linear-gradient(#fbbf24, #fbbf24),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.70) 0%, rgba(245, 158, 11, 0.38) 100%);
     }
-    .magic-hl.hl-amber::before {
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.72) 0%, rgba(245, 158, 11, 0.42) 100%);
-      border-bottom-color: #fbbf24;
+    .magic-hl.hl-sky {
+      background-image:
+        linear-gradient(#38bdf8, #38bdf8),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.72) 0%, rgba(56, 189, 248, 0.38) 100%);
     }
-    .magic-hl.hl-sky::before {
-      background: linear-gradient(90deg, rgba(14, 165, 233, 0.75) 0%, rgba(56, 189, 248, 0.42) 100%);
-      border-bottom-color: #38bdf8;
-    }
-    .magic-hl.hl-visible::before {
-      transform: scaleX(1) skewX(-8deg);
+    .magic-hl.hl-visible {
+      background-size: 100% 1.5px, 100% 82%;
     }
 
     /* B&W 35% Opacity Hover Rule */
@@ -297,7 +388,7 @@
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       padding-bottom: 6px;
     }
     .photo-heading-btn::after {
@@ -312,14 +403,20 @@
       transform-origin: left center;
       transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .photo-heading-btn:hover::after {
-      transform: scaleX(1);
-    }
     .photo-heading-arrow {
       transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
     }
-    .photo-heading-btn:hover .photo-heading-arrow {
-      transform: translate(5px, -5px);
+    @media (hover: hover) and (pointer: fine) {
+      .photo-heading-btn:hover::after {
+        transform: scaleX(1);
+      }
+      .photo-heading-btn:hover .photo-heading-arrow {
+        transform: translate(5px, -5px);
+        color: #e11d48;
+      }
+    }
+    .photo-heading-btn:active .photo-heading-arrow {
+      transform: translate(4px, -4px);
       color: #e11d48;
     }
 
@@ -409,7 +506,7 @@
   <div id="intro-backdrop" aria-hidden="true"></div>
 
   <!-- HERO SECTION -->
-  <section id="hero-section" class="relative min-h-screen supports-[min-height:100dvh]:min-h-[100dvh] flex flex-col justify-between pt-6 sm:pt-8 pb-12 sm:pb-16 px-5 sm:px-12 overflow-hidden border-b border-[var(--border)]">
+  <section id="hero-section" class="relative min-h-screen supports-[min-height:100svh]:min-h-[100svh] flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-8 pb-[max(1.75rem,env(safe-area-inset-bottom))] sm:pb-16 px-5 sm:px-12 overflow-hidden border-b border-[var(--border)]">
     <!-- Chiaroscuro Background Portrait (Option 4) -->
     <div id="hero-bg-portrait" aria-hidden="true">
       <div id="hero-bg-parallax">
@@ -417,10 +514,10 @@
       </div>
     </div>
 
-    <!-- Top Right: Borderless CARAVAN Interactive Widget (Strictly constrained to icon + title width) -->
+    <!-- Top Right: Borderless CARAVAN Interactive Widget (Compact header, usable drawer width on mobile) -->
     <div class="relative z-30 flex justify-end slide-reveal">
-      <div class="caravan-widget inline-grid justify-items-stretch text-right py-2">
-        <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none py-1">
+      <div class="caravan-widget inline-grid justify-items-end text-right py-1 sm:py-2">
+        <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none min-h-[44px] sm:min-h-0 py-1 px-1">
           <div id="eq-bars" class="flex items-end gap-[2px] h-3.5 eq-playing shrink-0">
             <span class="w-[2px] h-full bg-amber-400 eq-1"></span>
             <span class="w-[2px] h-full bg-amber-400 eq-2"></span>
@@ -430,32 +527,32 @@
           <span id="track-title" class="font-mono-tech text-xs tracking-widest text-zinc-200">CARAVAN</span>
         </div>
 
-        <!-- Hover / Tap Controls (Constrained to exact width of #caravan-header-row) -->
-        <div class="caravan-drawer w-0 min-w-full">
-          <div class="flex items-center justify-between pt-2 w-full">
-            <button type="button" id="audio-prev-btn" aria-label="Previous track" class="p-1.5 sm:p-0.5 text-zinc-400 hover:text-white transition-colors">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+        <!-- Hover / Tap Controls (Full comfortable width on mobile touchscreens, inline-compact on desktop) -->
+        <div class="caravan-drawer w-0 min-w-[168px] sm:min-w-full bg-zinc-950/90 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-white/10 sm:border-0 px-3 py-2 sm:p-0">
+          <div class="flex items-center justify-between sm:pt-2 w-full">
+            <button type="button" id="audio-prev-btn" aria-label="Previous track" class="min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 flex items-center justify-center p-1 sm:p-0.5 text-zinc-400 hover:text-white transition-colors">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="19 20 9 12 19 4 19 20"></polygon>
                 <rect x="5" y="4" width="2" height="16"></rect>
               </svg>
             </button>
-            <button type="button" id="audio-play-btn" aria-label="Play or pause" class="p-1.5 sm:p-0.5 text-amber-400 hover:text-amber-300 transition-colors">
-              <svg id="icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <button type="button" id="audio-play-btn" aria-label="Play or pause" class="min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 flex items-center justify-center p-1 sm:p-0.5 text-amber-400 hover:text-amber-300 transition-colors">
+              <svg id="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="6" y="4" width="4" height="16"></rect>
                 <rect x="14" y="4" width="4" height="16"></rect>
               </svg>
-              <svg id="icon-play" class="hidden" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <svg id="icon-play" class="hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="6 4 20 12 6 20 6 4"></polygon>
               </svg>
             </button>
-            <button type="button" id="audio-next-btn" aria-label="Next track" class="p-1.5 sm:p-0.5 text-zinc-400 hover:text-white transition-colors">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <button type="button" id="audio-next-btn" aria-label="Next track" class="min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 flex items-center justify-center p-1 sm:p-0.5 text-zinc-400 hover:text-white transition-colors">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="5 4 15 12 5 20 5 4"></polygon>
                 <rect x="17" y="4" width="2" height="16"></rect>
               </svg>
             </button>
           </div>
-          <div class="mt-2 w-full">
+          <div class="mt-1 sm:mt-2 w-full">
             <input id="audio-volume" type="range" min="0" max="100" value="25" aria-label="Volume" class="caravan-vol w-full block" />
           </div>
         </div>
@@ -464,28 +561,28 @@
     </div>
 
     <!-- Centerpiece: THE SINGLE STATIONARY #hero-adriano-line ELEMENT -->
-    <div class="relative z-50 my-auto py-8 sm:py-12 flex flex-col items-center text-center">
-      <div id="hero-wordmark-wrap" class="hero-wordmark-wrap px-2 sm:px-6 py-4 cursor-pointer">
-        <h1 class="hero-wordmark font-brutal text-[2.65rem] sm:text-7xl md:text-[7.5rem] leading-[0.9] tracking-tighter font-extrabold">
+    <div class="relative z-50 my-auto pt-[18svh] sm:pt-12 pb-6 sm:pb-12 flex flex-col items-center text-center">
+      <div id="hero-wordmark-wrap" class="hero-wordmark-wrap px-2 sm:px-6 py-3 sm:py-4 cursor-pointer">
+        <h1 class="hero-wordmark font-brutal text-[clamp(2.85rem,13vw,4.5rem)] sm:text-7xl md:text-[7.5rem] leading-[0.9] tracking-tighter font-extrabold">
           <span id="hero-adriano-line" class="inline-block select-none">ADRIANO</span><br />
-          <span class="slide-reveal font-nightshade font-normal text-rose-500 lowercase tracking-normal text-5xl sm:text-7xl md:text-8xl block mt-2">vilhena</span>
+          <span class="slide-reveal font-nightshade font-normal text-rose-500 lowercase tracking-normal text-[clamp(2.65rem,11.5vw,3.85rem)] sm:text-7xl md:text-8xl block mt-1.5 sm:mt-2">vilhena</span>
         </h1>
         <!-- Random [-10deg, +10deg] Angled Reel on Hover / Tap -->
         <div class="hero-loop-reel">
-          <div id="hero-reel-frame" class="w-64 sm:w-96 h-44 sm:h-60 overflow-hidden shadow-2xl">
+          <div id="hero-reel-frame" class="w-[min(76vw,18rem)] sm:w-96 h-40 sm:h-60 overflow-hidden shadow-2xl">
             <img id="hero-reel-img" src="assets/fotografia/DSCN0697.jpg" alt="Visual reel" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
 
-      <p class="slide-reveal mt-8 sm:mt-10 max-w-2xl text-sm sm:text-base text-zinc-300 leading-relaxed text-center">
+      <p class="slide-reveal mt-6 sm:mt-10 max-w-2xl text-[15px] sm:text-base text-zinc-300 leading-relaxed text-center [text-wrap:pretty]">
         <span class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
       </p>
     </div>
 
     <!-- Discreet Scroll Down Indicator -->
     <div class="relative z-30 flex justify-center slide-reveal">
-      <a href="#thread-section" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 text-zinc-500 hover:text-zinc-300 transition-colors">
+      <a href="#thread-section" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 min-w-[44px] min-h-[44px] justify-center text-zinc-500 hover:text-zinc-300 transition-colors">
         <span class="font-mono-tech text-[10px] tracking-[0.24em] uppercase">Scroll</span>
         <svg class="w-3.5 h-3.5 text-zinc-500 group-hover:text-rose-400 transition-transform duration-300 group-hover:translate-y-0.5 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <polyline points="6 9 12 15 18 9"></polyline>
@@ -499,51 +596,51 @@
 
     <!-- CONTROLLED CHAOS SECTION (Left side stays pinned while right side scrolls up until the divider) -->
     <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto border-b border-[var(--border)]">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-stretch">
-        <!-- Pinned Left Column (Compact sticky bar on mobile, vertically centered full-height on desktop) -->
-        <div class="lg:col-span-5 sticky top-0 z-20 bg-[var(--bg)]/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center py-5 lg:py-0 space-y-3 sm:space-y-6">
-          <h2 class="font-brutal text-3xl sm:text-5xl leading-[0.95] tracking-tight">
-            Controlled<br />
-            <span class="font-serif-editorial italic font-normal text-sky-400">Chaos.</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 items-stretch">
+        <!-- Pinned Left Column (Compact fixed-height translucent header on mobile, vertically centered full-height on desktop) -->
+        <div class="lg:col-span-5 sticky top-0 z-20 bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
+          <h2 class="font-brutal text-2xl sm:text-4xl lg:text-5xl leading-[0.95] tracking-tight">
+            Controlled<br class="hidden lg:inline" />
+            <span class="font-serif-editorial italic font-normal text-sky-400 lg:block"> Chaos.</span>
           </h2>
-          <p id="pinned-dynamic-quote" class="text-sm sm:text-lg text-zinc-300 leading-relaxed border-l-2 border-rose-500 pl-4 transition-all duration-300">
+          <p id="pinned-dynamic-quote" class="text-xs sm:text-base lg:text-lg text-zinc-300 leading-relaxed border-l-2 border-rose-500 pl-3 sm:pl-4 min-h-[3.25rem] sm:min-h-[3.5rem] lg:min-h-0 flex items-center transition-all duration-300">
             Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.
           </p>
         </div>
 
         <!-- Scrolling Right Column -->
-        <div class="lg:col-span-7 py-10 lg:py-32 space-y-16 lg:space-y-28">
-          <article class="pinned-beat space-y-5" data-beat="0">
-            <div class="tilt-card overflow-hidden cursor-pointer" onclick="openMorphModal('fencing')">
-              <img src="assets/IMG_1471.jpg" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full h-60 sm:h-96 object-cover" />
+        <div class="lg:col-span-7 py-8 lg:py-32 space-y-12 sm:space-y-16 lg:space-y-28">
+          <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="0">
+            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('fencing')">
+              <img src="assets/IMG_1471.jpg" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
             </div>
             <div class="sm:pl-16 max-w-lg">
-              <h3 class="font-space text-xl sm:text-2xl font-bold">Distance, Feint, Counter-Measure</h3>
-              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Distance, Feint, Counter-Measure</h3>
+              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
                 Good fencers and good engineers have more in common than you think. Neither of them merely reacts. They read early, prepare obsessively, and stay calm precisely because <span class="magic-hl">the hard work was done before anything moved.</span>
               </p>
             </div>
           </article>
 
-          <article class="pinned-beat space-y-5" data-beat="1">
-            <div class="tilt-card overflow-hidden cursor-pointer" onclick="openMorphModal('piano')">
-              <img src="assets/piano.jpg" alt="Big band piano keys" class="w-full h-60 sm:h-96 object-cover" />
+          <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="1">
+            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('piano')">
+              <img src="assets/piano.jpg" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
             </div>
             <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
-              <h3 class="font-space text-xl sm:text-2xl font-bold">Teamwork playing Jazz</h3>
-              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Teamwork playing Jazz</h3>
+              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
                 Big band piano taught me more about leadership than any textbook. Drive when the horns need pushing, disappear when someone's soloing, and <span class="magic-hl hl-amber">trust that the groove holds without you filling every bar.</span>
               </p>
             </div>
           </article>
 
-          <article class="pinned-beat space-y-5" data-beat="2">
-            <div class="tilt-card overflow-hidden cursor-pointer" onclick="openMorphModal('cosmos')">
-              <img src="assets/IMG_7252.jpeg" alt="From Luanda to the World and Above" class="w-full h-60 sm:h-96 object-cover" />
+          <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="2">
+            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('cosmos')">
+              <img src="assets/IMG_7252.jpeg" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
             </div>
             <div class="sm:pl-12 max-w-lg">
-              <h3 class="font-space text-xl sm:text-2xl font-bold">From Luanda to the World and Above</h3>
-              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">From Luanda to the World and Above</h3>
+              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
                 Across SLI, FGC 2024 and 2025, we explored how lunar technology and Robotics can improve life on Earth. I’ve started building in Luanda and arrived at Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
               </p>
             </div>
@@ -553,14 +650,17 @@
     </section>
 
     <!-- WHAT I BRING TO THE TABLE (Before Photography, Closed Accordions + Programming Languages) -->
-    <section id="skills-accordion" class="py-16 sm:py-28 px-5 sm:px-12 max-w-4xl mx-auto border-b border-[var(--border)]">
-      <div class="mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
-        <div class="tilt-card relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 border border-[var(--border)] bg-zinc-900 overflow-hidden shadow-2xl group">
-          <img src="assets/profile.png" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" />
+    <section id="skills-accordion" class="py-14 sm:py-28 px-5 sm:px-12 max-w-4xl mx-auto border-b border-[var(--border)]">
+      <div class="mb-8 sm:mb-10 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-8">
+        <div class="flex items-center gap-4 sm:contents">
+          <div class="tilt-card relative w-20 h-20 sm:w-32 sm:h-32 shrink-0 border border-[var(--border)] bg-zinc-900 overflow-hidden shadow-2xl group">
+            <img src="assets/profile.png" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" />
+          </div>
+          <h2 class="font-brutal text-2xl leading-[0.95] sm:hidden [text-wrap:balance]">What I bring to the table</h2>
         </div>
         <div class="flex-1">
-          <h2 class="font-brutal text-3xl sm:text-5xl">What I bring to the table</h2>
-          <p class="text-sm sm:text-base text-zinc-400 mt-4 leading-relaxed">
+          <h2 class="hidden sm:block font-brutal text-3xl sm:text-5xl">What I bring to the table</h2>
+          <p class="text-[15px] sm:text-base text-zinc-400 sm:mt-4 leading-relaxed [text-wrap:pretty]">
             I speak Portuguese &amp; English and write systems in <span class="magic-hl">C, C++, C#, .NET, Blazor, Python, JavaScript, Java, HTML/CSS, and SQL</span>. Connecting robotics, web applications and software with AI
           </p>
         </div>
@@ -652,10 +752,10 @@
 
     <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + ARROW) + OVERLAPPING DIAGONAL -> BENTO MOSAIC WITH 3D TILT -->
     <section id="photography-morph-section" class="relative h-[220vh] md:h-[320vh] border-b border-[var(--border)] bg-[var(--surface)]">
-      <div class="sticky top-0 h-screen supports-[height:100dvh]:h-[100dvh] w-full overflow-hidden flex flex-col justify-between py-6 sm:py-10 px-5 sm:px-12">
+      <div class="sticky top-0 h-screen supports-[height:100dvh]:h-[100dvh] w-full overflow-hidden flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:py-10 pb-[max(1.25rem,env(safe-area-inset-bottom))] px-5 sm:px-12">
         <!-- Clickable Fixed Title with Red Underline Hover & Arrow -->
         <div class="z-20">
-          <button type="button" onclick="openFullGalleryModal()" class="photo-heading-btn font-brutal text-2xl sm:text-5xl text-left text-white">
+          <button type="button" onclick="openFullGalleryModal()" class="photo-heading-btn font-brutal text-2xl sm:text-5xl text-left text-white min-h-[44px] sm:min-h-0">
             <span>My photography</span>
             <svg class="photo-heading-arrow w-6 h-6 sm:w-9 sm:h-9 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
               <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -665,27 +765,27 @@
         </div>
 
         <!-- Morphing Stage (Dynamically populated with 9–15 randomized photos into a Justified Bento Mosaic) -->
-        <div id="photo-morph-stage" class="palette-gallery relative w-full max-w-6xl mx-auto flex-1 my-4 sm:my-6"></div>
+        <div id="photo-morph-stage" class="palette-gallery relative w-full max-w-6xl mx-auto flex-1 my-3 sm:my-6"></div>
       </div>
     </section>
 
     <!-- FOOTER: SOCIAL LINKS + RESUME + DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS -->
-    <footer class="py-12 sm:py-16 px-5 sm:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+    <footer class="pt-12 sm:pt-16 pb-[max(3rem,calc(env(safe-area-inset-bottom)+1.5rem))] sm:pb-16 px-5 sm:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 items-center">
       <div class="md:col-span-5 space-y-4 font-mono-tech text-xs text-zinc-400">
         <p class="text-white font-space text-xl font-bold">Adriano Lopes de Vilhena</p>
         <p>
-          <a href="mailto:AdrianoLop.V@icloud.com" class="hover:text-rose-400 transition-colors">AdrianoLop.V@icloud.com</a>
+          <a href="mailto:AdrianoLop.V@icloud.com" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 transition-colors">AdrianoLop.V@icloud.com</a>
         </p>
-        <div class="flex flex-wrap items-center gap-5 pt-2 text-zinc-300">
-          <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" class="hover:text-rose-400 underline underline-offset-4 transition-colors">LinkedIn</a>
-          <a href="https://github.com/adrxlv" target="_blank" rel="noopener noreferrer" class="hover:text-rose-400 underline underline-offset-4 transition-colors">GitHub</a>
-          <a href="https://www.tiktok.com/@adrx_lv" target="_blank" rel="noopener noreferrer" class="hover:text-rose-400 underline underline-offset-4 transition-colors">TikTok (@adrx_lv)</a>
-          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" class="hover:text-rose-400 underline underline-offset-4 transition-colors">Download Resume</a>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1 text-zinc-300">
+          <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">LinkedIn</a>
+          <a href="https://github.com/adrxlv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">GitHub</a>
+          <a href="https://www.tiktok.com/@adrx_lv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">TikTok (@adrx_lv)</a>
+          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">Download Resume</a>
         </div>
       </div>
 
       <div class="md:col-span-7 relative">
-        <div id="dotted-map-wrapper" class="relative w-full h-64 sm:h-72 overflow-hidden flex items-center justify-center">
+        <div id="dotted-map-wrapper" class="relative w-full aspect-[64/30] sm:aspect-auto sm:h-72 overflow-hidden flex items-center justify-center">
           <div id="dotted-map-container" class="w-full h-full flex items-center justify-center"></div>
           <!-- Minimalist Slide-Out Country Name Tag from Pin -->
           <div id="map-flag-banner">
@@ -701,33 +801,33 @@
 
   <!-- FULL PHOTO GALLERY OVERLAY (Opened by clicking "My photography" header) -->
   <div id="full-gallery-modal" class="fixed inset-0 z-[9985] hidden flex-col bg-[#070709]/95 backdrop-blur-xl overflow-y-auto">
-    <div class="sticky top-0 z-20 flex items-center justify-between gap-4 px-5 sm:px-12 py-5 sm:py-6 bg-[#070709]/90 border-b border-[var(--border)]">
-      <h2 class="font-brutal text-xl sm:text-4xl">Complete Photography Archive</h2>
-      <button type="button" onclick="closeFullGalleryModal()" class="px-4 py-2 border border-white/20 font-mono-tech text-xs text-white hover:bg-rose-600 hover:border-rose-600 transition-colors shrink-0">
+    <div class="sticky top-0 z-20 flex items-center justify-between gap-4 px-5 sm:px-12 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sm:py-6 bg-[#070709]/90 border-b border-[var(--border)]">
+      <h2 class="font-brutal text-lg sm:text-4xl [text-wrap:balance]">Complete Photography Archive</h2>
+      <button type="button" onclick="closeFullGalleryModal()" class="min-h-[44px] sm:min-h-0 px-4 py-2 border border-white/20 font-mono-tech text-xs text-white hover:bg-rose-600 hover:border-rose-600 transition-colors shrink-0">
         CLOSE [ESC]
       </button>
     </div>
 
-    <div id="full-archive-grid" class="palette-gallery max-w-7xl mx-auto w-full px-5 sm:px-12 py-8 sm:py-12 flex flex-col gap-3 sm:gap-4">
+    <div id="full-archive-grid" class="palette-gallery max-w-7xl mx-auto w-full px-4 sm:px-12 py-6 sm:py-12 pb-[max(2rem,env(safe-area-inset-bottom))] flex flex-col gap-2.5 sm:gap-4">
       <!-- Populated dynamically by JS with shuffled picture-only Justified Bento Mosaic rows -->
     </div>
   </div>
 
   <!-- MORPHING DIALOG MODAL (Single Frame Context / Lightbox Viewer) -->
-  <div id="morph-modal" class="fixed inset-0 z-[9990] hidden items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md" role="dialog" aria-modal="true">
+  <div id="morph-modal" class="fixed inset-0 z-[9990] hidden items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md" role="dialog" aria-modal="true">
     <div id="morph-modal-card" class="w-full max-w-3xl max-h-[92dvh] overflow-y-auto border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
       <div class="relative bg-zinc-950">
-        <img id="morph-modal-img" src="" alt="" class="w-full h-52 sm:h-80 object-cover" />
-        <button type="button" onclick="closeMorphModal()" aria-label="Close modal" class="absolute top-4 right-4 w-9 h-9 bg-black/75 text-white border border-white/20 flex items-center justify-center hover:bg-rose-600 transition-colors font-mono-tech text-sm">
+        <img id="morph-modal-img" src="" alt="" class="w-full aspect-[4/3] sm:aspect-auto sm:h-80 object-cover" />
+        <button type="button" onclick="closeMorphModal()" aria-label="Close modal" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-9 sm:h-9 bg-black/80 text-white border border-white/20 flex items-center justify-center hover:bg-rose-600 transition-colors font-mono-tech text-base sm:text-sm">
           &times;
         </button>
       </div>
-      <div id="morph-modal-body" class="p-6 sm:p-8 space-y-4">
+      <div id="morph-modal-body" class="p-5 sm:p-8 space-y-3 sm:space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <span id="morph-modal-meta" class="font-mono-tech text-[11px] text-zinc-400"></span>
         </div>
-        <h3 id="morph-modal-title" class="font-brutal text-2xl sm:text-3xl"></h3>
-        <p id="morph-modal-desc" class="text-sm sm:text-base text-zinc-300 leading-relaxed"></p>
+        <h3 id="morph-modal-title" class="font-brutal text-2xl sm:text-3xl [text-wrap:balance]"></h3>
+        <p id="morph-modal-desc" class="text-[15px] sm:text-base text-zinc-300 leading-relaxed [text-wrap:pretty]"></p>
         <div id="morph-modal-pills" class="flex flex-wrap gap-2 pt-2"></div>
       </div>
     </div>
@@ -1210,6 +1310,9 @@
 
         if (progress >= 1) {
           clearInterval(interval);
+          // Detach non-passive intro scroll blockers once unlocked so mobile scroll runs natively
+          window.removeEventListener("wheel", blockScrollDuringIntro, { passive: false });
+          window.removeEventListener("touchmove", blockScrollDuringIntro, { passive: false });
           // Keep the settled spans intact so DOM layout does not jump a single pixel
           backdrop.classList.add("backdrop-cleared");
           document.documentElement.classList.remove("intro-locked");
@@ -1363,6 +1466,7 @@
       const heroBgParallax = document.getElementById("hero-bg-parallax");
       if (heroSection && heroBgParallax && isFineHover()) {
         heroSection.addEventListener("mousemove", (e) => {
+          if (window.innerWidth < 768) return;
           const rect = heroSection.getBoundingClientRect();
           const nx = (e.clientX - rect.left) / rect.width - 0.5;
           const ny = (e.clientY - rect.top) / rect.height - 0.5;
@@ -1371,7 +1475,7 @@
           heroBgParallax.style.transform = `translate3d(${dx}px, calc(-5% + ${dy}px), 0)`;
         });
         heroSection.addEventListener("mouseleave", () => {
-          heroBgParallax.style.transform = "translate3d(0, -5%, 0)";
+          heroBgParallax.style.transform = "";
         });
       }
 
@@ -1639,8 +1743,9 @@
       function pickMorphBatch(desiredCount) {
         const valid = ACTIVE_PHOTOS.filter(isValidGalleryEntry);
         if (valid.length === 0) return [];
+        const isMobile = window.innerWidth < 768;
         const minCount = Math.min(valid.length, 9);
-        const maxCount = Math.min(valid.length, 15);
+        const maxCount = Math.min(valid.length, isMobile ? 10 : 15);
         const target = desiredCount
           ? Math.max(minCount, Math.min(maxCount, desiredCount))
           : minCount + Math.floor(Math.random() * (maxCount - minCount + 1));
@@ -1661,8 +1766,8 @@
         }
         const totalAspect = pref[n];
 
-        const minR = Math.min(n, isMobile ? (n >= 9 ? 3 : 2) : (n >= 9 ? 3 : 2));
-        const maxR = Math.min(n, isMobile ? 7 : 5);
+        const minR = Math.min(n, isMobile ? (n >= 9 ? 4 : 2) : (n >= 9 ? 3 : 2));
+        const maxR = Math.min(n, isMobile ? Math.max(6, Math.ceil(n / 2)) : 5);
 
         let bestLayout = null;
         let bestScore = -Infinity;
@@ -1679,8 +1784,9 @@
                 if (!Number.isFinite(dp[r - 1][j])) continue;
                 const k = i - j;
                 const rowA = pref[i] - pref[j];
-                const singlePenalty = (k === 1 && n >= R + 2) ? (targetA * targetA * 1.4) : 0;
-                const cost = dp[r - 1][j] + Math.pow(rowA - targetA, 2) + singlePenalty;
+                const singlePenalty = (k === 1 && n >= R + 2) ? (targetA * targetA * 1.6) : 0;
+                const mobileCrowdedPenalty = (isMobile && k > 3) ? (targetA * targetA * 3.5 * (k - 3)) : 0;
+                const cost = dp[r - 1][j] + Math.pow(rowA - targetA, 2) + singlePenalty + mobileCrowdedPenalty;
                 if (cost < dp[r][i]) {
                   dp[r][i] = cost;
                   prev[r][i] = j;
@@ -1731,8 +1837,9 @@
 
           const fillRatio = (wEff * totalH) / (W * H);
           const heightBalancePenalty = (maxRowH / Math.max(1, minRowH) - 1) * 0.14;
-          const tinyTilePenalty = minRowH < (isMobile ? 52 : 76) ? 0.3 : 0;
-          const score = fillRatio - heightBalancePenalty - tinyTilePenalty;
+          const tinyTilePenalty = minRowH < (isMobile ? 64 : 76) ? 0.35 : 0;
+          const crowdedRowPenalty = isMobile && rows.some((r) => r.k > 3) ? 0.5 : 0;
+          const score = fillRatio - heightBalancePenalty - tinyTilePenalty - crowdedRowPenalty;
 
           if (score > bestScore) {
             bestScore = score;
@@ -1784,9 +1891,9 @@
         const H = Math.max(240, stageH);
         const rots = [-4.5, 3.2, -2.6, 3.8, -3.4, 2.4, -4.0, 2.9, -2.1, 4.2, -3.1, 2.8, -4.8, 3.5, -2.4];
 
-        const targetH = isMobile ? H * 0.25 : H * 0.39;
-        const maxW = isMobile ? W * 0.48 : W * 0.31;
-        const minW = isMobile ? W * 0.22 : W * 0.14;
+        const targetH = isMobile ? H * 0.27 : H * 0.39;
+        const maxW = isMobile ? W * 0.54 : W * 0.31;
+        const minW = isMobile ? W * 0.28 : W * 0.14;
 
         return items.map((item, i) => {
           const a = Number(item.aspect) > 0.1 ? Number(item.aspect) : 1.333;
@@ -1797,10 +1904,20 @@
             h = w / a;
           }
           const t = n > 1 ? i / (n - 1) : 0.5;
-          const xSpan = Math.max(20, W * (isMobile ? 0.58 : 0.86) - w);
-          const ySpan = Math.max(20, H * (isMobile ? 0.62 : 0.54) - h);
-          const staggerY = (i % 2 === 0 ? -1 : 1) * (H * (isMobile ? 0.035 : 0.055));
-          const x = W * (isMobile ? 0.04 : 0.06) + t * xSpan;
+          if (isMobile) {
+            const minX = W * 0.04;
+            const maxX = Math.max(minX, W - w - W * 0.02);
+            const laneBase = minX + t * (maxX - minX);
+            const zig = (i % 2 === 0 ? -0.05 : 0.06) * W;
+            const x = Math.max(minX, Math.min(maxX, laneBase + zig));
+            const ySpan = Math.max(20, H * 0.72 - h);
+            const y = Math.max(8, Math.min(H - h - 8, H * 0.06 + t * ySpan));
+            return { x, y, w, h, rot: rots[i % rots.length] };
+          }
+          const xSpan = Math.max(20, W * 0.86 - w);
+          const ySpan = Math.max(20, H * 0.54 - h);
+          const staggerY = (i % 2 === 0 ? -1 : 1) * (H * 0.055);
+          const x = W * 0.06 + t * xSpan;
           const y = Math.max(8, Math.min(H - h - 8, H * 0.08 + t * ySpan + staggerY));
           return { x, y, w, h, rot: rots[i % rots.length] };
         });
@@ -1927,6 +2044,7 @@
         if (src) openMorphModal(src);
       });
       stage.addEventListener("mouseover", (e) => {
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
         const item = e.target.closest(".palette-item");
         if (!item) return;
         const p = item.getAttribute("data-palette");
@@ -2035,7 +2153,7 @@
 
     // ==================== 8. FULL PHOTO GALLERY OVERLAY & MORPHING DIALOG ====================
     function getArchiveTargetAspect() {
-      if (window.innerWidth < 640) return 2.4;
+      if (window.innerWidth < 640) return 1.85;
       if (window.innerWidth < 1024) return 3.8;
       return 5.2;
     }
@@ -2045,7 +2163,7 @@
       if (!grid) return;
 
       const targetRowAspect = getArchiveTargetAspect();
-      const maxPerRow = window.innerWidth < 640 ? 3 : (window.innerWidth < 1024 ? 5 : 6);
+      const maxPerRow = window.innerWidth < 640 ? 2 : (window.innerWidth < 1024 ? 5 : 6);
       const validPhotos = ARCHIVE_PHOTOS.filter(isValidGalleryEntry);
 
       const rows = [];
@@ -2070,7 +2188,7 @@
       grid.innerHTML = rows.map((row) => {
         const rowStyle = row.complete
           ? ""
-          : `style="width: ${Math.max(24, Math.min(100, (row.sumA / targetRowAspect) * 100)).toFixed(1)}%;"`;
+          : `style="width: ${Math.max(32, Math.min(100, (row.sumA / targetRowAspect) * 100)).toFixed(1)}%;"`;
         const tilesHtml = row.items.map(({ photo, a }) => {
           const safeSrc = String(photo.src || "").replace(/"/g, "&quot;");
           const safeAlt = String(photo.filename || "Photography").replace(/"/g, "&quot;");
@@ -2080,7 +2198,7 @@
             </div>
           `;
         }).join("");
-        return `<div class="flex flex-row gap-3 sm:gap-4 items-stretch" ${rowStyle}>${tilesHtml}</div>`;
+        return `<div class="flex flex-row gap-2.5 sm:gap-4 items-stretch" ${rowStyle}>${tilesHtml}</div>`;
       }).join("");
 
       if (!grid.dataset.listenersBound) {
@@ -2091,6 +2209,7 @@
           openMorphModal(item.getAttribute("data-photo-src"));
         });
         grid.addEventListener("mouseover", (e) => {
+          if (!hasFineHover()) return;
           const item = e.target.closest(".palette-item");
           if (!item) return;
           const p = item.getAttribute("data-palette");
@@ -2144,7 +2263,7 @@
       const data = STORIES[target];
       if (data) {
         card.className = "w-full max-w-3xl max-h-[92dvh] overflow-y-auto border border-[var(--border)] bg-[var(--surface)] shadow-2xl";
-        img.className = "w-full h-52 sm:h-80 object-cover";
+        img.className = "w-full aspect-[4/3] sm:aspect-auto sm:h-80 object-cover";
         body.classList.remove("hidden");
         img.src = data.img;
         img.alt = data.title;
@@ -2155,8 +2274,8 @@
           .map((p) => `<span class="font-mono-tech text-[11px] px-3 py-1 border border-white/15 bg-white/5">${p}</span>`)
           .join("");
       } else if (typeof target === "string" && target.startsWith("assets/")) {
-        card.className = "w-auto max-w-[92vw] max-h-[92dvh] overflow-hidden border border-[var(--border)] bg-zinc-950 shadow-2xl";
-        img.className = "max-w-full max-h-[85dvh] w-auto h-auto object-contain block mx-auto";
+        card.className = "w-auto max-w-[94vw] max-h-[90dvh] overflow-hidden border border-[var(--border)] bg-zinc-950 shadow-2xl";
+        img.className = "max-w-full max-h-[82dvh] w-auto h-auto object-contain block mx-auto";
         body.classList.add("hidden");
         img.src = target;
         img.alt = "Photography by Adriano Vilhena";
@@ -2342,7 +2461,7 @@
         pinGroup.append("circle")
           .attr("cx", 0)
           .attr("cy", -5)
-          .attr("r", 9)
+          .attr("r", 16)
           .attr("fill", "transparent");
 
         // Pin stem + head (all pins white, including Portugal and Angola)
