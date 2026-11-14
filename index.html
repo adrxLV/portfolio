@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adriano Vilhena</title>
+  <link rel="preload" as="audio" href="assets/Caravan.mp3" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
@@ -478,11 +479,19 @@
       </div>
 
       <p class="slide-reveal mt-8 sm:mt-10 max-w-2xl text-sm sm:text-base text-zinc-300 leading-relaxed text-center">
-        <span class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> Technology, music, photography, whatever comes next: if something grabs my attention, I'll poke at it until I understand how it works. My proudest solutions came when two things I was into at the same time turned out to share a similar problem, and <span class="magic-hl">solving one said something about the other</span>.
+        <span class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
       </p>
     </div>
 
-    <div class="h-4"></div>
+    <!-- Discreet Scroll Down Indicator -->
+    <div class="relative z-30 flex justify-center slide-reveal">
+      <a href="#thread-section" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 text-zinc-500 hover:text-zinc-300 transition-colors">
+        <span class="font-mono-tech text-[10px] tracking-[0.24em] uppercase">Scroll</span>
+        <svg class="w-3.5 h-3.5 text-zinc-500 group-hover:text-rose-400 transition-transform duration-300 group-hover:translate-y-0.5 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </div>
   </section>
 
   <!-- REST OF THE PAGE -->
@@ -511,7 +520,7 @@
             <div class="sm:pl-16 max-w-lg">
               <h3 class="font-space text-xl sm:text-2xl font-bold">Distance, Feint, Counter-Measure</h3>
               <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
-                On the piste, you have milliseconds to read an opponent's shoulder before committing to a lunge. <span class="magic-hl">Cybersecurity and systems architecture</span> operate on the same way: preventive behaviour and critical reasoning.
+                Good fencers and good engineers have more in common than you think. Neither of them merely reacts. They read early, prepare obsessively, and stay calm precisely because <span class="magic-hl">the hard work was done before anything moved.</span>
               </p>
             </div>
           </article>
@@ -523,7 +532,7 @@
             <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
               <h3 class="font-space text-xl sm:text-2xl font-bold">Teamwork playing Jazz</h3>
               <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
-                Playing piano in a big band taught me more about leadership than any textbook: knowing when to drive the brass section, when to lock with the bass, and when to <span class="magic-hl hl-amber">leave space for someone else's solo</span>.
+                Big band piano taught me more about leadership than any textbook. Drive when the horns need pushing, disappear when someone's soloing, and <span class="magic-hl hl-amber">trust that the groove holds without you filling every bar.</span>
               </p>
             </div>
           </article>
@@ -535,7 +544,7 @@
             <div class="sm:pl-12 max-w-lg">
               <h3 class="font-space text-xl sm:text-2xl font-bold">From Luanda to the World and Above</h3>
               <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
-                Across SLI, FGC 2024 and 2025, we explored how robotics and lunar technology can improve life on Earth. I’ve started building in Luanda and arrived at Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
+                Across SLI, FGC 2024 and 2025, we explored how lunar technology and Robotics can improve life on Earth. I’ve started building in Luanda and arrived at Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
               </p>
             </div>
           </article>
@@ -552,7 +561,7 @@
         <div class="flex-1">
           <h2 class="font-brutal text-3xl sm:text-5xl">What I bring to the table</h2>
           <p class="text-sm sm:text-base text-zinc-400 mt-4 leading-relaxed">
-            I speak a few languages — Portuguese and English — and write systems in <span class="magic-hl">C#, .NET, Blazor, Python, JavaScript/TypeScript, HTML/CSS, and SQL</span>, bridging embedded robotics hardware with web architecture and AI.
+            I speak Portuguese &amp; English and write systems in <span class="magic-hl">C, C++, C#, .NET, Blazor, Python, JavaScript, Java, HTML/CSS, and SQL</span>. Connecting robotics, web applications and software with AI
           </p>
         </div>
       </div>
@@ -573,7 +582,7 @@
                 Won <span class="magic-hl">2nd place at Hack The City: Mobility Challenge</span> (NOVA IMS) over 48 intense hours using real-world public transport data from TML, building <strong class="text-zinc-200">Mobi4All</strong> to measure transit reliability and give commuters smarter routes.
               </p>
               <p>
-                Finished in <span class="magic-hl hl-amber">3rd place at Grona’s Growth Marketing Hackathon</span> (hosted at 42 Lisboa, supported by Google for Startups &amp; Google AI), where André Escarigo and I built a single-day AI-driven campaign to introduce <strong class="text-zinc-200">FORGe 2027</strong> — the upcoming hackathon edition we are building at <strong class="text-zinc-200">NOVAe</strong> — and pitched it to the judges in two minutes.
+                Finished in <span class="magic-hl hl-amber">3rd place at Grona’s Growth Marketing Hackathon</span> (hosted at 42 Lisboa, supported by Google for Startups &amp; Google AI), where André Escarigo and I built a single-day AI-driven campaign to introduce <a href="https://forgehackathon.com/" target="_blank" rel="noopener noreferrer" class="text-zinc-200 font-semibold underline decoration-rose-500/80 underline-offset-4 hover:text-rose-400 transition-colors">FORGe 2027</a>, the upcoming hackathon edition we are building at <a href="https://unlnovae.org/#about" target="_blank" rel="noopener noreferrer" class="text-zinc-200 font-semibold underline decoration-rose-500/80 underline-offset-4 hover:text-rose-400 transition-colors">NOVAe</a> and pitched it to the judges in two minutes.
               </p>
             </div>
           </div>
@@ -594,7 +603,7 @@
                 Built production features in C#, .NET, and Blazor for <strong class="text-zinc-200">MyHub</strong> at <a href="https://www.ceiia.com/" target="_blank" rel="noopener noreferrer" class="text-zinc-200 font-semibold underline decoration-rose-500/80 underline-offset-4 hover:text-rose-400 transition-colors">CEiiA</a> (overhauling performance, Means/Benefits workflows, and authoring the Function/Role Manual alongside Design and HR).
               </p>
               <p>
-                Currently pursuing Information Systems (STI) at NOVA IMS with a trajectory toward <span class="magic-hl hl-sky">Space Cybersecurity at ESA</span>.
+                Currently pursuing Information Systems (STI) at <a href="https://novaims.unl.pt/" target="_blank" rel="noopener noreferrer" class="text-zinc-200 font-semibold underline decoration-rose-500/80 underline-offset-4 hover:text-rose-400 transition-colors">NOVA IMS</a> with a trajectory toward <span class="magic-hl hl-sky">Space Cybersecurity at ESA</span>.
               </p>
             </div>
           </div>
@@ -1051,7 +1060,7 @@
         palette: "bw",
         meta: "Fencing Foil & Épée",
         title: "Distance, Feint, Counter-Measure",
-        desc: "On the piste, you have milliseconds to read an opponent's shoulder before committing to a lunge. Cybersecurity and systems architecture operate on the same way: preventive behaviour and critical reasoning.",
+        desc: "Good fencers and good engineers have more in common than you think. Neither of them merely reacts. They read early, prepare obsessively, and stay calm precisely because the hard work was done before anything moved.",
         pills: ["Spatial Timing", "Discipline", "Fencing"]
       },
       piano: {
@@ -1059,7 +1068,7 @@
         palette: "bw",
         meta: "Caravan // Big Band Ensemble",
         title: "Teamwork playing Jazz",
-        desc: "Playing piano in my school's big band taught me real-time teamwork: holding harmonic structure for 15+ musicians while keeping the pocket tight. Music is the hidden metronome behind my code and photography.",
+        desc: "Big band piano taught me more about leadership than any textbook. Drive when the horns need pushing, disappear when someone's soloing, and trust that the groove holds without you filling every bar.",
         pills: ["Teamwork", "Caravan", "Big Band"]
       },
       cosmos: {
@@ -1067,7 +1076,7 @@
         palette: "color",
         meta: "SLI & FGC 2024–2025",
         title: "From Luanda to the World and Above",
-        desc: "Across SLI, FGC 2024 and 2025, we explored how robotics and lunar technology can improve life on Earth. I've started building in Luanda and arrived at Portugal, aiming to work in Space-Applied Cybersecurity.",
+        desc: "Across SLI, FGC 2024 and 2025, we explored how lunar technology and Robotics can improve life on Earth. I’ve started building in Luanda and arrived at Portugal, aiming to work in Space-Applied Cybersecurity.",
         pills: ["SLI", "FGC 2024 & 2025", "Space Cybersecurity"]
       }
     };
@@ -1392,7 +1401,7 @@
         }
       });
 
-      // Caravan Audio Player (Real MP3 playback, 25% default volume, unmuted autoplay + gesture fallback)
+      // Caravan Audio Player (Real MP3 playback, 25% default volume, unmuted autoplay + confirmed-playback unlock)
       const TRACKS = [
         { name: "CARAVAN", src: "assets/Caravan.mp3" },
         { name: "TAKE FIVE", src: encodeURI("assets/Dave Brubeck, The Dave Brubeck Quartet - Take Five (Audio).mp3") },
@@ -1402,6 +1411,7 @@
       let wantsAutoplay = true;
       let playPending = false;
       let currentVolume = 0.25;
+      let lastThrottledRetry = 0;
 
       const audio = document.getElementById("bg-audio") || new Audio();
       audio.preload = "auto";
@@ -1410,7 +1420,7 @@
       if (!audio.getAttribute("src")) {
         audio.src = TRACKS[0].src;
       }
-      let isPlaying = !audio.paused;
+      let isPlaying = !audio.paused && !audio.muted && audio.currentTime > 0.05;
 
       const caravanWidget = document.querySelector(".caravan-widget");
       const caravanHeaderRow = document.getElementById("caravan-header-row");
@@ -1446,18 +1456,35 @@
         eqBars.classList.toggle("eq-paused", !isPlaying);
       }
 
-      const UNLOCK_EVENTS = ["pointerdown", "mousedown", "click", "touchstart", "keydown"];
+      const UNLOCK_EVENTS = [
+        "pointerdown",
+        "mousedown",
+        "pointerup",
+        "click",
+        "touchstart",
+        "touchend",
+        "keydown",
+        "keyup",
+        "wheel",
+        "pointermove"
+      ];
 
       function onFirstInteraction(e) {
+        if (!wantsAutoplay) return;
         if (
-          (e.type === "pointerdown" || e.type === "mousedown" || e.type === "click") &&
+          (e.type === "pointerdown" || e.type === "mousedown" || e.type === "pointerup" || e.type === "click") &&
           e.target &&
           typeof e.target.closest === "function" &&
           e.target.closest("#audio-play-btn, #audio-prev-btn, #audio-next-btn")
         ) {
           return;
         }
-        if (wantsAutoplay && audio.paused) {
+        if (e.type === "pointermove" || e.type === "wheel") {
+          const now = performance.now();
+          if (now - lastThrottledRetry < 200) return;
+          lastThrottledRetry = now;
+        }
+        if (audio.paused && !playPending) {
           tryPlay(true);
         }
       }
@@ -1467,17 +1494,10 @@
       }
 
       function tryPlay(forceRetry = false) {
-        if (playPending && !forceRetry) return;
+        if (playPending || (!audio.paused && !forceRetry)) return;
         audio.muted = false;
         audio.volume = currentVolume;
-        if (!audio.paused) {
-          isPlaying = true;
-          wantsAutoplay = false;
-          playPending = false;
-          removeUnlockListeners();
-          updatePlayUI();
-          return;
-        }
+        if (!audio.paused) return;
         playPending = true;
         const playPromise = audio.play();
         if (playPromise && typeof playPromise.then === "function") {
@@ -1485,8 +1505,6 @@
             .then(() => {
               playPending = false;
               isPlaying = true;
-              wantsAutoplay = false;
-              removeUnlockListeners();
               updatePlayUI();
             })
             .catch(() => {
@@ -1497,19 +1515,25 @@
         } else {
           playPending = false;
           isPlaying = !audio.paused;
-          if (isPlaying) {
-            wantsAutoplay = false;
-            removeUnlockListeners();
-          }
           updatePlayUI();
         }
       }
 
       audio.addEventListener("play", () => {
         isPlaying = true;
-        wantsAutoplay = false;
-        removeUnlockListeners();
         updatePlayUI();
+      });
+      audio.addEventListener("playing", () => {
+        isPlaying = true;
+        updatePlayUI();
+      });
+      audio.addEventListener("timeupdate", () => {
+        if (wantsAutoplay && !audio.paused && !audio.muted && audio.currentTime > 0.05) {
+          wantsAutoplay = false;
+          isPlaying = true;
+          removeUnlockListeners();
+          updatePlayUI();
+        }
       });
       audio.addEventListener("pause", () => {
         isPlaying = false;
@@ -1517,7 +1541,7 @@
       });
       ["loadeddata", "canplay", "canplaythrough"].forEach((evt) => {
         audio.addEventListener(evt, () => {
-          if (wantsAutoplay && audio.paused) {
+          if (wantsAutoplay && audio.paused && !playPending) {
             tryPlay();
           }
         });
@@ -1539,9 +1563,11 @@
       }
 
       function switchTrack(dir, forcePlay = false) {
+        wantsAutoplay = false;
+        removeUnlockListeners();
         trackIdx = (trackIdx + dir + TRACKS.length) % TRACKS.length;
         titleEl.textContent = TRACKS[trackIdx].name;
-        const shouldPlay = forcePlay || !audio.paused || wantsAutoplay;
+        const shouldPlay = forcePlay || !audio.paused;
         playPending = false;
         audio.src = TRACKS[trackIdx].src;
         audio.currentTime = 0;
@@ -1554,8 +1580,8 @@
       }
 
       playBtn.addEventListener("click", togglePlay);
-      prevBtn.addEventListener("click", () => switchTrack(-1));
-      nextBtn.addEventListener("click", () => switchTrack(1));
+      prevBtn.addEventListener("click", () => switchTrack(-1, true));
+      nextBtn.addEventListener("click", () => switchTrack(1, true));
       volSlider.addEventListener("input", (e) => {
         const val = Number(e.target.value);
         currentVolume = val / 100;
@@ -1564,7 +1590,7 @@
 
       UNLOCK_EVENTS.forEach((evt) => window.addEventListener(evt, onFirstInteraction, { passive: true }));
       window.addEventListener("load", () => {
-        if (wantsAutoplay && audio.paused) {
+        if (wantsAutoplay && audio.paused && !playPending) {
           tryPlay();
         }
       });
@@ -1575,7 +1601,7 @@
     // ==================== 4. PINNED CONTROLLED CHAOS SCROLL & MAGIC HIGHLIGHTER ====================
     const BEAT_QUOTES = [
       "Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.",
-      "Big band piano taught me how to hold structure for an ensemble — the same instinct that powers Team Portugal in robotics.",
+      "Being in a Big Band taught me how to hold the structure so the ensemble can shine",
       "From Luanda, to Lisbon, Porto, Athens and Panama City, building STEM projects with international teams with a focus to software and cybersecurity."
     ];
     window.addEventListener("scroll", () => {
