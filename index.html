@@ -6,7 +6,55 @@
   <meta name="theme-color" content="#09090b" />
   <meta name="color-scheme" content="dark" />
   <title>Adriano Vilhena</title>
-  <link rel="preload" as="audio" href="assets/Caravan.mp3" />
+  <meta name="description" content="Adriano Lopes de Vilhena — Software, robotics & space cybersecurity. Building across .NET, Python, hardware, fencing, big band piano, and photography." />
+  <meta name="author" content="Adriano Lopes de Vilhena" />
+  <link rel="canonical" href="https://portfolio.adrianolop.dev/" />
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://portfolio.adrianolop.dev/" />
+  <meta property="og:site_name" content="Adriano Vilhena" />
+  <meta property="og:title" content="Adriano Lopes de Vilhena — Portfolio" />
+  <meta property="og:description" content="Software, robotics & space cybersecurity. Building across C#, .NET, Python, hardware, fencing, big band piano, and photography." />
+  <meta property="og:image" content="https://portfolio.adrianolop.dev/assets/hero-rover.jpg" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="656" />
+  <meta property="og:image:alt" content="Adriano Vilhena with robotics rover" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Adriano Lopes de Vilhena — Portfolio" />
+  <meta name="twitter:description" content="Software, robotics & space cybersecurity. Building across C#, .NET, Python, hardware, fencing, big band piano, and photography." />
+  <meta name="twitter:image" content="https://portfolio.adrianolop.dev/assets/hero-rover.jpg" />
+
+  <!-- Favicons & App Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Adriano Lopes de Vilhena",
+      "alternateName": "Adriano Vilhena",
+      "url": "https://portfolio.adrianolop.dev/",
+      "image": "https://portfolio.adrianolop.dev/assets/profile.png",
+      "email": "mailto:AdrianoLop.V@icloud.com",
+      "jobTitle": "Software Engineering & Information Systems Student",
+      "affiliation": [
+        { "@type": "Organization", "name": "NOVA IMS", "url": "https://novaims.unl.pt/" },
+        { "@type": "Organization", "name": "CEiiA" },
+        { "@type": "Organization", "name": "FIRST Global Challenge" }
+      ],
+      "sameAs": [
+        "https://github.com/adrxlv",
+        "https://www.linkedin.com/in/adriano-vilhena-a0493b332/",
+        "https://www.tiktok.com/@adrx_lv"
+      ],
+      "knowsAbout": ["Software Engineering", "Robotics", "Space Cybersecurity", "C#", ".NET", "Blazor", "Python", "Photography"]
+    }
+  </script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
@@ -68,6 +116,16 @@
     }
     button:active, [role="button"]:active {
       transform: scale(0.97);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    input:focus-visible,
+    .tilt-card:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 3px;
     }
 
     #full-gallery-modal, #morph-modal-card {
@@ -514,11 +572,19 @@
       </div>
     </div>
 
-    <!-- Top Right: Borderless CARAVAN Interactive Widget (Compact header, usable drawer width on mobile) -->
-    <div class="relative z-30 flex justify-end slide-reveal">
+    <!-- Top Bar: Discreet Connect Anchor (Left) + Borderless CARAVAN Audio Control (Right) -->
+    <div class="relative z-30 flex items-center justify-between gap-4 slide-reveal">
+      <a href="#contact-footer" id="hero-connect-link" class="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 px-1 font-mono-tech text-xs tracking-widest uppercase text-zinc-400 hover:text-rose-400 transition-colors">
+        <span>Connect</span>
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="7" y1="7" x2="17" y2="17"></line>
+          <polyline points="17 7 17 17 7 17"></polyline>
+        </svg>
+      </a>
+
       <div class="caravan-widget inline-grid justify-items-end text-right py-1 sm:py-2">
         <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none min-h-[44px] sm:min-h-0 py-1 px-1">
-          <div id="eq-bars" class="flex items-end gap-[2px] h-3.5 eq-playing shrink-0">
+          <div id="eq-bars" class="flex items-end gap-[2px] h-3.5 eq-paused shrink-0">
             <span class="w-[2px] h-full bg-amber-400 eq-1"></span>
             <span class="w-[2px] h-full bg-amber-400 eq-2"></span>
             <span class="w-[2px] h-full bg-amber-400 eq-3"></span>
@@ -537,11 +603,11 @@
               </svg>
             </button>
             <button type="button" id="audio-play-btn" aria-label="Play or pause" class="min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 flex items-center justify-center p-1 sm:p-0.5 text-amber-400 hover:text-amber-300 transition-colors">
-              <svg id="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <svg id="icon-pause" class="hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="6" y="4" width="4" height="16"></rect>
                 <rect x="14" y="4" width="4" height="16"></rect>
               </svg>
-              <svg id="icon-play" class="hidden" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <svg id="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="6 4 20 12 6 20 6 4"></polygon>
               </svg>
             </button>
@@ -556,7 +622,7 @@
             <input id="audio-volume" type="range" min="0" max="100" value="25" aria-label="Volume" class="caravan-vol w-full block" />
           </div>
         </div>
-        <audio id="bg-audio" src="assets/Caravan.mp3" autoplay preload="auto" class="hidden"></audio>
+        <audio id="bg-audio" src="assets/Caravan.mp3" preload="none" class="hidden"></audio>
       </div>
     </div>
 
@@ -584,7 +650,7 @@
     <div class="relative z-30 flex justify-center slide-reveal">
       <a href="#thread-section" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 min-w-[44px] min-h-[44px] justify-center text-zinc-500 hover:text-zinc-300 transition-colors">
         <span class="font-mono-tech text-[10px] tracking-[0.24em] uppercase">Scroll</span>
-        <svg class="w-3.5 h-3.5 text-zinc-500 group-hover:text-rose-400 transition-transform duration-300 group-hover:translate-y-0.5 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg class="w-3.5 h-3.5 text-zinc-500 group-hover:text-rose-400 transition-transform duration-300 group-hover:translate-y-0.5 motion-safe:animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </a>
@@ -769,18 +835,42 @@
       </div>
     </section>
 
-    <!-- FOOTER: SOCIAL LINKS + RESUME + DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS -->
-    <footer class="pt-12 sm:pt-16 pb-[max(3rem,calc(env(safe-area-inset-bottom)+1.5rem))] sm:pb-16 px-5 sm:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 items-center">
-      <div class="md:col-span-5 space-y-4 font-mono-tech text-xs text-zinc-400">
+    <!-- FOOTER: CONTACT + CONTEXT-GROUPED LINKS + DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS -->
+    <footer id="contact-footer" class="pt-12 sm:pt-16 pb-[max(3rem,calc(env(safe-area-inset-bottom)+1.5rem))] sm:pb-16 px-5 sm:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 items-center">
+      <div class="md:col-span-5 space-y-5 font-mono-tech text-xs text-zinc-400">
         <p class="text-white font-space text-xl font-bold">Adriano Lopes de Vilhena</p>
-        <p>
-          <a href="mailto:AdrianoLop.V@icloud.com" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 transition-colors">AdrianoLop.V@icloud.com</a>
-        </p>
-        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1 text-zinc-300">
-          <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">LinkedIn</a>
-          <a href="https://github.com/adrxlv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">GitHub</a>
-          <a href="https://www.tiktok.com/@adrx_lv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">TikTok (@adrx_lv)</a>
-          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">Download Resume</a>
+
+        <!-- Highlighted Email + Quick Copy-to-Clipboard -->
+        <div class="flex flex-wrap items-center gap-2.5 pt-0.5">
+          <a href="mailto:AdrianoLop.V@icloud.com" class="inline-flex items-center min-h-[44px] sm:min-h-0 px-3 py-2 border border-white/15 bg-zinc-900/70 text-zinc-100 hover:border-rose-500/70 hover:text-rose-400 transition-colors">
+            AdrianoLop.V@icloud.com
+          </a>
+          <button type="button" id="copy-email-btn" data-email="AdrianoLop.V@icloud.com" aria-label="Copy email address" class="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 px-3 py-2 border border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-600 hover:border-rose-600 hover:text-white transition-colors">
+            <svg id="copy-email-icon" class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="copy-email-label" aria-live="polite">Copy</span>
+          </button>
+        </div>
+
+        <!-- Subtly Grouped Context Links: Build / Work vs Life / Creative -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 border-t border-white/10">
+          <div class="space-y-1.5 pt-3">
+            <p class="text-[10px] tracking-[0.22em] uppercase text-zinc-500">Build / Work</p>
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-zinc-300">
+              <a href="https://github.com/adrxlv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">GitHub</a>
+              <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">LinkedIn</a>
+              <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">Resume</a>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 sm:pt-3">
+            <p class="text-[10px] tracking-[0.22em] uppercase text-zinc-500">Life / Creative</p>
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-zinc-300">
+              <a href="https://www.tiktok.com/@adrx_lv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center min-h-[44px] sm:min-h-0 hover:text-rose-400 underline underline-offset-4 transition-colors">TikTok (@adrx_lv)</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1250,6 +1340,8 @@
       }
     });
 
+    const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     function runInPlaceIntro() {
       if (window.scrollY > 0) {
         savedScrollY = Math.max(savedScrollY, window.scrollY);
@@ -1258,6 +1350,22 @@
 
       const wordEl = document.getElementById("hero-adriano-line");
       const backdrop = document.getElementById("intro-backdrop");
+
+      if (prefersReducedMotion()) {
+        wordEl.textContent = "ADRIANO";
+        window.removeEventListener("wheel", blockScrollDuringIntro, { passive: false });
+        window.removeEventListener("touchmove", blockScrollDuringIntro, { passive: false });
+        backdrop.classList.add("backdrop-cleared");
+        document.documentElement.classList.remove("intro-locked");
+        document.body.classList.remove("intro-locked");
+        document.body.classList.add("intro-complete");
+        scrollTrackingReady = true;
+        if (savedScrollY > 40) {
+          window.scrollTo({ top: savedScrollY, behavior: "auto" });
+        }
+        return;
+      }
+
       const sourceWord = "Anomaly";
       const targetWord = "ADRIANO";
 
@@ -1333,7 +1441,7 @@
 
     // ==================== 2. MAGIC UI SMOOTH CURSOR (Dynamic Black/White Contrast) ====================
     (function initSmoothCursor() {
-      if (!window.matchMedia("(pointer: fine)").matches) return;
+      if (!window.matchMedia("(pointer: fine)").matches || prefersReducedMotion()) return;
       document.body.classList.add("custom-cursor-active");
       const cursor = document.getElementById("smooth-cursor");
       const arrowPath = document.getElementById("cursor-arrow-path");
@@ -1464,7 +1572,7 @@
 
       const heroSection = document.getElementById("hero-section");
       const heroBgParallax = document.getElementById("hero-bg-parallax");
-      if (heroSection && heroBgParallax && isFineHover()) {
+      if (heroSection && heroBgParallax && isFineHover() && !prefersReducedMotion()) {
         heroSection.addEventListener("mousemove", (e) => {
           if (window.innerWidth < 768) return;
           const rect = heroSection.getBoundingClientRect();
@@ -1505,26 +1613,24 @@
         }
       });
 
-      // Caravan Audio Player (Real MP3 playback, 25% default volume, unmuted autoplay + confirmed-playback unlock)
+      // Caravan Audio Player (On-demand MP3 playback, preload="none", 25% default volume)
       const TRACKS = [
         { name: "CARAVAN", src: "assets/Caravan.mp3" },
         { name: "TAKE FIVE", src: encodeURI("assets/Dave Brubeck, The Dave Brubeck Quartet - Take Five (Audio).mp3") },
         { name: "WHIPLASH", src: "assets/Whiplash.mp3" }
       ];
       let trackIdx = 0;
-      let wantsAutoplay = true;
       let playPending = false;
       let currentVolume = 0.25;
-      let lastThrottledRetry = 0;
 
       const audio = document.getElementById("bg-audio") || new Audio();
-      audio.preload = "auto";
+      audio.preload = "none";
       audio.muted = false;
       audio.volume = currentVolume;
       if (!audio.getAttribute("src")) {
         audio.src = TRACKS[0].src;
       }
-      let isPlaying = !audio.paused && !audio.muted && audio.currentTime > 0.05;
+      let isPlaying = false;
 
       const caravanWidget = document.querySelector(".caravan-widget");
       const caravanHeaderRow = document.getElementById("caravan-header-row");
@@ -1558,43 +1664,6 @@
         iconPlay.classList.toggle("hidden", isPlaying);
         eqBars.classList.toggle("eq-playing", isPlaying);
         eqBars.classList.toggle("eq-paused", !isPlaying);
-      }
-
-      const UNLOCK_EVENTS = [
-        "pointerdown",
-        "mousedown",
-        "pointerup",
-        "click",
-        "touchstart",
-        "touchend",
-        "keydown",
-        "keyup",
-        "wheel",
-        "pointermove"
-      ];
-
-      function onFirstInteraction(e) {
-        if (!wantsAutoplay) return;
-        if (
-          (e.type === "pointerdown" || e.type === "mousedown" || e.type === "pointerup" || e.type === "click") &&
-          e.target &&
-          typeof e.target.closest === "function" &&
-          e.target.closest("#audio-play-btn, #audio-prev-btn, #audio-next-btn")
-        ) {
-          return;
-        }
-        if (e.type === "pointermove" || e.type === "wheel") {
-          const now = performance.now();
-          if (now - lastThrottledRetry < 200) return;
-          lastThrottledRetry = now;
-        }
-        if (audio.paused && !playPending) {
-          tryPlay(true);
-        }
-      }
-
-      function removeUnlockListeners() {
-        UNLOCK_EVENTS.forEach((evt) => window.removeEventListener(evt, onFirstInteraction));
       }
 
       function tryPlay(forceRetry = false) {
@@ -1631,32 +1700,15 @@
         isPlaying = true;
         updatePlayUI();
       });
-      audio.addEventListener("timeupdate", () => {
-        if (wantsAutoplay && !audio.paused && !audio.muted && audio.currentTime > 0.05) {
-          wantsAutoplay = false;
-          isPlaying = true;
-          removeUnlockListeners();
-          updatePlayUI();
-        }
-      });
       audio.addEventListener("pause", () => {
         isPlaying = false;
         updatePlayUI();
-      });
-      ["loadeddata", "canplay", "canplaythrough"].forEach((evt) => {
-        audio.addEventListener(evt, () => {
-          if (wantsAutoplay && audio.paused && !playPending) {
-            tryPlay();
-          }
-        });
       });
       audio.addEventListener("ended", () => {
         switchTrack(1, true);
       });
 
       function togglePlay() {
-        wantsAutoplay = false;
-        removeUnlockListeners();
         if (audio.paused) {
           tryPlay(true);
         } else {
@@ -1667,8 +1719,6 @@
       }
 
       function switchTrack(dir, forcePlay = false) {
-        wantsAutoplay = false;
-        removeUnlockListeners();
         trackIdx = (trackIdx + dir + TRACKS.length) % TRACKS.length;
         titleEl.textContent = TRACKS[trackIdx].name;
         const shouldPlay = forcePlay || !audio.paused;
@@ -1692,14 +1742,7 @@
         audio.volume = currentVolume;
       });
 
-      UNLOCK_EVENTS.forEach((evt) => window.addEventListener(evt, onFirstInteraction, { passive: true }));
-      window.addEventListener("load", () => {
-        if (wantsAutoplay && audio.paused && !playPending) {
-          tryPlay();
-        }
-      });
       updatePlayUI();
-      tryPlay();
     })();
 
     // ==================== 4. PINNED CONTROLLED CHAOS SCROLL & MAGIC HIGHLIGHTER ====================
@@ -2067,7 +2110,7 @@
     // ==================== 6. 3D TILT (+15% STRONGER MOTION ON POINTER-FINE DEVICES) ====================
     const hasFineHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     document.addEventListener("mousemove", (e) => {
-      if (!hasFineHover()) return;
+      if (!hasFineHover() || prefersReducedMotion()) return;
       const card = e.target.closest(".tilt-card");
       if (!card) return;
       const rect = card.getBoundingClientRect();
@@ -2103,6 +2146,10 @@
 
         function animateDecrypt(toText) {
           clearInterval(timer);
+          if (prefersReducedMotion()) {
+            el.textContent = toText;
+            return;
+          }
           const startText = el.textContent;
           const maxLen = Math.max(startText.length, toText.length);
           const totalSteps = 13;
@@ -2490,9 +2537,57 @@
       }
     }
 
+    function initCopyEmailButton() {
+      const btn = document.getElementById("copy-email-btn");
+      const label = document.getElementById("copy-email-label");
+      if (!btn || !label) return;
+      const email = btn.getAttribute("data-email") || "AdrianoLop.V@icloud.com";
+      let resetTimer = null;
+
+      btn.addEventListener("click", async () => {
+        let copied = false;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(email);
+            copied = true;
+          }
+        } catch (err) {
+          copied = false;
+        }
+        if (!copied) {
+          const ta = document.createElement("textarea");
+          ta.value = email;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            copied = document.execCommand("copy");
+          } catch (err) {
+            copied = false;
+          }
+          document.body.removeChild(ta);
+        }
+
+        if (copied) {
+          clearTimeout(resetTimer);
+          label.textContent = "Copied!";
+          btn.classList.remove("border-rose-500/50", "bg-rose-500/10", "text-rose-300");
+          btn.classList.add("border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300");
+          resetTimer = setTimeout(() => {
+            label.textContent = "Copy";
+            btn.classList.remove("border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300");
+            btn.classList.add("border-rose-500/50", "bg-rose-500/10", "text-rose-300");
+          }, 2000);
+        }
+      });
+    }
+
     // ==================== INIT ====================
     window.addEventListener("DOMContentLoaded", () => {
       runInPlaceIntro();
+      initCopyEmailButton();
       renderFullArchiveGrid();
       initDottedMap();
       const initialKeys = new Set(ACTIVE_PHOTOS.map((p) => p.filename.toLowerCase()));
