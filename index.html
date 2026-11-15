@@ -1927,18 +1927,23 @@
         return slots;
       }
 
+      let diagMeta = { driftX: 0, driftY: 0 };
+
       function computeDynamicDiagStart(items, stageW, stageH, isMobile) {
         const n = items.length;
         if (n === 0) return [];
         const W = Math.max(280, stageW);
         const H = Math.max(240, stageH);
-        const rots = [-4.5, 3.2, -2.6, 3.8, -3.4, 2.4, -4.0, 2.9, -2.1, 4.2, -3.1, 2.8, -4.8, 3.5, -2.4];
 
-        const targetH = isMobile ? H * 0.27 : H * 0.39;
-        const maxW = isMobile ? W * 0.54 : W * 0.31;
+        const targetH = isMobile ? H * 0.25 : H * 0.36;
+        const maxW = isMobile ? W * 0.46 : W * 0.24;
         const minW = isMobile ? W * 0.28 : W * 0.14;
+        const gapVertical = isMobile ? -10 : -14;
+        const gapHorizontal = isMobile ? 4 : 6;
+        const slope = isMobile ? 0.85 : 0.46;
 
-        return items.map((item, i) => {
+        // Size each card preserving exact aspect ratio
+        const sized = items.map((item) => {
           const a = Number(item.aspect) > 0.1 ? Number(item.aspect) : 1.333;
           let h = Math.min(targetH, maxW / a);
           let w = h * a;
@@ -1946,24 +1951,43 @@
             w = Math.min(maxW, minW);
             h = w / a;
           }
-          const t = n > 1 ? i / (n - 1) : 0.5;
-          if (isMobile) {
-            const minX = W * 0.04;
-            const maxX = Math.max(minX, W - w - W * 0.02);
-            const laneBase = minX + t * (maxX - minX);
-            const zig = (i % 2 === 0 ? -0.05 : 0.06) * W;
-            const x = Math.max(minX, Math.min(maxX, laneBase + zig));
-            const ySpan = Math.max(20, H * 0.72 - h);
-            const y = Math.max(8, Math.min(H - h - 8, H * 0.06 + t * ySpan));
-            return { x, y, w, h, rot: rots[i % rots.length] };
-          }
-          const xSpan = Math.max(20, W * 0.86 - w);
-          const ySpan = Math.max(20, H * 0.54 - h);
-          const staggerY = (i % 2 === 0 ? -1 : 1) * (H * 0.055);
-          const x = W * 0.06 + t * xSpan;
-          const y = Math.max(8, Math.min(H - h - 8, H * 0.08 + t * ySpan + staggerY));
-          return { x, y, w, h, rot: rots[i % rots.length] };
+          return { w, h, isLandscape: a > 1.05 };
         });
+
+        // Place card centers strictly along a single straight diagonal line:
+        // top-left -> bottom-right with smaller gaps for vertical images and larger gaps for horizontal images
+        const startCenterX = isMobile ? W * 0.24 : W * 0.16;
+        const startCenterY = isMobile ? H * 0.22 : H * 0.23;
+
+        let cx = startCenterX;
+        let cy = startCenterY;
+
+        const slots = sized.map((sz, i) => {
+          if (i > 0) {
+            const prev = sized[i - 1];
+            const g1 = prev.isLandscape ? gapHorizontal : gapVertical;
+            const g2 = sz.isLandscape ? gapHorizontal : gapVertical;
+            const pairGap = (g1 + g2) * 0.5;
+            const stepX = (prev.w + sz.w) * 0.5 + pairGap;
+            cx += stepX;
+            cy += stepX * slope;
+          }
+          return {
+            x: cx - sz.w / 2,
+            y: cy - sz.h / 2,
+            w: sz.w,
+            h: sz.h,
+            rot: 0
+          };
+        });
+
+        const last = slots[slots.length - 1];
+        const lastCenterX = last.x + last.w / 2;
+        const targetEndCenterX = isMobile ? W * 0.74 : W * 0.80;
+        const driftX = Math.max(W * 0.2, lastCenterX - targetEndCenterX);
+        diagMeta = { driftX, driftY: driftX * slope };
+
+        return slots;
       }
 
       function renderMorphTiles() {
@@ -2005,11 +2029,8 @@
 
       function updateMorph() {
         if (morphEls.length === 0) return;
-        const isMobile = window.innerWidth < 768;
-        const stageW = stage.clientWidth || Math.min(1152, window.innerWidth - 40);
-        const stageH = stage.clientHeight || Math.max(360, window.innerHeight * 0.68);
-        const driftX = stageW * (isMobile ? 0.06 : 0.14);
-        const driftY = stageH * (isMobile ? 0.05 : 0.08);
+        const driftX = diagMeta.driftX;
+        const driftY = diagMeta.driftY;
 
         const rect = section.getBoundingClientRect();
         const scrollable = section.offsetHeight - window.innerHeight;
