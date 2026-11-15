@@ -331,6 +331,63 @@
       pointer-events: auto;
     }
 
+    /* PC-only Hand-Drawn Animated Hover Hint for Caravan */
+    .caravan-hover-hint {
+      display: none;
+    }
+    @keyframes caravan-hint-draw {
+      from { stroke-dashoffset: 96; }
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes caravan-hint-nudge {
+      0%, 100% { transform: translate(0, 0) rotate(-4deg); }
+      50% { transform: translate(4px, -2px) rotate(-2deg); }
+    }
+    @media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+      .caravan-hover-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        position: absolute;
+        right: calc(100% + 10px);
+        top: 10px;
+        pointer-events: none;
+        user-select: none;
+        color: rgba(251, 191, 36, 0.85);
+        opacity: 0;
+        transform: translateX(-4px);
+        transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      body.intro-complete .caravan-hover-hint {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      body.intro-complete .caravan-hover-hint-arrow path {
+        stroke-dasharray: 96;
+        stroke-dashoffset: 96;
+        animation: caravan-hint-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+      }
+      body.intro-complete .caravan-hover-hint-inner {
+        animation: caravan-hint-nudge 2.6s ease-in-out 1.2s infinite;
+      }
+      .caravan-widget:hover .caravan-hover-hint,
+      .caravan-widget:focus-within .caravan-hover-hint,
+      .caravan-widget.caravan-open .caravan-hover-hint,
+      .caravan-widget.caravan-hint-dismissed .caravan-hover-hint {
+        opacity: 0 !important;
+        transform: translateX(6px);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .caravan-hover-hint-arrow path {
+        stroke-dashoffset: 0 !important;
+        animation: none !important;
+      }
+      .caravan-hover-hint-inner {
+        animation: none !important;
+      }
+    }
+
     /* Ultra-subtle Volume Range Slider Knob (Touch-friendly hit area on coarse pointers) */
     input[type="range"].caravan-vol {
       -webkit-appearance: none;
@@ -582,7 +639,18 @@
         </svg>
       </a>
 
-      <div class="caravan-widget inline-grid justify-items-end text-right py-1 sm:py-2">
+      <div class="caravan-widget relative inline-grid justify-items-end text-right py-1 sm:py-2">
+        <!-- PC-only Hand-Drawn Animated Hint pointing to CARAVAN -->
+        <div class="caravan-hover-hint" aria-hidden="true">
+          <div class="caravan-hover-hint-inner flex items-end gap-1.5">
+            <span class="font-playwrite text-[11px] tracking-normal whitespace-nowrap leading-none -rotate-6 text-amber-300/90">Hover me!!</span>
+            <svg class="caravan-hover-hint-arrow w-12 h-6 text-amber-400/90 shrink-0" viewBox="0 0 54 28" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21 C16 23, 30 18, 47 12" />
+              <path d="M39 8.5 L48 11.8 L42.5 18.5" />
+            </svg>
+          </div>
+        </div>
+
         <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none min-h-[44px] sm:min-h-0 py-1 px-1">
           <div id="eq-bars" class="flex items-end gap-[2px] h-3.5 eq-paused shrink-0">
             <span class="w-[2px] h-full bg-amber-400 eq-1"></span>
@@ -1642,6 +1710,12 @@
       const iconPlay = document.getElementById("icon-play");
       const eqBars = document.getElementById("eq-bars");
       const volSlider = document.getElementById("audio-volume");
+
+      if (caravanWidget) {
+        const dismissCaravanHint = () => caravanWidget.classList.add("caravan-hint-dismissed");
+        caravanWidget.addEventListener("mouseenter", dismissCaravanHint, { once: true });
+        caravanWidget.addEventListener("focusin", dismissCaravanHint, { once: true });
+      }
 
       caravanHeaderRow.addEventListener("click", (e) => {
         e.stopPropagation();
