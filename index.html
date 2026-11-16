@@ -1028,7 +1028,7 @@
 
     <!-- Discreet Scroll Down Indicator -->
     <div class="relative z-30 flex justify-center slide-reveal">
-      <a href="#thread-section" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 min-w-[44px] min-h-[44px] justify-center text-zinc-500 hover:text-zinc-300 transition-colors">
+      <a href="#skills-accordion" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 min-w-[44px] min-h-[44px] justify-center text-zinc-500 hover:text-zinc-300 transition-colors">
         <span class="font-mono-tech text-[10px] tracking-[0.24em] uppercase">Scroll</span>
         <svg class="w-3.5 h-3.5 text-zinc-500 group-hover:text-rose-400 transition-transform duration-300 group-hover:translate-y-0.5 motion-safe:animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <polyline points="6 9 12 15 18 9"></polyline>
@@ -1040,78 +1040,7 @@
   <!-- REST OF THE PAGE -->
   <div class="slide-reveal">
 
-    <!-- CONTROLLED CHAOS SECTION (Left side stays pinned while right side scrolls up until the divider) -->
-    <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 items-stretch">
-        <!-- Pinned Left Column (Compact fixed-height translucent header on mobile, vertically centered full-height on desktop) -->
-        <div class="lg:col-span-5 sticky top-0 z-[30] bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
-          <h2 class="font-brutal text-2xl sm:text-4xl lg:text-5xl leading-[0.95] tracking-tight">
-            Controlled<br class="hidden lg:inline" />
-            <span class="font-serif-editorial italic font-normal text-sky-400 lg:block"> Chaos.</span>
-          </h2>
-          <p id="pinned-dynamic-quote" class="text-xs sm:text-base lg:text-lg text-zinc-300 leading-relaxed border-l-2 border-rose-500 pl-3 sm:pl-4 min-h-[3.25rem] sm:min-h-[3.5rem] lg:min-h-0 flex items-center transition-all duration-300">
-            Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.
-          </p>
-        </div>
-
-        <!-- Scrolling Right Column -->
-        <div class="lg:col-span-7 py-8 lg:py-32 space-y-12 sm:space-y-16 lg:space-y-28">
-          <article class="pinned-beat relative z-[15] space-y-4 sm:space-y-5" data-beat="0">
-            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('fencing')">
-              <picture>
-                <source media="(max-width: 767px)" srcset="assets/IMG_1471-800.webp" type="image/webp" />
-                <img src="assets/IMG_1471.webp" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
-              </picture>
-            </div>
-            <div class="sm:pl-16 max-w-lg">
-              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Distance, Feint, Counter-Measure</h3>
-              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
-                Good fencers and good engineers have more in common than you think. Neither of them merely reacts. They read early, prepare obsessively, and stay calm precisely because <span class="magic-hl">the hard work was done before anything moved.</span>
-              </p>
-            </div>
-          </article>
-
-          <article class="pinned-beat relative z-[30] space-y-4 sm:space-y-5" data-beat="1">
-            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('piano')">
-              <picture>
-                <source media="(max-width: 767px)" srcset="assets/piano-800.webp" type="image/webp" />
-                <img src="assets/piano.webp" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
-              </picture>
-            </div>
-            <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
-              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Teamwork playing Jazz</h3>
-              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
-                Big band piano taught me more about leadership than any textbook. Drive when the horns need pushing, disappear when someone's soloing, and <span class="magic-hl hl-amber">trust that the groove holds without you filling every bar.</span>
-              </p>
-            </div>
-          </article>
-
-          <article class="pinned-beat relative z-[30] space-y-4 sm:space-y-5" data-beat="2">
-            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('cosmos')">
-              <picture>
-                <source media="(max-width: 767px)" srcset="assets/IMG_7252-800.webp" type="image/webp" />
-                <img src="assets/IMG_7252.webp" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
-              </picture>
-            </div>
-            <div class="sm:pl-12 max-w-lg">
-              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">From Luanda to the World and Above</h3>
-              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
-                Across SLI, FGC 2024 and 2025, we explored how lunar technology and Robotics can improve life on Earth. I’ve started building in Luanda and arrived in Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
-              </p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- SEAM 2: Controlled Chaos -> What I Bring to the Table (Bass String Wave) -->
-    <div class="seam-wave-wrap" data-seam="wave" aria-hidden="true">
-      <svg id="seam-wave-svg" class="seam-wave-svg" viewBox="0 0 1200 24" preserveAspectRatio="none">
-        <path id="seam-wave-path" d="M0 12 C380 12, 820 12, 1200 12" fill="none" stroke="rgba(244,244,240,0.18)" stroke-width="1.2" />
-      </svg>
-    </div>
-
-    <!-- WHAT I BRING TO THE TABLE (Before Photography, Closed Accordions + Programming Languages) -->
+    <!-- WHAT I CAN HELP YOU WITH (Before Controlled Chaos, Closed Accordions + Programming Languages) -->
     <section id="skills-accordion" class="w-full py-14 sm:py-28 border-b border-[var(--border)]">
       <div class="px-5 sm:px-12 max-w-4xl mx-auto">
       <div class="mb-8 sm:mb-10 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-8">
@@ -1119,10 +1048,10 @@
           <div class="tilt-card relative w-20 h-20 sm:w-32 sm:h-32 shrink-0 border border-[var(--border)] bg-zinc-900 overflow-hidden shadow-2xl group">
             <img src="assets/profile.webp" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" fetchpriority="high" decoding="async" />
           </div>
-          <h2 class="font-brutal text-2xl leading-[0.95] sm:hidden [text-wrap:balance]">What I bring to the table</h2>
+          <h2 class="font-brutal text-2xl leading-[0.95] sm:hidden [text-wrap:balance]">What I can help you with</h2>
         </div>
         <div class="flex-1">
-          <h2 class="hidden sm:block font-brutal text-3xl sm:text-5xl">What I bring to the table</h2>
+          <h2 class="hidden sm:block font-brutal text-3xl sm:text-5xl">What I can help you with</h2>
           <p class="text-[15px] sm:text-base text-zinc-400 sm:mt-4 leading-relaxed [text-wrap:pretty]">
             I speak Portuguese &amp; English and write systems in <span class="magic-hl">C, C++, C#, .NET, Blazor, Python, JavaScript, Java, HTML/CSS, and SQL</span>. Connecting robotics, web applications and software with AI
           </p>
@@ -1229,6 +1158,77 @@
       </div>
       </div>
     </section>
+
+    <!-- CONTROLLED CHAOS SECTION (Left side stays pinned while right side scrolls up until the divider) -->
+    <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 items-stretch">
+        <!-- Pinned Left Column (Compact fixed-height translucent header on mobile, vertically centered full-height on desktop) -->
+        <div class="lg:col-span-5 sticky top-0 z-[30] bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
+          <h2 class="font-brutal text-2xl sm:text-4xl lg:text-5xl leading-[0.95] tracking-tight">
+            Controlled<br class="hidden lg:inline" />
+            <span class="font-serif-editorial italic font-normal text-sky-400 lg:block"> Chaos.</span>
+          </h2>
+          <p id="pinned-dynamic-quote" class="text-xs sm:text-base lg:text-lg text-zinc-300 leading-relaxed border-l-2 border-rose-500 pl-3 sm:pl-4 min-h-[3.25rem] sm:min-h-[3.5rem] lg:min-h-0 flex items-center transition-all duration-300">
+            Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.
+          </p>
+        </div>
+
+        <!-- Scrolling Right Column -->
+        <div class="lg:col-span-7 py-8 lg:py-32 space-y-12 sm:space-y-16 lg:space-y-28">
+          <article class="pinned-beat relative z-[15] space-y-4 sm:space-y-5" data-beat="0">
+            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('fencing')">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/IMG_1471-800.webp" type="image/webp" />
+                <img src="assets/IMG_1471.webp" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
+              </picture>
+            </div>
+            <div class="sm:pl-16 max-w-lg">
+              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Distance, Feint, Counter-Measure</h3>
+              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
+                Good fencers and good engineers have more in common than you think. Neither of them merely reacts. They read early, prepare obsessively, and stay calm precisely because <span class="magic-hl">the hard work was done before anything moved.</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="pinned-beat relative z-[30] space-y-4 sm:space-y-5" data-beat="1">
+            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('piano')">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/piano-800.webp" type="image/webp" />
+                <img src="assets/piano.webp" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
+              </picture>
+            </div>
+            <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
+              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Teamwork playing Jazz</h3>
+              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
+                Big band piano taught me more about leadership than any textbook. Drive when the horns need pushing, disappear when someone's soloing, and <span class="magic-hl hl-amber">trust that the groove holds without you filling every bar.</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="pinned-beat relative z-[30] space-y-4 sm:space-y-5" data-beat="2">
+            <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('cosmos')">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/IMG_7252-800.webp" type="image/webp" />
+                <img src="assets/IMG_7252.webp" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
+              </picture>
+            </div>
+            <div class="sm:pl-12 max-w-lg">
+              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">From Luanda to the World and Above</h3>
+              <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
+                Across SLI, FGC 2024 and 2025, we explored how lunar technology and Robotics can improve life on Earth. I’ve started building in Luanda and arrived in Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEAM 2: Controlled Chaos -> My Photography (Bass String Wave) -->
+    <div class="seam-wave-wrap" data-seam="wave" aria-hidden="true">
+      <svg id="seam-wave-svg" class="seam-wave-svg" viewBox="0 0 1200 24" preserveAspectRatio="none">
+        <path id="seam-wave-path" d="M0 12 C380 12, 820 12, 1200 12" fill="none" stroke="rgba(244,244,240,0.18)" stroke-width="1.2" />
+      </svg>
+    </div>
 
     <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + ARROW) + GPU DIAGONAL -> BENTO MOSAIC -->
     <section id="photography-morph-section" class="relative z-[20] h-[220vh] md:h-[320vh] border-b border-[var(--border)] bg-transparent">
@@ -3547,6 +3547,7 @@
           scheduleRender();
         }, undefined, () => {});
 
+        const threadSec = document.getElementById("thread-section");
         const photoSec = document.getElementById("photography-morph-section");
         const flashEl = document.getElementById("camera-shutter-flash");
 
@@ -3583,9 +3584,11 @@
           let anyVisible = false;
           let flashOpacity = 0;
 
-          // 1. Foil Fencing Blade: single-pass Hero -> Controlled Chaos flight (enters left, crosses Distance/Feint, exits right)
-          if (foilPivot) {
-            const pPass1 = clamp01((smoothScrollY - vh * 0.02) / (vh * 1.05));
+          // 1. Foil Fencing Blade: single-pass Controlled Chaos entrance flight (enters left, crosses Distance/Feint, exits right)
+          if (foilPivot && threadSec) {
+            const tr = threadSec.getBoundingClientRect();
+            const threadTop = tr.top + deltaY;
+            const pPass1 = clamp01((vh * 0.95 - threadTop) / (vh * 1.15));
             const pass1Active = pPass1 > 0.005 && pPass1 < 0.995;
 
             foilPivot.visible = pass1Active;
