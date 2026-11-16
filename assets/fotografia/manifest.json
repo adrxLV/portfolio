@@ -1,714 +1,1426 @@
 [
   {
-    "src": "assets/fotografia/DSCN0406.jpg",
-    "filename": "DSCN0406.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0406-800.webp",
+    "filename": "DSCN0406-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0536.jpg",
-    "filename": "DSCN0536.jpg",
-    "width": 1349,
-    "height": 1800,
-    "aspect": 0.749,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/DSCN0547.jpg",
-    "filename": "DSCN0547.jpg",
-    "width": 1349,
-    "height": 1800,
-    "aspect": 0.749,
+    "src": "assets/fotografia/DSCN0406.webp",
+    "filename": "DSCN0406.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0658.jpg",
-    "filename": "DSCN0658.jpg",
-    "width": 1800,
-    "height": 1349,
-    "aspect": 1.334,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/DSCN0678.jpg",
-    "filename": "DSCN0678.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0536-800.webp",
+    "filename": "DSCN0536-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/DSCN0693.jpg",
-    "filename": "DSCN0693.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0536.webp",
+    "filename": "DSCN0536.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/DSCN0547-800.webp",
+    "filename": "DSCN0547-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0697.jpg",
-    "filename": "DSCN0697.jpg",
-    "width": 1800,
-    "height": 1350,
+    "src": "assets/fotografia/DSCN0547.webp",
+    "filename": "DSCN0547.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0658-800.webp",
+    "filename": "DSCN0658-800.webp",
+    "width": 800,
+    "height": 600,
     "aspect": 1.333,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0712.jpg",
-    "filename": "DSCN0712.jpg",
-    "width": 1349,
-    "height": 1800,
-    "aspect": 0.749,
+    "src": "assets/fotografia/DSCN0658.webp",
+    "filename": "DSCN0658.webp",
+    "width": 1400,
+    "height": 1049,
+    "aspect": 1.335,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0678-800.webp",
+    "filename": "DSCN0678-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/DSCN0728.jpg",
-    "filename": "DSCN0728.jpg",
-    "width": 1800,
-    "height": 1350,
+    "src": "assets/fotografia/DSCN0678.webp",
+    "filename": "DSCN0678.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/DSCN0693-800.webp",
+    "filename": "DSCN0693-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0693.webp",
+    "filename": "DSCN0693.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0697-800.webp",
+    "filename": "DSCN0697-800.webp",
+    "width": 800,
+    "height": 600,
     "aspect": 1.333,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0746.jpg",
-    "filename": "DSCN0746.jpg",
-    "width": 1349,
-    "height": 1800,
-    "aspect": 0.749,
+    "src": "assets/fotografia/DSCN0697.webp",
+    "filename": "DSCN0697.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0756.jpg",
-    "filename": "DSCN0756.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0712-800.webp",
+    "filename": "DSCN0712-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/DSCN0712.webp",
+    "filename": "DSCN0712.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/DSCN0728-800.webp",
+    "filename": "DSCN0728-800.webp",
+    "width": 800,
+    "height": 600,
+    "aspect": 1.333,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0728.webp",
+    "filename": "DSCN0728.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0746-800.webp",
+    "filename": "DSCN0746-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0787.jpg",
-    "filename": "DSCN0787.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0746.webp",
+    "filename": "DSCN0746.webp",
+    "width": 1049,
+    "height": 1400,
     "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0791.jpg",
-    "filename": "DSCN0791.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0756-800.webp",
+    "filename": "DSCN0756-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/DSCN0831.jpg",
-    "filename": "DSCN0831.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/DSCN0756.webp",
+    "filename": "DSCN0756.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0787-800.webp",
+    "filename": "DSCN0787-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0787.webp",
+    "filename": "DSCN0787.webp",
+    "width": 1049,
+    "height": 1400,
     "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0049.jpeg",
-    "filename": "IMG_0049.jpeg",
-    "width": 1800,
-    "height": 1012,
+    "src": "assets/fotografia/DSCN0791-800.webp",
+    "filename": "DSCN0791-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0791.webp",
+    "filename": "DSCN0791.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0831-800.webp",
+    "filename": "DSCN0831-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/DSCN0831.webp",
+    "filename": "DSCN0831.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0049-800.webp",
+    "filename": "IMG_0049-800.webp",
+    "width": 800,
+    "height": 450,
+    "aspect": 1.778,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0049.webp",
+    "filename": "IMG_0049.webp",
+    "width": 1400,
+    "height": 787,
     "aspect": 1.779,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0107.jpg",
-    "filename": "IMG_0107.jpg",
-    "width": 1800,
-    "height": 1347,
+    "src": "assets/fotografia/IMG_0107-800.webp",
+    "filename": "IMG_0107-800.webp",
+    "width": 800,
+    "height": 599,
     "aspect": 1.336,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0111.jpg",
-    "filename": "IMG_0111.jpg",
-    "width": 1800,
-    "height": 1347,
+    "src": "assets/fotografia/IMG_0107.webp",
+    "filename": "IMG_0107.webp",
+    "width": 1400,
+    "height": 1048,
     "aspect": 1.336,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0351_SnapseedCopy.jpg",
-    "filename": "IMG_0351_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_0111-800.webp",
+    "filename": "IMG_0111-800.webp",
+    "width": 800,
+    "height": 599,
+    "aspect": 1.336,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0393_SnapseedCopy.jpg",
-    "filename": "IMG_0393_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0111.webp",
+    "filename": "IMG_0111.webp",
+    "width": 1400,
+    "height": 1048,
+    "aspect": 1.336,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0465_Copia.jpg",
-    "filename": "IMG_0465_Copia.jpg",
-    "width": 1800,
-    "height": 1285,
+    "src": "assets/fotografia/IMG_0351_SnapseedCopy-800.webp",
+    "filename": "IMG_0351_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0351_SnapseedCopy.webp",
+    "filename": "IMG_0351_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0393_SnapseedCopy-800.webp",
+    "filename": "IMG_0393_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0393_SnapseedCopy.webp",
+    "filename": "IMG_0393_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0465_Copia-800.webp",
+    "filename": "IMG_0465_Copia-800.webp",
+    "width": 800,
+    "height": 571,
     "aspect": 1.401,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0467_Copia.jpg",
-    "filename": "IMG_0467_Copia.jpg",
-    "width": 1349,
-    "height": 1800,
-    "aspect": 0.749,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_0498_SnapseedCopy.jpg",
-    "filename": "IMG_0498_SnapseedCopy.jpg",
-    "width": 1349,
-    "height": 1800,
-    "aspect": 0.749,
+    "src": "assets/fotografia/IMG_0465_Copia.webp",
+    "filename": "IMG_0465_Copia.webp",
+    "width": 1400,
+    "height": 999,
+    "aspect": 1.401,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0500_SnapseedCopy.jpg",
-    "filename": "IMG_0500_SnapseedCopy.jpg",
-    "width": 1350,
-    "height": 1800,
-    "aspect": 0.75,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_0534_SnapseedCopy.jpg",
-    "filename": "IMG_0534_SnapseedCopy.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_0467_Copia-800.webp",
+    "filename": "IMG_0467_Copia-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_0538.jpg",
-    "filename": "IMG_0538.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0467_Copia.webp",
+    "filename": "IMG_0467_Copia.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_0542_SnapseedCopy.jpg",
-    "filename": "IMG_0542_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0498_SnapseedCopy-800.webp",
+    "filename": "IMG_0498_SnapseedCopy-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0548_SnapseedCopy.jpg",
-    "filename": "IMG_0548_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0498_SnapseedCopy.webp",
+    "filename": "IMG_0498_SnapseedCopy.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0555_SnapseedCopy.jpg",
-    "filename": "IMG_0555_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0500_SnapseedCopy-800.webp",
+    "filename": "IMG_0500_SnapseedCopy-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0563_SnapseedCopy.jpg",
-    "filename": "IMG_0563_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_0500_SnapseedCopy.webp",
+    "filename": "IMG_0500_SnapseedCopy.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0534_SnapseedCopy-800.webp",
+    "filename": "IMG_0534_SnapseedCopy-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_0570_SnapseedCopy.jpg",
-    "filename": "IMG_0570_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0534_SnapseedCopy.webp",
+    "filename": "IMG_0534_SnapseedCopy.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_0538-800.webp",
+    "filename": "IMG_0538-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_0538.webp",
+    "filename": "IMG_0538.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_0542_SnapseedCopy-800.webp",
+    "filename": "IMG_0542_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0582_SnapseedCopy.jpg",
-    "filename": "IMG_0582_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0542_SnapseedCopy.webp",
+    "filename": "IMG_0542_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0600_SnapseedCopy.jpg",
-    "filename": "IMG_0600_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_0548_SnapseedCopy-800.webp",
+    "filename": "IMG_0548_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0644_SnapseedCopy.jpg",
-    "filename": "IMG_0644_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_0548_SnapseedCopy.webp",
+    "filename": "IMG_0548_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0652_SnapseedCopy.jpg",
-    "filename": "IMG_0652_SnapseedCopy.jpg",
-    "width": 1440,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_0555_SnapseedCopy-800.webp",
+    "filename": "IMG_0555_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0555_SnapseedCopy.webp",
+    "filename": "IMG_0555_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0563_SnapseedCopy-800.webp",
+    "filename": "IMG_0563_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_0563_SnapseedCopy.webp",
+    "filename": "IMG_0563_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_0570_SnapseedCopy-800.webp",
+    "filename": "IMG_0570_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0570_SnapseedCopy.webp",
+    "filename": "IMG_0570_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0582_SnapseedCopy-800.webp",
+    "filename": "IMG_0582_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0582_SnapseedCopy.webp",
+    "filename": "IMG_0582_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0600_SnapseedCopy-800.webp",
+    "filename": "IMG_0600_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0600_SnapseedCopy.webp",
+    "filename": "IMG_0600_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0644_SnapseedCopy-800.webp",
+    "filename": "IMG_0644_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0644_SnapseedCopy.webp",
+    "filename": "IMG_0644_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0652_SnapseedCopy-800.webp",
+    "filename": "IMG_0652_SnapseedCopy-800.webp",
+    "width": 640,
+    "height": 800,
     "aspect": 0.8,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_0765_SnapseedCopy.jpg",
-    "filename": "IMG_0765_SnapseedCopy.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_0652_SnapseedCopy.webp",
+    "filename": "IMG_0652_SnapseedCopy.webp",
+    "width": 1120,
+    "height": 1400,
+    "aspect": 0.8,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_0765_SnapseedCopy-800.webp",
+    "filename": "IMG_0765_SnapseedCopy-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0772_SnapseedCopy.jpg",
-    "filename": "IMG_0772_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_0765_SnapseedCopy.webp",
+    "filename": "IMG_0765_SnapseedCopy.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_0934_Copia.jpg",
-    "filename": "IMG_0934_Copia.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_0772_SnapseedCopy-800.webp",
+    "filename": "IMG_0772_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_1403.jpg",
-    "filename": "IMG_1403.jpg",
-    "width": 1800,
-    "height": 1012,
+    "src": "assets/fotografia/IMG_0772_SnapseedCopy.webp",
+    "filename": "IMG_0772_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0934_Copia-800.webp",
+    "filename": "IMG_0934_Copia-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_0934_Copia.webp",
+    "filename": "IMG_0934_Copia.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_1403-800.webp",
+    "filename": "IMG_1403-800.webp",
+    "width": 800,
+    "height": 450,
+    "aspect": 1.778,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_1403.webp",
+    "filename": "IMG_1403.webp",
+    "width": 1400,
+    "height": 787,
     "aspect": 1.779,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1407_SnapseedCopy.jpg",
-    "filename": "IMG_1407_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_1407_SnapseedCopy-800.webp",
+    "filename": "IMG_1407_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_1408.jpg",
-    "filename": "IMG_1408.jpg",
+    "src": "assets/fotografia/IMG_1407_SnapseedCopy.webp",
+    "filename": "IMG_1407_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_1408-800.webp",
+    "filename": "IMG_1408-800.webp",
+    "width": 603,
+    "height": 800,
+    "aspect": 0.754,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_1408.webp",
+    "filename": "IMG_1408.webp",
     "width": 896,
     "height": 1188,
     "aspect": 0.754,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1471.jpg",
-    "filename": "IMG_1471.jpg",
+    "src": "assets/fotografia/IMG_1471-800.webp",
+    "filename": "IMG_1471-800.webp",
+    "width": 800,
+    "height": 534,
+    "aspect": 1.498,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_1471.webp",
+    "filename": "IMG_1471.webp",
     "width": 1264,
     "height": 843,
     "aspect": 1.499,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1474.jpg",
-    "filename": "IMG_1474.jpg",
-    "width": 1800,
-    "height": 1350,
+    "src": "assets/fotografia/IMG_1474-800.webp",
+    "filename": "IMG_1474-800.webp",
+    "width": 800,
+    "height": 600,
     "aspect": 1.333,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1476.jpg",
-    "filename": "IMG_1476.jpg",
+    "src": "assets/fotografia/IMG_1474.webp",
+    "filename": "IMG_1474.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_1476-800.webp",
+    "filename": "IMG_1476-800.webp",
+    "width": 601,
+    "height": 800,
+    "aspect": 0.751,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_1476.webp",
+    "filename": "IMG_1476.webp",
     "width": 896,
     "height": 1193,
     "aspect": 0.751,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1478.jpg",
-    "filename": "IMG_1478.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_1478-800.webp",
+    "filename": "IMG_1478-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1479.jpg",
-    "filename": "IMG_1479.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/IMG_1478.webp",
+    "filename": "IMG_1478.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_1592_SnapseedCopy.jpg",
-    "filename": "IMG_1592_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_1597_SnapseedCopy.jpg",
-    "filename": "IMG_1597_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_2946.jpg",
-    "filename": "IMG_2946.jpg",
-    "width": 1347,
-    "height": 1800,
-    "aspect": 0.748,
+    "src": "assets/fotografia/IMG_1479-800.webp",
+    "filename": "IMG_1479-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_2947.jpg",
-    "filename": "IMG_2947.jpg",
-    "width": 1347,
-    "height": 1800,
-    "aspect": 0.748,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_6742.jpg",
-    "filename": "IMG_6742.jpg",
-    "width": 1800,
-    "height": 1350,
-    "aspect": 1.333,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_6800.jpg",
-    "filename": "IMG_6800.jpg",
-    "width": 1616,
-    "height": 1080,
-    "aspect": 1.496,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_6813.jpg",
-    "filename": "IMG_6813.jpg",
-    "width": 1616,
-    "height": 1080,
-    "aspect": 1.496,
-    "palette": "color"
-  },
-  {
-    "src": "assets/fotografia/IMG_6820.jpg",
-    "filename": "IMG_6820.jpg",
-    "width": 1616,
-    "height": 1080,
-    "aspect": 1.496,
+    "src": "assets/fotografia/IMG_1479.webp",
+    "filename": "IMG_1479.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_6831.jpg",
-    "filename": "IMG_6831.jpg",
-    "width": 1616,
-    "height": 1080,
-    "aspect": 1.496,
+    "src": "assets/fotografia/IMG_1592_SnapseedCopy-800.webp",
+    "filename": "IMG_1592_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_7178.jpg",
-    "filename": "IMG_7178.jpg",
-    "width": 1800,
-    "height": 1349,
-    "aspect": 1.334,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_7493.jpg",
-    "filename": "IMG_7493.jpg",
-    "width": 1285,
-    "height": 1800,
-    "aspect": 0.714,
+    "src": "assets/fotografia/IMG_1592_SnapseedCopy.webp",
+    "filename": "IMG_1592_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_7542.jpg",
-    "filename": "IMG_7542.jpg",
-    "width": 1285,
-    "height": 1800,
-    "aspect": 0.714,
+    "src": "assets/fotografia/IMG_1597_SnapseedCopy-800.webp",
+    "filename": "IMG_1597_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_1597_SnapseedCopy.webp",
+    "filename": "IMG_1597_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_2946-800.webp",
+    "filename": "IMG_2946-800.webp",
+    "width": 599,
+    "height": 800,
+    "aspect": 0.749,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_7548.jpg",
-    "filename": "IMG_7548.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_2946.webp",
+    "filename": "IMG_2946.webp",
+    "width": 1048,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_2947-800.webp",
+    "filename": "IMG_2947-800.webp",
+    "width": 599,
+    "height": 800,
     "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_7717.jpg",
-    "filename": "IMG_7717.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/IMG_2947.webp",
+    "filename": "IMG_2947.webp",
+    "width": 1048,
+    "height": 1400,
+    "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_7780.jpg",
-    "filename": "IMG_7780.jpg",
+    "src": "assets/fotografia/IMG_6742-800.webp",
+    "filename": "IMG_6742-800.webp",
+    "width": 800,
+    "height": 600,
+    "aspect": 1.333,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6742.webp",
+    "filename": "IMG_6742.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6800-800.webp",
+    "filename": "IMG_6800-800.webp",
+    "width": 800,
+    "height": 535,
+    "aspect": 1.495,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6800.webp",
+    "filename": "IMG_6800.webp",
+    "width": 1400,
+    "height": 936,
+    "aspect": 1.496,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6813-800.webp",
+    "filename": "IMG_6813-800.webp",
+    "width": 800,
+    "height": 535,
+    "aspect": 1.495,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6813.webp",
+    "filename": "IMG_6813.webp",
+    "width": 1400,
+    "height": 936,
+    "aspect": 1.496,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6820-800.webp",
+    "filename": "IMG_6820-800.webp",
+    "width": 800,
+    "height": 535,
+    "aspect": 1.495,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_6820.webp",
+    "filename": "IMG_6820.webp",
+    "width": 1400,
+    "height": 936,
+    "aspect": 1.496,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_6831-800.webp",
+    "filename": "IMG_6831-800.webp",
+    "width": 800,
+    "height": 535,
+    "aspect": 1.495,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_6831.webp",
+    "filename": "IMG_6831.webp",
+    "width": 1400,
+    "height": 936,
+    "aspect": 1.496,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7178-800.webp",
+    "filename": "IMG_7178-800.webp",
+    "width": 800,
+    "height": 600,
+    "aspect": 1.333,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_7178.webp",
+    "filename": "IMG_7178.webp",
+    "width": 1400,
+    "height": 1049,
+    "aspect": 1.335,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_7493-800.webp",
+    "filename": "IMG_7493-800.webp",
+    "width": 571,
+    "height": 800,
+    "aspect": 0.714,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7493.webp",
+    "filename": "IMG_7493.webp",
+    "width": 999,
+    "height": 1400,
+    "aspect": 0.714,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7542-800.webp",
+    "filename": "IMG_7542-800.webp",
+    "width": 571,
+    "height": 800,
+    "aspect": 0.714,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_7542.webp",
+    "filename": "IMG_7542.webp",
+    "width": 999,
+    "height": 1400,
+    "aspect": 0.714,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_7548-800.webp",
+    "filename": "IMG_7548-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7548.webp",
+    "filename": "IMG_7548.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7717-800.webp",
+    "filename": "IMG_7717-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7717.webp",
+    "filename": "IMG_7717.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7780-800.webp",
+    "filename": "IMG_7780-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_7780.webp",
+    "filename": "IMG_7780.webp",
     "width": 824,
     "height": 1099,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_8360_SnapseedCopy.jpg",
-    "filename": "IMG_8360_SnapseedCopy.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_8360_SnapseedCopy-800.webp",
+    "filename": "IMG_8360_SnapseedCopy-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_8360_SnapseedCopy.webp",
+    "filename": "IMG_8360_SnapseedCopy.webp",
+    "width": 1049,
+    "height": 1400,
     "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/IMG_8436.jpg",
-    "filename": "IMG_8436.jpg",
-    "width": 1347,
-    "height": 1800,
-    "aspect": 0.748,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_9045.jpeg",
-    "filename": "IMG_9045.jpeg",
-    "width": 1347,
-    "height": 1800,
-    "aspect": 0.748,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_9110.jpg",
-    "filename": "IMG_9110.jpg",
-    "width": 1347,
-    "height": 1800,
-    "aspect": 0.748,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_9138.jpg",
-    "filename": "IMG_9138.jpg",
-    "width": 1347,
-    "height": 1800,
-    "aspect": 0.748,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_9222.jpg",
-    "filename": "IMG_9222.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_8436-800.webp",
+    "filename": "IMG_8436-800.webp",
+    "width": 599,
+    "height": 800,
     "aspect": 0.749,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_9240.jpg",
-    "filename": "IMG_9240.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_8436.webp",
+    "filename": "IMG_8436.webp",
+    "width": 1048,
+    "height": 1400,
     "aspect": 0.749,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_9266.jpg",
-    "filename": "IMG_9266.jpg",
-    "width": 1800,
-    "height": 1350,
+    "src": "assets/fotografia/IMG_9045-800.webp",
+    "filename": "IMG_9045-800.webp",
+    "width": 599,
+    "height": 800,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9045.webp",
+    "filename": "IMG_9045.webp",
+    "width": 1048,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/IMG_9110-800.webp",
+    "filename": "IMG_9110-800.webp",
+    "width": 599,
+    "height": 800,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9110.webp",
+    "filename": "IMG_9110.webp",
+    "width": 1048,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9138-800.webp",
+    "filename": "IMG_9138-800.webp",
+    "width": 599,
+    "height": 800,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9138.webp",
+    "filename": "IMG_9138.webp",
+    "width": 1048,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9222-800.webp",
+    "filename": "IMG_9222-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9222.webp",
+    "filename": "IMG_9222.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9240-800.webp",
+    "filename": "IMG_9240-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9240.webp",
+    "filename": "IMG_9240.webp",
+    "width": 1049,
+    "height": 1400,
+    "aspect": 0.749,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9266-800.webp",
+    "filename": "IMG_9266-800.webp",
+    "width": 800,
+    "height": 600,
     "aspect": 1.333,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_9295.jpg",
-    "filename": "IMG_9295.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_9266.webp",
+    "filename": "IMG_9266.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9295-800.webp",
+    "filename": "IMG_9295-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9295.webp",
+    "filename": "IMG_9295.webp",
+    "width": 1049,
+    "height": 1400,
     "aspect": 0.749,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/IMG_9354.jpg",
-    "filename": "IMG_9354.jpg",
-    "width": 1800,
-    "height": 1348,
-    "aspect": 1.335,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_9412.jpg",
-    "filename": "IMG_9412.jpg",
-    "width": 1800,
-    "height": 1349,
-    "aspect": 1.334,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/IMG_9424.jpg",
-    "filename": "IMG_9424.jpg",
-    "width": 1800,
-    "height": 1347,
+    "src": "assets/fotografia/IMG_9354-800.webp",
+    "filename": "IMG_9354-800.webp",
+    "width": 800,
+    "height": 599,
     "aspect": 1.336,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/ld-export-0c7e5e14-10182025.jpg",
-    "filename": "ld-export-0c7e5e14-10182025.jpg",
-    "width": 1800,
-    "height": 1350,
-    "aspect": 1.333,
-    "palette": "color"
+    "src": "assets/fotografia/IMG_9354.webp",
+    "filename": "IMG_9354.webp",
+    "width": 1400,
+    "height": 1048,
+    "aspect": 1.336,
+    "palette": "bw"
   },
   {
-    "src": "assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy.jpg",
-    "filename": "ld-export-31497c87-10112025_SnapseedCopy.jpg",
-    "width": 1800,
-    "height": 1350,
+    "src": "assets/fotografia/IMG_9412-800.webp",
+    "filename": "IMG_9412-800.webp",
+    "width": 800,
+    "height": 600,
     "aspect": 1.333,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/ld-export-81eddb7a-10112025.jpeg",
-    "filename": "ld-export-81eddb7a-10112025.jpeg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/IMG_9412.webp",
+    "filename": "IMG_9412.webp",
+    "width": 1400,
+    "height": 1049,
+    "aspect": 1.335,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9424-800.webp",
+    "filename": "IMG_9424-800.webp",
+    "width": 800,
+    "height": 599,
+    "aspect": 1.336,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/IMG_9424.webp",
+    "filename": "IMG_9424.webp",
+    "width": 1400,
+    "height": 1048,
+    "aspect": 1.336,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/ld-export-0c7e5e14-10182025-800.webp",
+    "filename": "ld-export-0c7e5e14-10182025-800.webp",
+    "width": 800,
+    "height": 600,
+    "aspect": 1.333,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/ld-export-0c7e5e14-10182025.webp",
+    "filename": "ld-export-0c7e5e14-10182025.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy-800.webp",
+    "filename": "ld-export-31497c87-10112025_SnapseedCopy-800.webp",
+    "width": 800,
+    "height": 600,
+    "aspect": 1.333,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy.webp",
+    "filename": "ld-export-31497c87-10112025_SnapseedCopy.webp",
+    "width": 1400,
+    "height": 1050,
+    "aspect": 1.333,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/ld-export-81eddb7a-10112025-800.webp",
+    "filename": "ld-export-81eddb7a-10112025-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/ld-export-844af384-10112025.jpg",
-    "filename": "ld-export-844af384-10112025.jpg",
-    "width": 1616,
-    "height": 1080,
+    "src": "assets/fotografia/ld-export-81eddb7a-10112025.webp",
+    "filename": "ld-export-81eddb7a-10112025.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/ld-export-844af384-10112025-800.webp",
+    "filename": "ld-export-844af384-10112025-800.webp",
+    "width": 800,
+    "height": 535,
+    "aspect": 1.495,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/ld-export-844af384-10112025.webp",
+    "filename": "ld-export-844af384-10112025.webp",
+    "width": 1400,
+    "height": 936,
     "aspect": 1.496,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/Snapseed.jpg",
-    "filename": "Snapseed.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/Snapseed-800.webp",
+    "filename": "Snapseed-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/Snapseed_2.jpg",
-    "filename": "Snapseed_2.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/Snapseed.webp",
+    "filename": "Snapseed.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/YTL00324.jpg",
-    "filename": "YTL00324.jpg",
-    "width": 996,
-    "height": 1494,
+    "src": "assets/fotografia/Snapseed_2-800.webp",
+    "filename": "Snapseed_2-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/Snapseed_2.webp",
+    "filename": "Snapseed_2.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00324-800.webp",
+    "filename": "YTL00324-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00324.webp",
+    "filename": "YTL00324.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00349-800.webp",
+    "filename": "YTL00349-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00349.webp",
+    "filename": "YTL00349.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00360-800.webp",
+    "filename": "YTL00360-800.webp",
+    "width": 534,
+    "height": 800,
     "aspect": 0.667,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/YTL00349.jpg",
-    "filename": "YTL00349.jpg",
-    "width": 1200,
-    "height": 1800,
+    "src": "assets/fotografia/YTL00360.webp",
+    "filename": "YTL00360.webp",
+    "width": 934,
+    "height": 1400,
     "aspect": 0.667,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/YTL00360.jpg",
-    "filename": "YTL00360.jpg",
-    "width": 1200,
-    "height": 1799,
-    "aspect": 0.667,
-    "palette": "bw"
-  },
-  {
-    "src": "assets/fotografia/YTL00389.jpg",
-    "filename": "YTL00389.jpg",
-    "width": 1350,
-    "height": 1800,
+    "src": "assets/fotografia/YTL00389-800.webp",
+    "filename": "YTL00389-800.webp",
+    "width": 600,
+    "height": 800,
     "aspect": 0.75,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/YTL00420.jpg",
-    "filename": "YTL00420.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/YTL00389.webp",
+    "filename": "YTL00389.webp",
+    "width": 1050,
+    "height": 1400,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/YTL00420-800.webp",
+    "filename": "YTL00420-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/YTL00425.jpg",
-    "filename": "YTL00425.jpg",
-    "width": 1800,
-    "height": 1285,
+    "src": "assets/fotografia/YTL00420.webp",
+    "filename": "YTL00420.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00425-800.webp",
+    "filename": "YTL00425-800.webp",
+    "width": 800,
+    "height": 571,
     "aspect": 1.401,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/YTL00435.jpg",
-    "filename": "YTL00435.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/YTL00425.webp",
+    "filename": "YTL00425.webp",
+    "width": 1400,
+    "height": 999,
+    "aspect": 1.401,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/YTL00435-800.webp",
+    "filename": "YTL00435-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "bw"
   },
   {
-    "src": "assets/fotografia/YTL00440.jpg",
-    "filename": "YTL00440.jpg",
-    "width": 1800,
-    "height": 1286,
+    "src": "assets/fotografia/YTL00435.webp",
+    "filename": "YTL00435.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00440-800.webp",
+    "filename": "YTL00440-800.webp",
+    "width": 800,
+    "height": 572,
+    "aspect": 1.399,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/YTL00440.webp",
+    "filename": "YTL00440.webp",
+    "width": 1400,
+    "height": 1000,
     "aspect": 1.4,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/YTL00450.jpg",
-    "filename": "YTL00450.jpg",
-    "width": 1349,
-    "height": 1800,
+    "src": "assets/fotografia/YTL00450-800.webp",
+    "filename": "YTL00450-800.webp",
+    "width": 600,
+    "height": 800,
+    "aspect": 0.75,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/YTL00450.webp",
+    "filename": "YTL00450.webp",
+    "width": 1049,
+    "height": 1400,
     "aspect": 0.749,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/YTL00463.jpg",
-    "filename": "YTL00463.jpg",
-    "width": 1200,
-    "height": 1800,
-    "aspect": 0.667,
+    "src": "assets/fotografia/YTL00463-800.webp",
+    "filename": "YTL00463-800.webp",
+    "width": 533,
+    "height": 800,
+    "aspect": 0.666,
     "palette": "color"
   },
   {
-    "src": "assets/fotografia/YTL00482.jpg",
-    "filename": "YTL00482.jpg",
-    "width": 1800,
-    "height": 1200,
-    "aspect": 1.5,
+    "src": "assets/fotografia/YTL00463.webp",
+    "filename": "YTL00463.webp",
+    "width": 933,
+    "height": 1400,
+    "aspect": 0.666,
+    "palette": "color"
+  },
+  {
+    "src": "assets/fotografia/YTL00482-800.webp",
+    "filename": "YTL00482-800.webp",
+    "width": 800,
+    "height": 533,
+    "aspect": 1.501,
+    "palette": "bw"
+  },
+  {
+    "src": "assets/fotografia/YTL00482.webp",
+    "filename": "YTL00482.webp",
+    "width": 1400,
+    "height": 933,
+    "aspect": 1.501,
     "palette": "bw"
   }
 ]

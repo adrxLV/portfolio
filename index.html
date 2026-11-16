@@ -156,18 +156,15 @@
     .font-playwrite { font-family: 'Playwrite AU SA', cursive; }
     .font-nightshade { font-family: 'Jim Nightshade', cursive; }
 
-    /* Magic UI Smooth Cursor (SVG Pointer + Dynamic Black/White Contrast) */
+    /* Magic UI Smooth Cursor (GPU translate3d + mix-blend-mode difference, zero DOM style reads) */
     #smooth-cursor {
       position: fixed;
       top: 0; left: 0;
       pointer-events: none;
       z-index: 10001;
-      transform: translate(-4px, -4px);
-      transition: transform 0.08s ease-out;
-      will-change: left, top, transform;
-    }
-    #smooth-cursor svg path {
-      transition: fill 0.18s ease, stroke 0.18s ease;
+      mix-blend-mode: difference;
+      will-change: transform;
+      transform: translate3d(-100px, -100px, 0);
     }
 
     /* In-place Preloader Backdrop */
@@ -331,61 +328,114 @@
       pointer-events: auto;
     }
 
-    /* PC-only Hand-Drawn Animated Hover Hint for Caravan */
-    .caravan-hover-hint {
-      display: none;
+    /* Quiet Ambient Riff on Equalizer Bars (replaces explicit hover hint) */
+    @keyframes eq-ambient-riff {
+      0%, 100% { transform: scaleY(0.35); opacity: 0.65; }
+      30% { transform: scaleY(0.95); opacity: 1; }
+      60% { transform: scaleY(0.45); opacity: 0.8; }
+      80% { transform: scaleY(0.8); opacity: 0.95; }
     }
-    @keyframes caravan-hint-draw {
-      from { stroke-dashoffset: 96; }
-      to { stroke-dashoffset: 0; }
+    .eq-ambient-riff .eq-1 { animation: eq-ambient-riff 0.42s ease-out 0ms 1; transform-origin: bottom; }
+    .eq-ambient-riff .eq-2 { animation: eq-ambient-riff 0.42s ease-out 70ms 1; transform-origin: bottom; }
+    .eq-ambient-riff .eq-3 { animation: eq-ambient-riff 0.42s ease-out 130ms 1; transform-origin: bottom; }
+    .eq-ambient-riff .eq-4 { animation: eq-ambient-riff 0.42s ease-out 190ms 1; transform-origin: bottom; }
+
+    /* GPU-Only Morph Photo Tile */
+    .morph-photo {
+      left: 0;
+      top: 0;
+      transform-origin: 0 0;
+      will-change: transform, opacity;
     }
-    @keyframes caravan-hint-nudge {
-      0%, 100% { transform: translate(0, 0) rotate(-4deg); }
-      50% { transform: translate(4px, -2px) rotate(-2deg); }
+
+    /* Thematic <Seam> Chapter Transitions */
+    .seam-wave-wrap {
+      position: relative;
+      width: 100%;
+      height: 24px;
+      margin-top: -12px;
+      margin-bottom: -12px;
+      pointer-events: none;
+      overflow: hidden;
     }
-    @media (hover: hover) and (pointer: fine) and (min-width: 768px) {
-      .caravan-hover-hint {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        position: absolute;
-        right: calc(100% + 10px);
-        top: 10px;
-        pointer-events: none;
-        user-select: none;
-        color: rgba(251, 191, 36, 0.85);
-        opacity: 0;
-        transform: translateX(-4px);
-        transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      body.intro-complete .caravan-hover-hint {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      body.intro-complete .caravan-hover-hint-arrow path {
-        stroke-dasharray: 96;
-        stroke-dashoffset: 96;
-        animation: caravan-hint-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
-      }
-      body.intro-complete .caravan-hover-hint-inner {
-        animation: caravan-hint-nudge 2.6s ease-in-out 1.2s infinite;
-      }
-      .caravan-widget:hover .caravan-hover-hint,
-      .caravan-widget:focus-within .caravan-hover-hint,
-      .caravan-widget.caravan-open .caravan-hover-hint,
-      .caravan-widget.caravan-hint-dismissed .caravan-hover-hint {
-        opacity: 0 !important;
-        transform: translateX(6px);
+    .seam-wave-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform-origin: center center;
+      transition: transform 0.2s ease-out;
+    }
+    .seam-viewfinder {
+      position: relative;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+    .seam-vf-mark {
+      position: absolute;
+      top: -10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: rgba(244, 244, 240, 0.55);
+      opacity: 0.25;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, color 0.4s ease;
+      pointer-events: none;
+    }
+    .seam-vf-left { left: 1.25rem; transform: translateX(-10px); }
+    .seam-vf-right { right: 1.25rem; transform: translateX(10px); }
+    @media (min-width: 640px) {
+      .seam-vf-left { left: 3rem; }
+      .seam-vf-right { right: 3rem; }
+    }
+    .seam-viewfinder.seam-active .seam-vf-mark {
+      opacity: 1;
+      transform: translateX(0);
+      color: #f59e0b;
+    }
+
+    /* <Roll> Button Typography & data-glyph Micro-Scenes (Desktop fine pointer only) */
+    .roll-wrap {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      height: 1.25em;
+      line-height: 1.25em;
+      vertical-align: middle;
+    }
+    .roll-track {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .roll-host:hover .roll-track {
+        transform: translateY(-50%);
       }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .caravan-hover-hint-arrow path {
-        stroke-dashoffset: 0 !important;
-        animation: none !important;
-      }
-      .caravan-hover-hint-inner {
-        animation: none !important;
-      }
+    [data-glyph] .glyph-svg {
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease, stroke 0.25s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      [data-glyph="connect"]:hover .glyph-pin-l { transform: translate(2px, -2px); }
+      [data-glyph="connect"]:hover .glyph-pin-r { transform: translate(-2px, 2px); }
+      [data-glyph="connect"]:hover .glyph-spark { opacity: 1; transform: scale(1.15); }
+      [data-glyph="copy"]:hover .glyph-flap { transform: scaleY(-0.85); transform-origin: 12px 7px; }
+      [data-glyph="photos"]:hover .glyph-iris { transform: rotate(45deg) scale(0.9); transform-origin: center; }
+      .mp-accordion-trigger:hover .acc-glyph { color: #fb7185; transform: scale(1.08); }
+    }
+    .mp-accordion-item.open .acc-glyph { color: #e11d48; }
+    [data-glyph="connect"] .glyph-spark { opacity: 0; transition: opacity 0.22s ease, transform 0.22s ease; transform-origin: center; }
+
+    /* Web Audio Groove Shift subtle reactive accents */
+    :root { --groove: 0; }
+    #hero-curious-line {
+      text-decoration-thickness: calc(2px + var(--groove) * 1.5px);
+      filter: drop-shadow(0 0 calc(var(--groove) * 8px) rgba(225, 29, 72, 0.55));
+    }
+    #pinned-dynamic-quote {
+      border-left-color: rgba(225, 29, 72, calc(0.75 + var(--groove) * 0.25));
+      box-shadow: inset 2px 0 calc(var(--groove) * 10px) -2px rgba(225, 29, 72, calc(var(--groove) * 0.45));
     }
 
     /* Ultra-subtle Volume Range Slider Knob (Touch-friendly hit area on coarse pointers) */
@@ -491,9 +541,8 @@
       opacity: 1;
     }
 
-    /* 3D Tilt (+15% stronger motion, no spotlight) */
+    /* 3D Tilt (+15% stronger motion, perspective per-element without preserve-3d click swallow) */
     .tilt-card {
-      transform-style: preserve-3d;
       transition: transform 0.16s ease-out;
       will-change: transform;
     }
@@ -625,32 +674,25 @@
     <!-- Chiaroscuro Background Portrait (Option 4) -->
     <div id="hero-bg-portrait" aria-hidden="true">
       <div id="hero-bg-parallax">
-        <img id="hero-bg-img" src="assets/hero-rover.jpg" alt="" />
+        <picture>
+          <source media="(max-width: 767px)" srcset="assets/hero-rover-800.webp" type="image/webp" />
+          <img id="hero-bg-img" src="assets/hero-rover.webp" alt="" />
+        </picture>
       </div>
     </div>
 
     <!-- Top Bar: Discreet Connect Anchor (Left) + Borderless CARAVAN Audio Control (Right) -->
     <div class="relative z-30 flex items-center justify-between gap-4 slide-reveal">
-      <a href="#contact-footer" id="hero-connect-link" class="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 px-1 font-mono-tech text-xs tracking-widest uppercase text-zinc-400 hover:text-rose-400 transition-colors">
-        <span>Connect</span>
-        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <line x1="7" y1="7" x2="17" y2="17"></line>
-          <polyline points="17 7 17 17 7 17"></polyline>
+      <a href="#contact-footer" id="hero-connect-link" data-glyph="connect" class="roll-host inline-flex items-center gap-2 min-h-[44px] sm:min-h-0 px-1 font-mono-tech text-xs tracking-widest uppercase text-zinc-400 hover:text-rose-400 transition-colors">
+        <span class="roll-wrap"><span class="roll-track"><span>Connect</span><span>Connect</span></span></span>
+        <svg class="glyph-svg w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <g class="glyph-pin-l"><path d="M5 17L9 13M7 11l4 4" /></g>
+          <g class="glyph-pin-r"><path d="M19 7l-4 4M13 9l4 4" /></g>
+          <circle class="glyph-spark" cx="12" cy="12" r="1.7" fill="#fb7185" stroke="none" />
         </svg>
       </a>
 
       <div class="caravan-widget relative inline-grid justify-items-end text-right py-1 sm:py-2">
-        <!-- PC-only Hand-Drawn Animated Hint pointing to CARAVAN -->
-        <div class="caravan-hover-hint" aria-hidden="true">
-          <div class="caravan-hover-hint-inner flex items-end gap-1.5">
-            <span class="font-playwrite text-[11px] tracking-normal whitespace-nowrap leading-none -rotate-6 text-amber-300/90">Hover me!!</span>
-            <svg class="caravan-hover-hint-arrow w-12 h-6 text-amber-400/90 shrink-0" viewBox="0 0 54 28" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 21 C16 23, 30 18, 47 12" />
-              <path d="M39 8.5 L48 11.8 L42.5 18.5" />
-            </svg>
-          </div>
-        </div>
-
         <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none min-h-[44px] sm:min-h-0 py-1 px-1">
           <div id="eq-bars" class="flex items-end gap-[2px] h-3.5 eq-paused shrink-0">
             <span class="w-[2px] h-full bg-amber-400 eq-1"></span>
@@ -704,13 +746,13 @@
         <!-- Random [-10deg, +10deg] Angled Reel on Hover / Tap -->
         <div class="hero-loop-reel">
           <div id="hero-reel-frame" class="w-[min(76vw,18rem)] sm:w-96 h-40 sm:h-60 overflow-hidden shadow-2xl">
-            <img id="hero-reel-img" src="assets/fotografia/DSCN0697.jpg" alt="Visual reel" class="w-full h-full object-cover" />
+            <img id="hero-reel-img" src="assets/fotografia/DSCN0658.webp" alt="Visual reel" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
 
       <p class="slide-reveal mt-6 sm:mt-10 max-w-2xl text-[15px] sm:text-base text-zinc-300 leading-relaxed text-center [text-wrap:pretty]">
-        <span class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
+        <span id="hero-curious-line" class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
       </p>
     </div>
 
@@ -729,7 +771,7 @@
   <div class="slide-reveal">
 
     <!-- CONTROLLED CHAOS SECTION (Left side stays pinned while right side scrolls up until the divider) -->
-    <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto border-b border-[var(--border)]">
+    <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 items-stretch">
         <!-- Pinned Left Column (Compact fixed-height translucent header on mobile, vertically centered full-height on desktop) -->
         <div class="lg:col-span-5 sticky top-0 z-20 bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
@@ -746,7 +788,10 @@
         <div class="lg:col-span-7 py-8 lg:py-32 space-y-12 sm:space-y-16 lg:space-y-28">
           <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="0">
             <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('fencing')">
-              <img src="assets/IMG_1471.jpg" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/IMG_1471-800.webp" type="image/webp" />
+                <img src="assets/IMG_1471.webp" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+              </picture>
             </div>
             <div class="sm:pl-16 max-w-lg">
               <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Distance, Feint, Counter-Measure</h3>
@@ -758,7 +803,10 @@
 
           <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="1">
             <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('piano')">
-              <img src="assets/piano.jpg" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/piano-800.webp" type="image/webp" />
+                <img src="assets/piano.webp" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+              </picture>
             </div>
             <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
               <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Teamwork playing Jazz</h3>
@@ -770,7 +818,10 @@
 
           <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="2">
             <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('cosmos')">
-              <img src="assets/IMG_7252.jpeg" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/IMG_7252-800.webp" type="image/webp" />
+                <img src="assets/IMG_7252.webp" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+              </picture>
             </div>
             <div class="sm:pl-12 max-w-lg">
               <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">From Luanda to the World and Above</h3>
@@ -783,12 +834,19 @@
       </div>
     </section>
 
+    <!-- SEAM 2: Controlled Chaos -> What I Bring to the Table (Piano-String Wave) -->
+    <div class="seam-wave-wrap" data-seam="wave" aria-hidden="true">
+      <svg id="seam-wave-svg" class="seam-wave-svg" viewBox="0 0 1200 24" preserveAspectRatio="none">
+        <path id="seam-wave-path" d="M0 12 Q150 12 300 12 T600 12 T900 12 T1200 12" fill="none" stroke="rgba(244,244,240,0.18)" stroke-width="1.2" />
+      </svg>
+    </div>
+
     <!-- WHAT I BRING TO THE TABLE (Before Photography, Closed Accordions + Programming Languages) -->
-    <section id="skills-accordion" class="py-14 sm:py-28 px-5 sm:px-12 max-w-4xl mx-auto border-b border-[var(--border)]">
+    <section id="skills-accordion" class="py-14 sm:py-28 px-5 sm:px-12 max-w-4xl mx-auto">
       <div class="mb-8 sm:mb-10 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-8">
         <div class="flex items-center gap-4 sm:contents">
           <div class="tilt-card relative w-20 h-20 sm:w-32 sm:h-32 shrink-0 border border-[var(--border)] bg-zinc-900 overflow-hidden shadow-2xl group">
-            <img src="assets/profile.png" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" />
+            <img src="assets/profile.webp" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" />
           </div>
           <h2 class="font-brutal text-2xl leading-[0.95] sm:hidden [text-wrap:balance]">What I bring to the table</h2>
         </div>
@@ -803,8 +861,12 @@
       <div id="accordion-list" class="border-t border-[var(--border)]">
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
-              Hackathons, Rapid Prototyping &amp; Product Strategy
+            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              <span class="font-mono-tech text-xs text-zinc-500">01</span>
+              <span>Hackathons, Rapid Prototyping &amp; Product Strategy</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -824,8 +886,13 @@
 
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
-              Full-Stack Engineering
+            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" y1="19" x2="20" y2="19"></line>
+              </svg>
+              <span class="font-mono-tech text-xs text-zinc-500">02</span>
+              <span>Full-Stack Engineering</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -845,8 +912,13 @@
 
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
-              Robotics, Hardware Integration &amp; Team Leadership
+            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9l2.1 2.1m10 10l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path>
+              </svg>
+              <span class="font-mono-tech text-xs text-zinc-500">03</span>
+              <span>Robotics, Hardware Integration &amp; Team Leadership</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -866,8 +938,14 @@
 
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
-              Music, Sports and Photography
+            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+              <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+              </svg>
+              <span class="font-mono-tech text-xs text-zinc-500">04</span>
+              <span>Music, Sports and Photography</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -884,13 +962,28 @@
       </div>
     </section>
 
-    <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + ARROW) + OVERLAPPING DIAGONAL -> BENTO MOSAIC WITH 3D TILT -->
+    <!-- SEAM 3: Skills -> My Photography (Camera Viewfinder Framing Marks) -->
+    <div class="seam-viewfinder" data-seam="viewfinder" aria-hidden="true">
+      <span class="seam-vf-mark seam-vf-left">[ + ]</span>
+      <span class="seam-vf-mark seam-vf-right">[ + ]</span>
+    </div>
+
+    <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + IRIS GLYPH) + GPU DIAGONAL -> BENTO MOSAIC -->
     <section id="photography-morph-section" class="relative h-[220vh] md:h-[320vh] border-b border-[var(--border)] bg-[var(--surface)]">
       <div class="sticky top-0 h-screen supports-[height:100dvh]:h-[100dvh] w-full overflow-hidden flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:py-10 pb-[max(1.25rem,env(safe-area-inset-bottom))] px-5 sm:px-12">
-        <!-- Clickable Fixed Title with Red Underline Hover & Arrow -->
+        <!-- Clickable Fixed Title with Red Underline Hover & Lens Iris Glyph -->
         <div class="z-20">
-          <button type="button" onclick="openFullGalleryModal()" class="photo-heading-btn font-brutal text-2xl sm:text-5xl text-left text-white min-h-[44px] sm:min-h-0">
-            <span>My photography</span>
+          <button type="button" onclick="openFullGalleryModal()" data-glyph="photos" class="photo-heading-btn roll-host font-brutal text-2xl sm:text-5xl text-left text-white min-h-[44px] sm:min-h-0">
+            <span class="roll-wrap"><span class="roll-track"><span>My photography</span><span>My photography</span></span></span>
+            <svg class="glyph-svg glyph-iris w-5 h-5 sm:w-8 sm:h-8 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+              <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+              <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+              <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+              <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+              <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+            </svg>
             <svg class="photo-heading-arrow w-6 h-6 sm:w-9 sm:h-9 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
               <line x1="7" y1="17" x2="17" y2="7"></line>
               <polyline points="7 7 17 7 17 17"></polyline>
@@ -913,12 +1006,12 @@
           <a href="mailto:AdrianoLop.V@icloud.com" class="inline-flex items-center min-h-[44px] sm:min-h-0 px-3 py-2 border border-white/15 bg-zinc-900/70 text-zinc-100 hover:border-rose-500/70 hover:text-rose-400 transition-colors">
             AdrianoLop.V@icloud.com
           </a>
-          <button type="button" id="copy-email-btn" data-email="AdrianoLop.V@icloud.com" aria-label="Copy email address" class="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 px-3 py-2 border border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-600 hover:border-rose-600 hover:text-white transition-colors">
-            <svg id="copy-email-icon" class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <rect x="9" y="9" width="13" height="13"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          <button type="button" id="copy-email-btn" data-glyph="copy" data-email="AdrianoLop.V@icloud.com" aria-label="Copy email address" class="roll-host inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 px-3 py-2 border border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-600 hover:border-rose-600 hover:text-white transition-colors">
+            <svg id="copy-email-icon" class="glyph-svg w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14"></rect>
+              <polyline class="glyph-flap" points="3 7 12 13 21 7"></polyline>
             </svg>
-            <span id="copy-email-label" aria-live="polite">Copy</span>
+            <span class="roll-wrap"><span class="roll-track"><span id="copy-email-label" aria-live="polite">Copy</span><span aria-hidden="true">Copy</span></span></span>
           </button>
         </div>
 
@@ -945,10 +1038,11 @@
       <div class="md:col-span-7 relative">
         <div id="dotted-map-wrapper" class="relative w-full aspect-[64/30] sm:aspect-auto sm:h-72 overflow-hidden flex items-center justify-center">
           <div id="dotted-map-container" class="w-full h-full flex items-center justify-center"></div>
-          <!-- Minimalist Slide-Out Country Name Tag from Pin -->
+          <!-- Minimalist Slide-Out Country Name Tag + Mission Telemetry from Pin -->
           <div id="map-flag-banner">
-            <div class="px-2.5 py-1 font-mono-tech text-[10px] tracking-wider text-white uppercase flex items-center gap-1.5">
-              <span id="map-flag-name"></span>
+            <div class="px-2.5 py-1.5 font-mono-tech text-[10px] tracking-wider text-white uppercase">
+              <span id="map-flag-name" class="block"></span>
+              <span id="map-flag-telemetry" class="block text-[9px] text-rose-400/90 tracking-wider mt-0.5 empty:hidden"></span>
             </div>
           </div>
         </div>
@@ -993,99 +1087,103 @@
 
   <script>
     // ==================== DATA ====================
-    const GALLERY_PHOTOS = [
-      {"src":"assets/fotografia/DSCN0406.jpg","filename":"DSCN0406.jpg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/DSCN0536.jpg","filename":"DSCN0536.jpg","palette":"bw","aspect":0.749},
-      {"src":"assets/fotografia/DSCN0547.jpg","filename":"DSCN0547.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/DSCN0658.jpg","filename":"DSCN0658.jpg","palette":"color","aspect":1.334},
-      {"src":"assets/fotografia/DSCN0678.jpg","filename":"DSCN0678.jpg","palette":"bw","aspect":0.75},
-      {"src":"assets/fotografia/DSCN0693.jpg","filename":"DSCN0693.jpg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/DSCN0697.jpg","filename":"DSCN0697.jpg","palette":"color","aspect":1.333},
-      {"src":"assets/fotografia/DSCN0712.jpg","filename":"DSCN0712.jpg","palette":"bw","aspect":0.749},
-      {"src":"assets/fotografia/DSCN0728.jpg","filename":"DSCN0728.jpg","palette":"color","aspect":1.333},
-      {"src":"assets/fotografia/DSCN0746.jpg","filename":"DSCN0746.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/DSCN0756.jpg","filename":"DSCN0756.jpg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/DSCN0787.jpg","filename":"DSCN0787.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/DSCN0791.jpg","filename":"DSCN0791.jpg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/DSCN0831.jpg","filename":"DSCN0831.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/IMG_0049.jpeg","filename":"IMG_0049.jpeg","palette":"color","aspect":1.779},
-      {"src":"assets/fotografia/IMG_0107.jpg","filename":"IMG_0107.jpg","palette":"color","aspect":1.336},
-      {"src":"assets/fotografia/IMG_0111.jpg","filename":"IMG_0111.jpg","palette":"color","aspect":1.336},
-      {"src":"assets/fotografia/IMG_0351_SnapseedCopy.jpg","filename":"IMG_0351_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_0393_SnapseedCopy.jpg","filename":"IMG_0393_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0465_Copia.jpg","filename":"IMG_0465_Copia.jpg","palette":"color","aspect":1.401},
-      {"src":"assets/fotografia/IMG_0467_Copia.jpg","filename":"IMG_0467_Copia.jpg","palette":"bw","aspect":0.749},
-      {"src":"assets/fotografia/IMG_0498_SnapseedCopy.jpg","filename":"IMG_0498_SnapseedCopy.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/IMG_0500_SnapseedCopy.jpg","filename":"IMG_0500_SnapseedCopy.jpg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/IMG_0534_SnapseedCopy.jpg","filename":"IMG_0534_SnapseedCopy.jpg","palette":"bw","aspect":0.75},
-      {"src":"assets/fotografia/IMG_0538.jpg","filename":"IMG_0538.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0542_SnapseedCopy.jpg","filename":"IMG_0542_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0548_SnapseedCopy.jpg","filename":"IMG_0548_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0555_SnapseedCopy.jpg","filename":"IMG_0555_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0563_SnapseedCopy.jpg","filename":"IMG_0563_SnapseedCopy.jpg","palette":"bw","aspect":1.5},
-      {"src":"assets/fotografia/IMG_0570_SnapseedCopy.jpg","filename":"IMG_0570_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0582_SnapseedCopy.jpg","filename":"IMG_0582_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0600_SnapseedCopy.jpg","filename":"IMG_0600_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_0644_SnapseedCopy.jpg","filename":"IMG_0644_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_0652_SnapseedCopy.jpg","filename":"IMG_0652_SnapseedCopy.jpg","palette":"bw","aspect":0.8},
-      {"src":"assets/fotografia/IMG_0765_SnapseedCopy.jpg","filename":"IMG_0765_SnapseedCopy.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/IMG_0772_SnapseedCopy.jpg","filename":"IMG_0772_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_0934_Copia.jpg","filename":"IMG_0934_Copia.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_1403.jpg","filename":"IMG_1403.jpg","palette":"bw","aspect":1.779},
-      {"src":"assets/fotografia/IMG_1407_SnapseedCopy.jpg","filename":"IMG_1407_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_1408.jpg","filename":"IMG_1408.jpg","palette":"bw","aspect":0.754},
-      {"src":"assets/fotografia/IMG_1471.jpg","filename":"IMG_1471.jpg","palette":"bw","aspect":1.499},
-      {"src":"assets/fotografia/IMG_1474.jpg","filename":"IMG_1474.jpg","palette":"bw","aspect":1.333},
-      {"src":"assets/fotografia/IMG_1476.jpg","filename":"IMG_1476.jpg","palette":"bw","aspect":0.751},
-      {"src":"assets/fotografia/IMG_1478.jpg","filename":"IMG_1478.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/IMG_1479.jpg","filename":"IMG_1479.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/IMG_1592_SnapseedCopy.jpg","filename":"IMG_1592_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_1597_SnapseedCopy.jpg","filename":"IMG_1597_SnapseedCopy.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_2946.jpg","filename":"IMG_2946.jpg","palette":"bw","aspect":0.748},
-      {"src":"assets/fotografia/IMG_2947.jpg","filename":"IMG_2947.jpg","palette":"color","aspect":0.748},
-      {"src":"assets/fotografia/IMG_6742.jpg","filename":"IMG_6742.jpg","palette":"color","aspect":1.333},
-      {"src":"assets/fotografia/IMG_6800.jpg","filename":"IMG_6800.jpg","palette":"color","aspect":1.496},
-      {"src":"assets/fotografia/IMG_6813.jpg","filename":"IMG_6813.jpg","palette":"color","aspect":1.496},
-      {"src":"assets/fotografia/IMG_6820.jpg","filename":"IMG_6820.jpg","palette":"bw","aspect":1.496},
-      {"src":"assets/fotografia/IMG_6831.jpg","filename":"IMG_6831.jpg","palette":"color","aspect":1.496},
-      {"src":"assets/fotografia/IMG_7178.jpg","filename":"IMG_7178.jpg","palette":"bw","aspect":1.334},
-      {"src":"assets/fotografia/IMG_7493.jpg","filename":"IMG_7493.jpg","palette":"color","aspect":0.714},
-      {"src":"assets/fotografia/IMG_7542.jpg","filename":"IMG_7542.jpg","palette":"bw","aspect":0.714},
-      {"src":"assets/fotografia/IMG_7548.jpg","filename":"IMG_7548.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/IMG_7717.jpg","filename":"IMG_7717.jpg","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_7780.jpg","filename":"IMG_7780.jpg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/IMG_8360_SnapseedCopy.jpg","filename":"IMG_8360_SnapseedCopy.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/IMG_8436.jpg","filename":"IMG_8436.jpg","palette":"bw","aspect":0.748},
-      {"src":"assets/fotografia/IMG_9045.jpeg","filename":"IMG_9045.jpeg","palette":"bw","aspect":0.748},
-      {"src":"assets/fotografia/IMG_9110.jpg","filename":"IMG_9110.jpg","palette":"bw","aspect":0.748},
-      {"src":"assets/fotografia/IMG_9138.jpg","filename":"IMG_9138.jpg","palette":"bw","aspect":0.748},
-      {"src":"assets/fotografia/IMG_9222.jpg","filename":"IMG_9222.jpg","palette":"bw","aspect":0.749},
-      {"src":"assets/fotografia/IMG_9240.jpg","filename":"IMG_9240.jpg","palette":"bw","aspect":0.749},
-      {"src":"assets/fotografia/IMG_9266.jpg","filename":"IMG_9266.jpg","palette":"bw","aspect":1.333},
-      {"src":"assets/fotografia/IMG_9295.jpg","filename":"IMG_9295.jpg","palette":"bw","aspect":0.749},
-      {"src":"assets/fotografia/IMG_9354.jpg","filename":"IMG_9354.jpg","palette":"bw","aspect":1.335},
-      {"src":"assets/fotografia/IMG_9412.jpg","filename":"IMG_9412.jpg","palette":"bw","aspect":1.334},
-      {"src":"assets/fotografia/IMG_9424.jpg","filename":"IMG_9424.jpg","palette":"bw","aspect":1.336},
-      {"src":"assets/fotografia/Snapseed_2.jpg","filename":"Snapseed_2.jpg","palette":"bw","aspect":1.5},
-      {"src":"assets/fotografia/Snapseed.jpg","filename":"Snapseed.jpg","palette":"bw","aspect":0.75},
-      {"src":"assets/fotografia/YTL00324.jpg","filename":"YTL00324.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/YTL00349.jpg","filename":"YTL00349.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/YTL00360.jpg","filename":"YTL00360.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/YTL00389.jpg","filename":"YTL00389.jpg","palette":"bw","aspect":0.75},
-      {"src":"assets/fotografia/YTL00420.jpg","filename":"YTL00420.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/YTL00425.jpg","filename":"YTL00425.jpg","palette":"color","aspect":1.401},
-      {"src":"assets/fotografia/YTL00435.jpg","filename":"YTL00435.jpg","palette":"bw","aspect":0.667},
-      {"src":"assets/fotografia/YTL00440.jpg","filename":"YTL00440.jpg","palette":"color","aspect":1.4},
-      {"src":"assets/fotografia/YTL00450.jpg","filename":"YTL00450.jpg","palette":"color","aspect":0.749},
-      {"src":"assets/fotografia/YTL00463.jpg","filename":"YTL00463.jpg","palette":"color","aspect":0.667},
-      {"src":"assets/fotografia/YTL00482.jpg","filename":"YTL00482.jpg","palette":"bw","aspect":1.5},
-      {"src":"assets/fotografia/ld-export-0c7e5e14-10182025.jpg","filename":"ld-export-0c7e5e14-10182025.jpg","palette":"color","aspect":1.333},
-      {"src":"assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy.jpg","filename":"ld-export-31497c87-10112025_SnapseedCopy.jpg","palette":"bw","aspect":1.333},
-      {"src":"assets/fotografia/ld-export-81eddb7a-10112025.jpeg","filename":"ld-export-81eddb7a-10112025.jpeg","palette":"color","aspect":0.75},
-      {"src":"assets/fotografia/ld-export-844af384-10112025.jpg","filename":"ld-export-844af384-10112025.jpg","palette":"bw","aspect":1.496}
+    const HERO_REEL_PHOTOS = [
+      {"src":"assets/fotografia/DSCN0658.webp","mobileSrc":"assets/fotografia/DSCN0658-800.webp","filename":"DSCN0658.webp","palette":"color","aspect":1.334},
+      {"src":"assets/fotografia/DSCN0697.webp","mobileSrc":"assets/fotografia/DSCN0697-800.webp","filename":"DSCN0697.webp","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/DSCN0728.webp","mobileSrc":"assets/fotografia/DSCN0728-800.webp","filename":"DSCN0728.webp","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/IMG_0049.webp","mobileSrc":"assets/fotografia/IMG_0049-800.webp","filename":"IMG_0049.webp","palette":"color","aspect":1.779},
+      {"src":"assets/fotografia/IMG_0107.webp","mobileSrc":"assets/fotografia/IMG_0107-800.webp","filename":"IMG_0107.webp","palette":"color","aspect":1.336},
+      {"src":"assets/fotografia/IMG_0111.webp","mobileSrc":"assets/fotografia/IMG_0111-800.webp","filename":"IMG_0111.webp","palette":"color","aspect":1.336},
+      {"src":"assets/fotografia/IMG_0351_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0351_SnapseedCopy-800.webp","filename":"IMG_0351_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0465_Copia.webp","mobileSrc":"assets/fotografia/IMG_0465_Copia-800.webp","filename":"IMG_0465_Copia.webp","palette":"color","aspect":1.401}
     ];
 
-    const EXCLUDED_GALLERY_FILES = new Set(["piano.jpg", "img_7252.jpeg"]);
+    const GALLERY_PHOTOS = [
+      {"src":"assets/fotografia/DSCN0406.webp","mobileSrc":"assets/fotografia/DSCN0406-800.webp","filename":"DSCN0406.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0536.webp","mobileSrc":"assets/fotografia/DSCN0536-800.webp","filename":"DSCN0536.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0547.webp","mobileSrc":"assets/fotografia/DSCN0547-800.webp","filename":"DSCN0547.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0678.webp","mobileSrc":"assets/fotografia/DSCN0678-800.webp","filename":"DSCN0678.webp","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0693.webp","mobileSrc":"assets/fotografia/DSCN0693-800.webp","filename":"DSCN0693.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0712.webp","mobileSrc":"assets/fotografia/DSCN0712-800.webp","filename":"DSCN0712.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0746.webp","mobileSrc":"assets/fotografia/DSCN0746-800.webp","filename":"DSCN0746.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0756.webp","mobileSrc":"assets/fotografia/DSCN0756-800.webp","filename":"DSCN0756.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0787.webp","mobileSrc":"assets/fotografia/DSCN0787-800.webp","filename":"DSCN0787.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0791.webp","mobileSrc":"assets/fotografia/DSCN0791-800.webp","filename":"DSCN0791.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0831.webp","mobileSrc":"assets/fotografia/DSCN0831-800.webp","filename":"DSCN0831.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0393_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0393_SnapseedCopy-800.webp","filename":"IMG_0393_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0467_Copia.webp","mobileSrc":"assets/fotografia/IMG_0467_Copia-800.webp","filename":"IMG_0467_Copia.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0498_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0498_SnapseedCopy-800.webp","filename":"IMG_0498_SnapseedCopy.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0500_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0500_SnapseedCopy-800.webp","filename":"IMG_0500_SnapseedCopy.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/IMG_0534_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0534_SnapseedCopy-800.webp","filename":"IMG_0534_SnapseedCopy.webp","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/IMG_0538.webp","mobileSrc":"assets/fotografia/IMG_0538-800.webp","filename":"IMG_0538.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0542_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0542_SnapseedCopy-800.webp","filename":"IMG_0542_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0548_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0548_SnapseedCopy-800.webp","filename":"IMG_0548_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0555_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0555_SnapseedCopy-800.webp","filename":"IMG_0555_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0563_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0563_SnapseedCopy-800.webp","filename":"IMG_0563_SnapseedCopy.webp","palette":"bw","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0570_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0570_SnapseedCopy-800.webp","filename":"IMG_0570_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0582_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0582_SnapseedCopy-800.webp","filename":"IMG_0582_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0600_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0600_SnapseedCopy-800.webp","filename":"IMG_0600_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0644_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0644_SnapseedCopy-800.webp","filename":"IMG_0644_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0652_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0652_SnapseedCopy-800.webp","filename":"IMG_0652_SnapseedCopy.webp","palette":"bw","aspect":0.8},
+      {"src":"assets/fotografia/IMG_0765_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0765_SnapseedCopy-800.webp","filename":"IMG_0765_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0772_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0772_SnapseedCopy-800.webp","filename":"IMG_0772_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_0934_Copia.webp","mobileSrc":"assets/fotografia/IMG_0934_Copia-800.webp","filename":"IMG_0934_Copia.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_1403.webp","mobileSrc":"assets/fotografia/IMG_1403-800.webp","filename":"IMG_1403.webp","palette":"bw","aspect":1.779},
+      {"src":"assets/fotografia/IMG_1407_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_1407_SnapseedCopy-800.webp","filename":"IMG_1407_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_1408.webp","mobileSrc":"assets/fotografia/IMG_1408-800.webp","filename":"IMG_1408.webp","palette":"bw","aspect":0.754},
+      {"src":"assets/fotografia/IMG_1471.webp","mobileSrc":"assets/fotografia/IMG_1471-800.webp","filename":"IMG_1471.webp","palette":"bw","aspect":1.499},
+      {"src":"assets/fotografia/IMG_1474.webp","mobileSrc":"assets/fotografia/IMG_1474-800.webp","filename":"IMG_1474.webp","palette":"bw","aspect":1.333},
+      {"src":"assets/fotografia/IMG_1476.webp","mobileSrc":"assets/fotografia/IMG_1476-800.webp","filename":"IMG_1476.webp","palette":"bw","aspect":0.751},
+      {"src":"assets/fotografia/IMG_1478.webp","mobileSrc":"assets/fotografia/IMG_1478-800.webp","filename":"IMG_1478.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/IMG_1479.webp","mobileSrc":"assets/fotografia/IMG_1479-800.webp","filename":"IMG_1479.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/IMG_1592_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_1592_SnapseedCopy-800.webp","filename":"IMG_1592_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_1597_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_1597_SnapseedCopy-800.webp","filename":"IMG_1597_SnapseedCopy.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_2946.webp","mobileSrc":"assets/fotografia/IMG_2946-800.webp","filename":"IMG_2946.webp","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_2947.webp","mobileSrc":"assets/fotografia/IMG_2947-800.webp","filename":"IMG_2947.webp","palette":"color","aspect":0.748},
+      {"src":"assets/fotografia/IMG_6742.webp","mobileSrc":"assets/fotografia/IMG_6742-800.webp","filename":"IMG_6742.webp","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/IMG_6800.webp","mobileSrc":"assets/fotografia/IMG_6800-800.webp","filename":"IMG_6800.webp","palette":"color","aspect":1.496},
+      {"src":"assets/fotografia/IMG_6813.webp","mobileSrc":"assets/fotografia/IMG_6813-800.webp","filename":"IMG_6813.webp","palette":"color","aspect":1.496},
+      {"src":"assets/fotografia/IMG_6820.webp","mobileSrc":"assets/fotografia/IMG_6820-800.webp","filename":"IMG_6820.webp","palette":"bw","aspect":1.496},
+      {"src":"assets/fotografia/IMG_6831.webp","mobileSrc":"assets/fotografia/IMG_6831-800.webp","filename":"IMG_6831.webp","palette":"color","aspect":1.496},
+      {"src":"assets/fotografia/IMG_7178.webp","mobileSrc":"assets/fotografia/IMG_7178-800.webp","filename":"IMG_7178.webp","palette":"bw","aspect":1.334},
+      {"src":"assets/fotografia/IMG_7493.webp","mobileSrc":"assets/fotografia/IMG_7493-800.webp","filename":"IMG_7493.webp","palette":"color","aspect":0.714},
+      {"src":"assets/fotografia/IMG_7542.webp","mobileSrc":"assets/fotografia/IMG_7542-800.webp","filename":"IMG_7542.webp","palette":"bw","aspect":0.714},
+      {"src":"assets/fotografia/IMG_7548.webp","mobileSrc":"assets/fotografia/IMG_7548-800.webp","filename":"IMG_7548.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_7717.webp","mobileSrc":"assets/fotografia/IMG_7717-800.webp","filename":"IMG_7717.webp","palette":"color","aspect":1.5},
+      {"src":"assets/fotografia/IMG_7780.webp","mobileSrc":"assets/fotografia/IMG_7780-800.webp","filename":"IMG_7780.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/IMG_8360_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_8360_SnapseedCopy-800.webp","filename":"IMG_8360_SnapseedCopy.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_8436.webp","mobileSrc":"assets/fotografia/IMG_8436-800.webp","filename":"IMG_8436.webp","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9045.webp","mobileSrc":"assets/fotografia/IMG_9045-800.webp","filename":"IMG_9045.webp","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9110.webp","mobileSrc":"assets/fotografia/IMG_9110-800.webp","filename":"IMG_9110.webp","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9138.webp","mobileSrc":"assets/fotografia/IMG_9138-800.webp","filename":"IMG_9138.webp","palette":"bw","aspect":0.748},
+      {"src":"assets/fotografia/IMG_9222.webp","mobileSrc":"assets/fotografia/IMG_9222-800.webp","filename":"IMG_9222.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_9240.webp","mobileSrc":"assets/fotografia/IMG_9240-800.webp","filename":"IMG_9240.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_9266.webp","mobileSrc":"assets/fotografia/IMG_9266-800.webp","filename":"IMG_9266.webp","palette":"bw","aspect":1.333},
+      {"src":"assets/fotografia/IMG_9295.webp","mobileSrc":"assets/fotografia/IMG_9295-800.webp","filename":"IMG_9295.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/IMG_9354.webp","mobileSrc":"assets/fotografia/IMG_9354-800.webp","filename":"IMG_9354.webp","palette":"bw","aspect":1.335},
+      {"src":"assets/fotografia/IMG_9412.webp","mobileSrc":"assets/fotografia/IMG_9412-800.webp","filename":"IMG_9412.webp","palette":"bw","aspect":1.334},
+      {"src":"assets/fotografia/IMG_9424.webp","mobileSrc":"assets/fotografia/IMG_9424-800.webp","filename":"IMG_9424.webp","palette":"bw","aspect":1.336},
+      {"src":"assets/fotografia/ld-export-0c7e5e14-10182025.webp","mobileSrc":"assets/fotografia/ld-export-0c7e5e14-10182025-800.webp","filename":"ld-export-0c7e5e14-10182025.webp","palette":"color","aspect":1.333},
+      {"src":"assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy.webp","mobileSrc":"assets/fotografia/ld-export-31497c87-10112025_SnapseedCopy-800.webp","filename":"ld-export-31497c87-10112025_SnapseedCopy.webp","palette":"bw","aspect":1.333},
+      {"src":"assets/fotografia/ld-export-81eddb7a-10112025.webp","mobileSrc":"assets/fotografia/ld-export-81eddb7a-10112025-800.webp","filename":"ld-export-81eddb7a-10112025.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/ld-export-844af384-10112025.webp","mobileSrc":"assets/fotografia/ld-export-844af384-10112025-800.webp","filename":"ld-export-844af384-10112025.webp","palette":"bw","aspect":1.496},
+      {"src":"assets/fotografia/Snapseed.webp","mobileSrc":"assets/fotografia/Snapseed-800.webp","filename":"Snapseed.webp","palette":"bw","aspect":0.75},
+      {"src":"assets/fotografia/Snapseed_2.webp","mobileSrc":"assets/fotografia/Snapseed_2-800.webp","filename":"Snapseed_2.webp","palette":"bw","aspect":1.5},
+      {"src":"assets/fotografia/YTL00324.webp","mobileSrc":"assets/fotografia/YTL00324-800.webp","filename":"YTL00324.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00349.webp","mobileSrc":"assets/fotografia/YTL00349-800.webp","filename":"YTL00349.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00360.webp","mobileSrc":"assets/fotografia/YTL00360-800.webp","filename":"YTL00360.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00389.webp","mobileSrc":"assets/fotografia/YTL00389-800.webp","filename":"YTL00389.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/YTL00420.webp","mobileSrc":"assets/fotografia/YTL00420-800.webp","filename":"YTL00420.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00425.webp","mobileSrc":"assets/fotografia/YTL00425-800.webp","filename":"YTL00425.webp","palette":"color","aspect":1.401},
+      {"src":"assets/fotografia/YTL00435.webp","mobileSrc":"assets/fotografia/YTL00435-800.webp","filename":"YTL00435.webp","palette":"bw","aspect":0.667},
+      {"src":"assets/fotografia/YTL00440.webp","mobileSrc":"assets/fotografia/YTL00440-800.webp","filename":"YTL00440.webp","palette":"color","aspect":1.4},
+      {"src":"assets/fotografia/YTL00450.webp","mobileSrc":"assets/fotografia/YTL00450-800.webp","filename":"YTL00450.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/YTL00463.webp","mobileSrc":"assets/fotografia/YTL00463-800.webp","filename":"YTL00463.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/YTL00482.webp","mobileSrc":"assets/fotografia/YTL00482-800.webp","filename":"YTL00482.webp","palette":"bw","aspect":1.5}
+    ];
+
+    const HERO_REEL_SET = new Set(HERO_REEL_PHOTOS.map((p) => p.filename.toLowerCase()));
+    const EXCLUDED_GALLERY_FILES = new Set(["piano.jpg", "piano.webp", "img_7252.jpeg", "img_7252.webp", ...HERO_REEL_SET]);
     const IMAGE_EXT_RE = /\.(jpe?g|png|webp|avif|gif)$/i;
 
     function isValidGalleryEntry(p) {
@@ -1236,62 +1334,14 @@
       };
 
       let manifestItems = null;
-      const manifestPromise = fetch("assets/fotografia/manifest.json", { cache: "no-store" })
-        .then((r) => (r.ok ? r.json() : null))
-        .then((data) => (Array.isArray(data) ? registerManifestEntries(data) : null))
-        .catch(() => null);
-
       try {
-        const dirRes = await fetch("assets/fotografia/", { cache: "no-store" });
-        if (dirRes.ok) {
-          const html = await dirRes.text();
-          const dirFiles = parseDirectoryListing(html);
-          if (dirFiles.length > 0) {
-            await manifestPromise;
-            const resolved = await buildFromFilenames(dirFiles);
-            if (resolved.length > 0) {
-              ACTIVE_PHOTOS = shuffleArray(resolved);
-              ARCHIVE_PHOTOS = shuffleArray(resolved);
-              return ACTIVE_PHOTOS;
-            }
-          }
+        const res = await fetch("assets/fotografia/manifest.json", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) manifestItems = registerManifestEntries(data);
         }
       } catch {
-        // Directory listing unavailable (e.g., GitHub Pages or file://)
-      }
-
-      manifestItems = await manifestPromise;
-
-      const isRemoteProd = /github\.io|adrxlv\.dev/i.test(window.location.hostname);
-      if (isRemoteProd) {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 1200);
-        try {
-          const ghRes = await fetch(
-            "https://api.github.com/repos/adrxLV/portfolio/contents/assets/fotografia",
-            { cache: "no-store", signal: controller.signal }
-          );
-          if (ghRes.ok) {
-            const entries = await ghRes.json();
-            if (Array.isArray(entries)) {
-              const ghFiles = entries
-                .filter((e) => e && e.type === "file" && IMAGE_EXT_RE.test(e.name) && !EXCLUDED_GALLERY_FILES.has(e.name.toLowerCase()))
-                .map((e) => e.name);
-              if (ghFiles.length > 0) {
-                const resolved = await buildFromFilenames(ghFiles);
-                if (resolved.length > 0) {
-                  ACTIVE_PHOTOS = shuffleArray(resolved);
-                  ARCHIVE_PHOTOS = shuffleArray(resolved);
-                  return ACTIVE_PHOTOS;
-                }
-              }
-            }
-          }
-        } catch {
-          // Fall back to manifest.json
-        } finally {
-          clearTimeout(timer);
-        }
+        // Static GALLERY_PHOTOS fallback
       }
 
       if (manifestItems && manifestItems.length > 0) {
@@ -1307,9 +1357,9 @@
     }
 
     const IMAGES = {
-      fencing: "assets/IMG_1471.jpg",
-      piano: "assets/piano.jpg",
-      cosmos: "assets/IMG_7252.jpeg"
+      fencing: "assets/IMG_1471.webp",
+      piano: "assets/piano.webp",
+      cosmos: "assets/IMG_7252.webp"
     };
 
     const STORIES = {
@@ -1339,20 +1389,20 @@
       }
     };
 
-    // All 12 Flown Countries with Pin Coordinates and ISO numeric codes (country names only, except Dubai · UAE)
+    // All 12 Flown Countries with Pin Coordinates, ISO numeric codes, and Mission Telemetry
     const FLOWN_DESTINATIONS = [
-      { code: "620", name: "Portugal", defaultRed: true, coords: [-9.14, 38.72] },
-      { code: "024", name: "Angola", defaultRed: true, coords: [13.23, -8.83] },
-      { code: "591", name: "Panama", defaultRed: false, coords: [-79.52, 8.99] },
-      { code: "300", name: "Greece", defaultRed: false, coords: [23.72, 37.98] },
-      { code: "528", name: "Netherlands", defaultRed: false, coords: [4.90, 52.37] },
-      { code: "784", name: "Dubai · UAE", defaultRed: false, coords: [55.27, 25.20] },
-      { code: "076", name: "Brazil", defaultRed: false, coords: [-47.88, -15.79] },
-      { code: "710", name: "South Africa", defaultRed: false, coords: [28.04, -26.20] },
-      { code: "516", name: "Namibia", defaultRed: false, coords: [17.08, -22.56] },
-      { code: "756", name: "Switzerland", defaultRed: false, coords: [8.05, 47.45] },
-      { code: "250", name: "France", defaultRed: false, coords: [2.35, 48.00] },
-      { code: "276", name: "Germany", defaultRed: false, coords: [9.50, 50.50] }
+      { code: "620", name: "Portugal", defaultRed: true, coords: [-9.14, 38.72], hub: "024", telemetry: "LISBON & PORTO // NOVA IMS · CEIIA · IPE" },
+      { code: "024", name: "Angola", defaultRed: true, coords: [13.23, -8.83], hub: "620", telemetry: "LUANDA // ORIGIN · DIALOGA & EARLY BUILDS" },
+      { code: "591", name: "Panama", defaultRed: false, coords: [-79.52, 8.99], hub: "620", telemetry: "PANAMA CITY · FGC 2025 // TEAM CAPTAIN & PROGRAMMER" },
+      { code: "300", name: "Greece", defaultRed: false, coords: [23.72, 37.98], hub: "620", telemetry: "ATHENS · FGC 2024 // ROBOTICS TEAM PORTUGAL" },
+      { code: "528", name: "Netherlands", defaultRed: false, coords: [4.90, 52.37], hub: "620", telemetry: "EUROPE // ESA & SPACE TRAJECTORY" },
+      { code: "784", name: "Dubai · UAE", defaultRed: false, coords: [55.27, 25.20], hub: "024", telemetry: "TRANSIT // LUANDA -> EUROPE CORRIDOR" },
+      { code: "076", name: "Brazil", defaultRed: false, coords: [-47.88, -15.79], hub: "024", telemetry: "ATLANTIC // LUSOPHONE CONNECTIONS" },
+      { code: "710", name: "South Africa", defaultRed: false, coords: [28.04, -26.20], hub: "024", telemetry: "SOUTHERN AFRICA // REGIONAL EXPEDITION" },
+      { code: "516", name: "Namibia", defaultRed: false, coords: [17.08, -22.56], hub: "024", telemetry: "SOUTHERN AFRICA // DESERT HORIZONS" },
+      { code: "756", name: "Switzerland", defaultRed: false, coords: [8.05, 47.45], hub: "620", telemetry: "ALPS // PRECISION & RESEARCH" },
+      { code: "250", name: "France", defaultRed: false, coords: [2.35, 48.00], hub: "620", telemetry: "EUROPE // FENCING & FIELDWORK" },
+      { code: "276", name: "Germany", defaultRed: false, coords: [9.50, 50.50], hub: "620", telemetry: "EUROPE // ENGINEERING & SYSTEMS" }
     ];
 
     // ==================== 1. ZERO-SNAP IN-PLACE PRELOADER ON #hero-adriano-line ====================
@@ -1409,28 +1459,56 @@
     });
 
     const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isPhoneViewport = () => window.innerWidth < 768;
+
+    // On mobile phones, never block the user's first swipe during the intro
+    if (isPhoneViewport()) {
+      window.removeEventListener("wheel", blockScrollDuringIntro, { passive: false });
+      window.removeEventListener("touchmove", blockScrollDuringIntro, { passive: false });
+      document.documentElement.classList.remove("intro-locked");
+      document.body.classList.remove("intro-locked");
+    }
 
     function runInPlaceIntro() {
       if (window.scrollY > 0) {
         savedScrollY = Math.max(savedScrollY, window.scrollY);
       }
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      if (!isPhoneViewport()) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
 
       const wordEl = document.getElementById("hero-adriano-line");
       const backdrop = document.getElementById("intro-backdrop");
 
-      if (prefersReducedMotion()) {
-        wordEl.textContent = "ADRIANO";
+      let introSeenRecently = false;
+      try {
+        const lastSeen = Number(localStorage.getItem("adriano:intro_seen") || 0);
+        introSeenRecently = lastSeen > 0 && (Date.now() - lastSeen) < 30 * 60 * 1000;
+      } catch {
+        introSeenRecently = false;
+      }
+
+      const finishIntro = () => {
         window.removeEventListener("wheel", blockScrollDuringIntro, { passive: false });
         window.removeEventListener("touchmove", blockScrollDuringIntro, { passive: false });
         backdrop.classList.add("backdrop-cleared");
         document.documentElement.classList.remove("intro-locked");
         document.body.classList.remove("intro-locked");
         document.body.classList.add("intro-complete");
-        scrollTrackingReady = true;
+        try { localStorage.setItem("adriano:intro_seen", String(Date.now())); } catch {}
         if (savedScrollY > 40) {
-          window.scrollTo({ top: savedScrollY, behavior: "auto" });
+          setTimeout(() => {
+            scrollTrackingReady = true;
+            window.scrollTo({ top: savedScrollY, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+          }, introSeenRecently ? 120 : 320);
+        } else {
+          scrollTrackingReady = true;
         }
+      };
+
+      if (prefersReducedMotion()) {
+        wordEl.textContent = "ADRIANO";
+        finishIntro();
         return;
       }
 
@@ -1442,7 +1520,7 @@
       ).join("");
 
       const startTime = performance.now();
-      const totalDuration = 3500;
+      const totalDuration = introSeenRecently ? 400 : (isPhoneViewport() ? 1150 : 3200);
 
       const interval = setInterval(() => {
         const elapsed = performance.now() - startTime;
@@ -1486,96 +1564,67 @@
 
         if (progress >= 1) {
           clearInterval(interval);
-          // Detach non-passive intro scroll blockers once unlocked so mobile scroll runs natively
-          window.removeEventListener("wheel", blockScrollDuringIntro, { passive: false });
-          window.removeEventListener("touchmove", blockScrollDuringIntro, { passive: false });
-          // Keep the settled spans intact so DOM layout does not jump a single pixel
-          backdrop.classList.add("backdrop-cleared");
-          document.documentElement.classList.remove("intro-locked");
-          document.body.classList.remove("intro-locked");
-          document.body.classList.add("intro-complete");
-
-          if (savedScrollY > 40) {
-            setTimeout(() => {
-              scrollTrackingReady = true;
-              window.scrollTo({ top: savedScrollY, behavior: "smooth" });
-            }, 450);
-          } else {
-            scrollTrackingReady = true;
-          }
+          finishIntro();
         }
-      }, 65);
+      }, introSeenRecently ? 45 : 60);
     }
 
-    // ==================== 2. MAGIC UI SMOOTH CURSOR (Dynamic Black/White Contrast) ====================
+    // ==================== 2. COORDINATED STAGE LOOP + GPU CURSOR (Sleeps when idle) ====================
+    const STAGE_LOOP = (() => {
+      let rafId = null;
+      const tasks = new Set();
+      function frame(now) {
+        rafId = null;
+        let keepRunning = false;
+        tasks.forEach((fn) => {
+          if (fn(now) === true) keepRunning = true;
+        });
+        if (keepRunning) {
+          rafId = requestAnimationFrame(frame);
+        }
+      }
+      return {
+        add(fn) { tasks.add(fn); },
+        wake() {
+          if (rafId === null) rafId = requestAnimationFrame(frame);
+        }
+      };
+    })();
+
     (function initSmoothCursor() {
       if (!window.matchMedia("(pointer: fine)").matches || prefersReducedMotion()) return;
       document.body.classList.add("custom-cursor-active");
       const cursor = document.getElementById("smooth-cursor");
-      const arrowPath = document.getElementById("cursor-arrow-path");
 
       let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
       let curX = mouseX, curY = mouseY;
       let prevX = mouseX, prevY = mouseY;
 
-      function parseRgb(str) {
-        const m = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-        if (!m) return null;
-        return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
-      }
-
-      function getEffectiveLuminance(el) {
-        let node = el;
-        while (node && node !== document.documentElement) {
-          const bg = getComputedStyle(node).backgroundColor;
-          const rgb = parseRgb(bg);
-          if (rgb && rgb.a > 0.35) {
-            return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
-          }
-          node = node.parentElement;
-        }
-        return 0.05;
-      }
+      STAGE_LOOP.add(() => {
+        curX += (mouseX - curX) * 0.24;
+        curY += (mouseY - curY) * 0.24;
+        const vx = curX - prevX;
+        const vy = curY - prevY;
+        prevX = curX;
+        prevY = curY;
+        const tilt = Math.max(-18, Math.min(18, vx * 1.1));
+        cursor.style.transform = `translate3d(${(curX - 4).toFixed(1)}px, ${(curY - 4).toFixed(1)}px, 0) rotate(${tilt.toFixed(1)}deg)`;
+        return Math.hypot(mouseX - curX, mouseY - curY) >= 0.05 || Math.hypot(vx, vy) >= 0.05;
+      });
 
       window.addEventListener("mousemove", (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        const elUnder = document.elementFromPoint(mouseX, mouseY);
-        if (elUnder) {
-          const lum = getEffectiveLuminance(elUnder);
-          if (lum > 0.55) {
-            arrowPath.setAttribute("fill", "#09090b");
-            arrowPath.setAttribute("stroke", "#f4f4f0");
-          } else {
-            arrowPath.setAttribute("fill", "#f4f4f0");
-            arrowPath.setAttribute("stroke", "#09090b");
-          }
-        }
-      });
-
-      function tick() {
-        curX += (mouseX - curX) * 0.22;
-        curY += (mouseY - curY) * 0.22;
-        const vx = curX - prevX;
-        prevX = curX;
-        prevY = curY;
-        const tilt = Math.max(-18, Math.min(18, vx * 1.1));
-        cursor.style.left = `${curX}px`;
-        cursor.style.top = `${curY}px`;
-        cursor.style.transform = `translate(-4px, -4px) rotate(${tilt.toFixed(1)}deg)`;
-        requestAnimationFrame(tick);
-      }
-      tick();
+        STAGE_LOOP.wake();
+      }, { passive: true });
     })();
 
-    // ==================== 3. HERO WORDMARK REEL (Random -10° to +10°) + AUTO-PLAY CARAVAN ====================
+    // ==================== 3. HERO WORDMARK REEL (Exclusive Pool) + CARAVAN + GROOVE SHIFT ====================
     (function initHeroAndAudio() {
-      // Strictly landscape-only photos (width > height) from the active photography pool
+      // Exclusive landscape pool for Hero Reel (zero overlap with Morph Stage / Archive)
       function getLandscapeReelList() {
         return shuffleArray(
-          ACTIVE_PHOTOS
-            .filter((p) => p && p.aspect > 1.0 && !EXCLUDED_GALLERY_FILES.has(String(p.filename || "").toLowerCase()))
-            .map((p) => p.src)
+          HERO_REEL_PHOTOS.map((p) => (window.innerWidth < 768 && p.mobileSrc ? p.mobileSrc : p.src))
         );
       }
 
@@ -1711,11 +1760,54 @@
       const eqBars = document.getElementById("eq-bars");
       const volSlider = document.getElementById("audio-volume");
 
-      if (caravanWidget) {
-        const dismissCaravanHint = () => caravanWidget.classList.add("caravan-hint-dismissed");
-        caravanWidget.addEventListener("mouseenter", dismissCaravanHint, { once: true });
-        caravanWidget.addEventListener("focusin", dismissCaravanHint, { once: true });
+      // Web Audio Groove Shift (lazy AnalyserNode driving --groove CSS var)
+      let audioCtx = null;
+      let analyser = null;
+      let freqBins = null;
+
+      function ensureGrooveAnalyser() {
+        if (analyser || prefersReducedMotion()) return;
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        try {
+          audioCtx = new Ctx();
+          const source = audioCtx.createMediaElementSource(audio);
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 64;
+          source.connect(analyser);
+          analyser.connect(audioCtx.destination);
+          freqBins = new Uint8Array(analyser.frequencyBinCount);
+        } catch {
+          analyser = null;
+        }
       }
+
+      STAGE_LOOP.add((now) => {
+        if (!isPlaying || prefersReducedMotion()) {
+          document.documentElement.style.setProperty("--groove", "0");
+          return false;
+        }
+        let level = 0;
+        if (analyser && freqBins) {
+          analyser.getByteFrequencyData(freqBins);
+          const bass = (freqBins[0] + freqBins[1] + freqBins[2] + freqBins[3]) / (4 * 255);
+          level = Math.min(1, bass * 1.25);
+        } else {
+          // Fallback rhythmic pulse (~120 BPM) if AudioContext is unavailable
+          level = 0.35 + 0.35 * Math.sin((now / 250) * Math.PI);
+        }
+        document.documentElement.style.setProperty("--groove", level.toFixed(3));
+        return true;
+      });
+
+      // Quiet ambient secret: brief 420ms amber riff every 6s while paused
+      setInterval(() => {
+        if (isPlaying || prefersReducedMotion() || !document.body.classList.contains("intro-complete")) return;
+        eqBars.classList.remove("eq-ambient-riff");
+        void eqBars.offsetWidth;
+        eqBars.classList.add("eq-ambient-riff");
+        setTimeout(() => eqBars.classList.remove("eq-ambient-riff"), 680);
+      }, 6000);
 
       caravanHeaderRow.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -1742,6 +1834,10 @@
 
       function tryPlay(forceRetry = false) {
         if (playPending || (!audio.paused && !forceRetry)) return;
+        ensureGrooveAnalyser();
+        if (audioCtx && audioCtx.state === "suspended") {
+          audioCtx.resume().catch(() => {});
+        }
         audio.muted = false;
         audio.volume = currentVolume;
         if (!audio.paused) return;
@@ -1753,6 +1849,7 @@
               playPending = false;
               isPlaying = true;
               updatePlayUI();
+              STAGE_LOOP.wake();
             })
             .catch(() => {
               playPending = false;
@@ -1769,14 +1866,17 @@
       audio.addEventListener("play", () => {
         isPlaying = true;
         updatePlayUI();
+        STAGE_LOOP.wake();
       });
       audio.addEventListener("playing", () => {
         isPlaying = true;
         updatePlayUI();
+        STAGE_LOOP.wake();
       });
       audio.addEventListener("pause", () => {
         isPlaying = false;
         updatePlayUI();
+        document.documentElement.style.setProperty("--groove", "0");
       });
       audio.addEventListener("ended", () => {
         switchTrack(1, true);
@@ -2065,6 +2165,7 @@
       }
 
       function renderMorphTiles() {
+        const usePhoneSrc = window.innerWidth < 768;
         stage.innerHTML = "";
         morphEls = morphItems.map((photo) => {
           const tile = document.createElement("div");
@@ -2073,7 +2174,7 @@
           tile.setAttribute("data-photo-src", photo.src);
 
           const img = document.createElement("img");
-          img.src = photo.src;
+          img.src = usePhoneSrc && photo.mobileSrc ? photo.mobileSrc : photo.src;
           img.alt = photo.filename || "Photography";
           img.className = "w-full h-full object-contain block pointer-events-none select-none transition-transform duration-500 group-hover:scale-[1.03]";
           img.loading = "eager";
@@ -2085,12 +2186,23 @@
         });
       }
 
+      let lastMorphStageWidth = 0;
+
       function recomputeGeometry() {
         const isMobile = window.innerWidth < 768;
         const stageW = stage.clientWidth || Math.min(1152, window.innerWidth - 40);
         const stageH = stage.clientHeight || Math.max(360, window.innerHeight * 0.68);
+        lastMorphStageWidth = stageW;
         diagStart = computeDynamicDiagStart(morphItems, stageW, stageH, isMobile);
         bentoSlots = computeDynamicBentoSlots(morphItems, stageW, stageH, isMobile);
+
+        // Set base dimensions once so scroll morphing mutates ONLY GPU transform
+        morphEls.forEach((el, i) => {
+          const b = bentoSlots[i];
+          if (!b) return;
+          el.style.width = `${b.w.toFixed(1)}px`;
+          el.style.height = `${b.h.toFixed(1)}px`;
+        });
       }
 
       function lerp(a, b, t) {
@@ -2100,6 +2212,8 @@
       function easeInOutCubic(x) {
         return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
       }
+
+      let morphScrollQueued = false;
 
       function updateMorph() {
         if (morphEls.length === 0) return;
@@ -2126,13 +2240,20 @@
           const curW = lerp(d.w, b.w, morphT);
           const curH = lerp(d.h, b.h, morphT);
           const curRot = lerp(d.rot, 0, morphT);
+          const sx = b.w > 0 ? curW / b.w : 1;
+          const sy = b.h > 0 ? curH / b.h : 1;
 
-          el.style.left = `${curX.toFixed(1)}px`;
-          el.style.top = `${curY.toFixed(1)}px`;
-          el.style.width = `${curW.toFixed(1)}px`;
-          el.style.height = `${curH.toFixed(1)}px`;
-          el.style.transform = `rotate(${curRot.toFixed(2)}deg)`;
+          el.style.transform = `translate3d(${curX.toFixed(1)}px, ${curY.toFixed(1)}px, 0) scale(${sx.toFixed(4)}, ${sy.toFixed(4)}) rotate(${curRot.toFixed(2)}deg)`;
           el.style.zIndex = morphT > 0.8 ? 1 : (30 - i);
+        });
+      }
+
+      function scheduleMorphUpdate() {
+        if (morphScrollQueued) return;
+        morphScrollQueued = true;
+        requestAnimationFrame(() => {
+          morphScrollQueued = false;
+          updateMorph();
         });
       }
 
@@ -2165,10 +2286,13 @@
       };
 
       let morphResizeRaf = null;
-      window.addEventListener("scroll", updateMorph, { passive: true });
+      window.addEventListener("scroll", scheduleMorphUpdate, { passive: true });
       window.addEventListener("resize", () => {
         if (morphResizeRaf) cancelAnimationFrame(morphResizeRaf);
         morphResizeRaf = requestAnimationFrame(() => {
+          const curW = stage.clientWidth || Math.min(1152, window.innerWidth - 40);
+          // Ignore mobile URL-bar height jitter; recompute only on real width/orientation changes
+          if (Math.abs(curW - lastMorphStageWidth) <= 12 && window.innerWidth < 768) return;
           recomputeGeometry();
           updateMorph();
         });
@@ -2327,16 +2451,18 @@
         rows.push({ items: curRow, sumA: curSum, complete });
       }
 
+      const usePhoneArchiveSrc = window.innerWidth < 768;
       grid.innerHTML = rows.map((row) => {
         const rowStyle = row.complete
           ? ""
           : `style="width: ${Math.max(32, Math.min(100, (row.sumA / targetRowAspect) * 100)).toFixed(1)}%;"`;
         const tilesHtml = row.items.map(({ photo, a }) => {
           const safeSrc = String(photo.src || "").replace(/"/g, "&quot;");
+          const displaySrc = String((usePhoneArchiveSrc && photo.mobileSrc) ? photo.mobileSrc : photo.src || "").replace(/"/g, "&quot;");
           const safeAlt = String(photo.filename || "Photography").replace(/"/g, "&quot;");
           return `
             <div class="palette-item min-w-0 overflow-hidden bg-zinc-900 border border-white/5 shadow-lg cursor-pointer group" data-palette="${photo.palette || "color"}" data-photo-src="${safeSrc}" style="flex: ${a} 1 0%; aspect-ratio: ${a};">
-              <img src="${safeSrc}" alt="${safeAlt}" class="w-full h-full object-contain block transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" decoding="async" />
+              <img src="${displaySrc}" alt="${safeAlt}" class="w-full h-full object-contain block transition-transform duration-500 group-hover:scale-[1.02]" loading="eager" decoding="async" />
             </div>
           `;
         }).join("");
@@ -2448,18 +2574,19 @@
       }
     });
 
-    // ==================== 9. DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS ====================
+    // ==================== 9. DOTTED MAP WITH TELEMETRY ARCS & MISSION STORIES ====================
     async function initDottedMap() {
       const wrapper = document.getElementById("dotted-map-wrapper");
       const container = document.getElementById("dotted-map-container");
       const banner = document.getElementById("map-flag-banner");
       const nameEl = document.getElementById("map-flag-name");
+      const telemetryEl = document.getElementById("map-flag-telemetry");
 
       const byCode = {};
       FLOWN_DESTINATIONS.forEach((d) => { byCode[d.code] = d; });
 
       try {
-        const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+        const world = await d3.json("assets/world-110m.json");
         const countries = topojson.feature(world, world.objects.countries);
 
         const width = 640, height = 300;
@@ -2498,6 +2625,14 @@
             return byCode[code] && byCode[code].defaultRed ? "url(#dot-matrix-red)" : "url(#dot-matrix-base)";
           });
 
+        const arcLayer = svg.append("g").attr("class", "pointer-events-none");
+        const missionArc = arcLayer.append("path")
+          .attr("fill", "none")
+          .attr("stroke", "#e11d48")
+          .attr("stroke-width", 1.4)
+          .attr("stroke-dasharray", "4 4")
+          .attr("opacity", 0);
+
         let activeDest = null;
 
         function resetHighlight(dest) {
@@ -2505,6 +2640,33 @@
             countryPaths
               .filter((d) => String(d.id).padStart(3, "0") === dest.code)
               .attr("fill", "url(#dot-matrix-base)");
+          }
+        }
+
+        function drawMissionArc(dest) {
+          const hub = byCode[dest.hub || "620"];
+          if (!hub || hub.code === dest.code) {
+            missionArc.attr("opacity", 0);
+            return;
+          }
+          const [x1, y1] = projection(hub.coords);
+          const [x2, y2] = projection(dest.coords);
+          const mx = (x1 + x2) / 2;
+          const dist = Math.hypot(x2 - x1, y2 - y1);
+          const my = (y1 + y2) / 2 - Math.min(58, Math.max(18, dist * 0.28));
+          missionArc
+            .attr("d", `M ${x1.toFixed(1)} ${y1.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`)
+            .attr("opacity", 0.9);
+          if (!prefersReducedMotion()) {
+            const totalLen = missionArc.node().getTotalLength() || 120;
+            missionArc
+              .attr("stroke-dasharray", `${totalLen} ${totalLen}`)
+              .attr("stroke-dashoffset", totalLen)
+              .transition()
+              .duration(480)
+              .ease(d3.easeCubicOut)
+              .attr("stroke-dashoffset", 0)
+              .on("end", () => missionArc.attr("stroke-dasharray", "4 4"));
           }
         }
 
@@ -2517,7 +2679,9 @@
             .filter((d) => String(d.id).padStart(3, "0") === dest.code)
             .attr("fill", "url(#dot-matrix-red)");
 
-          // Position country name banner next to the pin in wrapper coordinates
+          drawMissionArc(dest);
+
+          // Position country name banner + telemetry next to the pin in wrapper coordinates
           const svgEl = container.querySelector("svg");
           const svgRect = svgEl.getBoundingClientRect();
           const wrapRect = wrapper.getBoundingClientRect();
@@ -2528,9 +2692,10 @@
           const topPx = (svgRect.top - wrapRect.top) + py * scaleY;
 
           nameEl.textContent = dest.name;
-          const bannerWidth = Math.max(banner.offsetWidth || 120, 120);
+          if (telemetryEl) telemetryEl.textContent = dest.telemetry || "";
+          const bannerWidth = Math.max(banner.offsetWidth || 160, 160);
           const clampedLeft = Math.max(4, Math.min(wrapRect.width - bannerWidth - 14, leftPx));
-          const clampedTop = Math.max(18, Math.min(wrapRect.height - 18, topPx));
+          const clampedTop = Math.max(22, Math.min(wrapRect.height - 22, topPx));
           banner.style.left = `${clampedLeft}px`;
           banner.style.top = `${clampedTop}px`;
           banner.classList.add("flag-open");
@@ -2538,6 +2703,7 @@
 
         function hideLabelForDest(dest) {
           resetHighlight(dest);
+          missionArc.attr("opacity", 0);
           banner.classList.remove("flag-open");
         }
 
@@ -2679,10 +2845,47 @@
       });
     }
 
+    function initSeams() {
+      const seams = document.querySelectorAll("[data-seam]");
+      if ("IntersectionObserver" in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("seam-active");
+          });
+        }, { threshold: 0.25 });
+        seams.forEach((el) => obs.observe(el));
+      } else {
+        seams.forEach((el) => el.classList.add("seam-active"));
+      }
+
+      const wavePath = document.getElementById("seam-wave-path");
+      const waveWrap = document.querySelector(".seam-wave-wrap");
+      if (!wavePath || !waveWrap || prefersReducedMotion()) return;
+
+      let waveRaf = null;
+      const updateWave = () => {
+        waveRaf = null;
+        const rect = waveWrap.getBoundingClientRect();
+        const vh = window.innerHeight || 800;
+        if (rect.bottom < -40 || rect.top > vh + 40) return;
+        const distFromCenter = Math.abs((rect.top + rect.height / 2) - vh / 2) / (vh / 2);
+        const amp = Math.max(0, 1 - distFromCenter) * 9.5;
+        wavePath.setAttribute(
+          "d",
+          `M0 12 Q150 ${(12 - amp).toFixed(2)} 300 12 T600 12 T900 12 T1200 12`
+        );
+      };
+      window.addEventListener("scroll", () => {
+        if (!waveRaf) waveRaf = requestAnimationFrame(updateWave);
+      }, { passive: true });
+      updateWave();
+    }
+
     // ==================== INIT ====================
     window.addEventListener("DOMContentLoaded", () => {
       runInPlaceIntro();
       initCopyEmailButton();
+      initSeams();
       renderFullArchiveGrid();
       initDottedMap();
       const initialKeys = new Set(ACTIVE_PHOTOS.map((p) => p.filename.toLowerCase()));
