@@ -31,6 +31,20 @@
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192x192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
 
+  <!-- Tier 1 High-Priority Preloads (Hero PFP, Skills PFP, Controlled Chaos Beats, 3D Models on Desktop) -->
+  <link rel="preload" as="image" href="assets/hero-rover.webp" media="(min-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/hero-rover-800.webp" media="(max-width: 767px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/profile.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/IMG_1471.webp" media="(min-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/IMG_1471-800.webp" media="(max-width: 767px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/piano.webp" media="(min-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/piano-800.webp" media="(max-width: 767px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/IMG_7252.webp" media="(min-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/IMG_7252-800.webp" media="(max-width: 767px)" fetchpriority="high" />
+  <link rel="preload" as="fetch" href="assets/models/foil.glb" crossorigin="anonymous" media="(min-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="fetch" href="assets/models/sony-a6100.glb" crossorigin="anonymous" media="(min-width: 768px)" fetchpriority="high" />
+  <link rel="preload" as="fetch" href="assets/models/sony-a7iii.glb" crossorigin="anonymous" media="(min-width: 768px)" fetchpriority="high" />
+
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
     {
@@ -53,6 +67,14 @@
         "https://www.tiktok.com/@adrx_lv"
       ],
       "knowsAbout": ["Software Engineering", "Robotics", "Space Cybersecurity", "C#", ".NET", "Blazor", "Python", "Photography"]
+    }
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
     }
   </script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -156,13 +178,12 @@
     .font-playwrite { font-family: 'Playwrite AU SA', cursive; }
     .font-nightshade { font-family: 'Jim Nightshade', cursive; }
 
-    /* Magic UI Smooth Cursor (GPU translate3d + mix-blend-mode difference, zero DOM style reads) */
+    /* Magic UI Smooth Cursor (GPU translate3d, crisp white with black border) */
     #smooth-cursor {
       position: fixed;
       top: 0; left: 0;
       pointer-events: none;
       z-index: 10001;
-      mix-blend-mode: difference;
       will-change: transform;
       transform: translate3d(-100px, -100px, 0);
     }
@@ -199,7 +220,7 @@
     }
     body.intro-complete .slide-reveal {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
 
     /* Frankie Mills Hero Wordmark Blur + Random [-10deg, +10deg] Angled Reel */
@@ -365,34 +386,6 @@
       transform-origin: center center;
       transition: transform 0.2s ease-out;
     }
-    .seam-viewfinder {
-      position: relative;
-      width: 100%;
-      height: 1px;
-      background: var(--border);
-    }
-    .seam-vf-mark {
-      position: absolute;
-      top: -10px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      color: rgba(244, 244, 240, 0.55);
-      opacity: 0.25;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, color 0.4s ease;
-      pointer-events: none;
-    }
-    .seam-vf-left { left: 1.25rem; transform: translateX(-10px); }
-    .seam-vf-right { right: 1.25rem; transform: translateX(10px); }
-    @media (min-width: 640px) {
-      .seam-vf-left { left: 3rem; }
-      .seam-vf-right { right: 3rem; }
-    }
-    .seam-viewfinder.seam-active .seam-vf-mark {
-      opacity: 1;
-      transform: translateX(0);
-      color: #f59e0b;
-    }
 
     /* <Roll> Button Typography & data-glyph Micro-Scenes (Desktop fine pointer only) */
     .roll-wrap {
@@ -421,21 +414,242 @@
       [data-glyph="connect"]:hover .glyph-pin-r { transform: translate(-2px, 2px); }
       [data-glyph="connect"]:hover .glyph-spark { opacity: 1; transform: scale(1.15); }
       [data-glyph="copy"]:hover .glyph-flap { transform: scaleY(-0.85); transform-origin: 12px 7px; }
-      [data-glyph="photos"]:hover .glyph-iris { transform: rotate(45deg) scale(0.9); transform-origin: center; }
       .mp-accordion-trigger:hover .acc-glyph { color: #fb7185; transform: scale(1.08); }
     }
     .mp-accordion-item.open .acc-glyph { color: #e11d48; }
-    [data-glyph="connect"] .glyph-spark { opacity: 0; transition: opacity 0.22s ease, transform 0.22s ease; transform-origin: center; }
 
-    /* Web Audio Groove Shift subtle reactive accents */
-    :root { --groove: 0; }
-    #hero-curious-line {
-      text-decoration-thickness: calc(2px + var(--groove) * 1.5px);
-      filter: drop-shadow(0 0 calc(var(--groove) * 8px) rgba(225, 29, 72, 0.55));
+    /* FORGe "Partner with FORGe" Button Asset, Per-Character Roll & Hover-Only Handshake Scene (Borderless & Transparent) */
+    .forge-partner-btn {
+      --cut: 10px;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.5rem;
+      min-width: 7.75rem;
+      padding: 0 1.15rem;
+      background: transparent;
+      color: #f4f4f0;
+      border: 0;
+      clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+      overflow: hidden;
+      isolation: isolate;
+      user-select: none;
+      transition: transform 0.3s var(--ease-out), color 0.25s ease;
     }
-    #pinned-dynamic-quote {
-      border-left-color: rgba(225, 29, 72, calc(0.75 + var(--groove) * 0.25));
-      box-shadow: inset 2px 0 calc(var(--groove) * 10px) -2px rgba(225, 29, 72, calc(var(--groove) * 0.45));
+    .forge-partner-btn:active {
+      transform: scale(0.97);
+    }
+    .forge-partner-btn:focus-visible {
+      outline: none;
+      box-shadow: inset 0 0 0 2px currentColor;
+    }
+    .forge-partner-btn .roll {
+      display: inline-flex;
+      position: relative;
+      z-index: 1;
+    }
+    .forge-partner-btn .roll-in {
+      display: inline-flex;
+      overflow: hidden;
+      padding-block: 0.14em;
+      margin-block: -0.14em;
+    }
+    .forge-partner-btn .roll-ch {
+      position: relative;
+      display: inline-block;
+      white-space: pre;
+      transition:
+        transform 0.55s var(--ease-out) calc(var(--i, 0) * 14ms),
+        opacity 0.3s ease calc(var(--i, 0) * 14ms);
+    }
+    .forge-partner-btn .roll-ch::after {
+      content: attr(data-ch);
+      position: absolute;
+      left: 0;
+      top: 100%;
+      padding-top: 0.14em;
+    }
+    .forge-partner-btn > .bs {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      --sa: #e11d48;
+      --sb: #fb7185;
+      --sc: #f4f4f0;
+    }
+    .forge-partner-btn > .bs .bs-stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 160px;
+      height: 52px;
+      transform: translate(-50%, -50%) scale(var(--bs-scale, 1));
+    }
+    .forge-partner-btn > .bs .bs-stage > * {
+      position: absolute;
+    }
+    .forge-partner-btn:not([data-playing]) > .bs * {
+      animation: none !important;
+    }
+    .forge-partner-btn[data-act] > .bs .bs-stage {
+      animation: bs-act 0.55s var(--ease-out);
+    }
+    @keyframes bs-act {
+      35% {
+        filter: brightness(1.35);
+        transform: translate(-50%, -50%) scale(calc(var(--bs-scale, 1) * 1.18));
+      }
+    }
+    .forge-partner-btn .gs-hand {
+      top: 14px;
+      width: 1em;
+      height: 1em;
+      font-size: 23px;
+      opacity: 0;
+    }
+    .forge-partner-btn .gs-hand.l {
+      left: 14px;
+      color: var(--sb);
+      animation: gs-hand-l 2.2s var(--ease-out) 1 forwards;
+    }
+    .forge-partner-btn .gs-hand.r {
+      left: 123px;
+      color: var(--sa);
+      animation: gs-hand-r 2.2s var(--ease-out) 1 forwards;
+    }
+    @keyframes gs-hand-l {
+      0% { opacity: 0; transform: translateX(-10px) rotate(70deg); }
+      10% { opacity: 1; }
+      34% { opacity: 1; transform: translateX(42px) rotate(90deg); }
+      40%, 100% { opacity: 0; transform: translateX(44px) rotate(90deg); }
+    }
+    @keyframes gs-hand-r {
+      0% { opacity: 0; transform: translateX(10px) scaleX(-1) rotate(70deg); }
+      10% { opacity: 1; }
+      34% { opacity: 1; transform: translateX(-42px) scaleX(-1) rotate(90deg); }
+      40%, 100% { opacity: 0; transform: translateX(-44px) scaleX(-1) rotate(90deg); }
+    }
+    .forge-partner-btn .gs-shake {
+      left: 64px;
+      top: 10px;
+      width: 1em;
+      height: 1em;
+      font-size: 32px;
+      color: #f4f4f0;
+      opacity: 0;
+      animation: gs-shake 2.2s ease-in-out 1 forwards;
+    }
+    @keyframes gs-shake {
+      0%, 36% { opacity: 0; transform: scale(0.6); }
+      42% { opacity: 1; transform: scale(1.1); }
+      48% { transform: translateY(-2px) rotate(-6deg); }
+      56% { transform: translateY(2px) rotate(4deg); }
+      64% { transform: translateY(-2px) rotate(-6deg); }
+      72% { transform: translateY(1px) rotate(3deg); }
+      80% { transform: none; }
+      92% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .forge-partner-btn .gs-spark {
+      width: 3px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--sa);
+      opacity: 0;
+      --a: calc((var(--k) - var(--mid, 1)) * var(--step, 50deg));
+      animation: gs-spark var(--loop, 2s) ease-out var(--at, 0s) 1 forwards;
+    }
+    .forge-partner-btn .gs-spark.at-shake {
+      left: 79px;
+      top: 11px;
+      --loop: 2.2s;
+      --at: 0.95s;
+      --mid: 1.5;
+      --step: 38deg;
+    }
+    @keyframes gs-spark {
+      0% { opacity: 0; transform: rotate(var(--a)) translateY(0); }
+      4% { opacity: 1; }
+      28%, 100% { opacity: 0; transform: rotate(var(--a)) translateY(-11px); }
+    }
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .forge-partner-btn:hover .roll-ch {
+        transform: translateY(calc(-100% - 0.14em));
+      }
+      .forge-partner-btn[data-playing] .roll-ch {
+        opacity: 0;
+        transform: translateY(-130%);
+      }
+      .forge-partner-btn[data-playing] > .bs {
+        opacity: 1;
+        transition-delay: 0.1s;
+      }
+    }
+
+    /* Post-Animation Hover Popup below Connect */
+    #connect-hover-popup {
+      position: absolute;
+      left: 0;
+      top: calc(100% + 6px);
+      z-index: 60;
+      background: rgba(9, 9, 11, 0.94);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(244, 244, 240, 0.14);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      padding: 0.625rem;
+      opacity: 0;
+      transform: translateY(-6px) scale(0.98);
+      transform-origin: top left;
+      pointer-events: none;
+      transition:
+        opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #connect-hover-popup::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -10px;
+      height: 10px;
+    }
+    #connect-widget.popup-open #connect-hover-popup {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* Web Audio Groove Shift subtle beat-only reactive accents */
+    :root { --groove: 0; --groove-beat: 0; }
+    #hero-curious-line {
+      text-decoration-thickness: calc(2px + var(--groove-beat) * 1.6px);
+      filter: drop-shadow(0 0 calc(var(--groove-beat) * 8px) rgba(225, 29, 72, calc(var(--groove-beat) * 0.7)));
+    }
+    .decrypt-slot {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: flex-start;
+      vertical-align: baseline;
+      white-space: nowrap;
+      overflow: hidden;
+      transition:
+        width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.25s ease;
+      will-change: width;
+    }
+    .decrypt-slot > .decrypt-inner {
+      text-decoration: inherit;
+      text-decoration-color: inherit;
+      text-decoration-thickness: inherit;
+      text-decoration-style: inherit;
+      text-underline-offset: inherit;
     }
 
     /* Ultra-subtle Volume Range Slider Knob (Touch-friendly hit area on coarse pointers) */
@@ -669,6 +883,10 @@
   <!-- Fixed Intro Backdrop (Fades out while #hero-adriano-line stays locked in place without snapping) -->
   <div id="intro-backdrop" aria-hidden="true"></div>
 
+  <!-- Wide-Only Fixed 3D Stage (FORGe discipline: desktop only, transparent background, GPU-only scroll choreography) -->
+  <canvas id="stage-3d-canvas" aria-hidden="true" class="hidden md:block fixed inset-0 w-full h-full pointer-events-none z-[25] opacity-0 transition-opacity duration-300"></canvas>
+  <div id="camera-shutter-flash" aria-hidden="true" class="hidden md:block fixed inset-0 pointer-events-none z-[26] opacity-0" style="background: radial-gradient(circle at 50% 48%, rgba(255,255,255,0.98) 0%, rgba(244,244,240,0.85) 28%, rgba(244,244,240,0.25) 68%, rgba(9,9,11,0) 100%);"></div>
+
   <!-- HERO SECTION -->
   <section id="hero-section" class="relative min-h-screen supports-[min-height:100svh]:min-h-[100svh] flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-8 pb-[max(1.75rem,env(safe-area-inset-bottom))] sm:pb-16 px-5 sm:px-12 overflow-hidden border-b border-[var(--border)]">
     <!-- Chiaroscuro Background Portrait (Option 4) -->
@@ -676,21 +894,70 @@
       <div id="hero-bg-parallax">
         <picture>
           <source media="(max-width: 767px)" srcset="assets/hero-rover-800.webp" type="image/webp" />
-          <img id="hero-bg-img" src="assets/hero-rover.webp" alt="" />
+          <img id="hero-bg-img" src="assets/hero-rover.webp" alt="" fetchpriority="high" decoding="async" />
         </picture>
       </div>
     </div>
 
-    <!-- Top Bar: Discreet Connect Anchor (Left) + Borderless CARAVAN Audio Control (Right) -->
+    <!-- Top Bar: Discreet Connect Anchor + Post-Handshake Quick Popup (Left) + Borderless CARAVAN Audio Control (Right) -->
     <div class="relative z-30 flex items-center justify-between gap-4 slide-reveal">
-      <a href="#contact-footer" id="hero-connect-link" data-glyph="connect" class="roll-host inline-flex items-center gap-2 min-h-[44px] sm:min-h-0 px-1 font-mono-tech text-xs tracking-widest uppercase text-zinc-400 hover:text-rose-400 transition-colors">
-        <span class="roll-wrap"><span class="roll-track"><span>Connect</span><span>Connect</span></span></span>
-        <svg class="glyph-svg w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <g class="glyph-pin-l"><path d="M5 17L9 13M7 11l4 4" /></g>
-          <g class="glyph-pin-r"><path d="M19 7l-4 4M13 9l4 4" /></g>
-          <circle class="glyph-spark" cx="12" cy="12" r="1.7" fill="#fb7185" stroke="none" />
-        </svg>
-      </a>
+      <div id="connect-widget" class="relative inline-flex items-center">
+        <a href="#contact-footer" id="hero-connect-link" data-glyph="partner" class="forge-partner-btn font-mono-tech text-xs tracking-widest uppercase">
+          <span class="roll">
+            <span class="sr-only">Connect</span>
+            <span class="roll-in" aria-hidden="true"><span data-ch="C" style="--i:0" class="roll-ch">C</span><span data-ch="o" style="--i:1" class="roll-ch">o</span><span data-ch="n" style="--i:2" class="roll-ch">n</span><span data-ch="n" style="--i:3" class="roll-ch">n</span><span data-ch="e" style="--i:4" class="roll-ch">e</span><span data-ch="c" style="--i:5" class="roll-ch">c</span><span data-ch="t" style="--i:6" class="roll-ch">t</span></span>
+          </span>
+          <span class="bs" data-kind="partner" aria-hidden="true">
+            <span class="bs-stage">
+              <svg class="gs-hand l" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,64v90.93c0,46.2-36.85,84.55-83,85.06A83.71,83.71,0,0,1,72.6,215.4C50.79,192.33,26.15,136,26.15,136a16,16,0,0,1,6.53-22.23c7.66-4,17.1-.84,21.4,6.62l21,36.44a6.09,6.09,0,0,0,6,3.09l.12,0A8.19,8.19,0,0,0,88,151.74V48a16,16,0,0,1,16.77-16c8.61.4,15.23,7.82,15.23,16.43V112a8,8,0,0,0,8.53,8,8.17,8.17,0,0,0,7.47-8.25V32a16,16,0,0,1,16.77-16c8.61.4,15.23,7.82,15.23,16.43V120a8,8,0,0,0,8.53,8,8.17,8.17,0,0,0,7.47-8.25V64.45c0-8.61,6.62-16,15.23-16.43A16,16,0,0,1,216,64Z"/></svg>
+              <svg class="gs-hand r" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216,64v90.93c0,46.2-36.85,84.55-83,85.06A83.71,83.71,0,0,1,72.6,215.4C50.79,192.33,26.15,136,26.15,136a16,16,0,0,1,6.53-22.23c7.66-4,17.1-.84,21.4,6.62l21,36.44a6.09,6.09,0,0,0,6,3.09l.12,0A8.19,8.19,0,0,0,88,151.74V48a16,16,0,0,1,16.77-16c8.61.4,15.23,7.82,15.23,16.43V112a8,8,0,0,0,8.53,8,8.17,8.17,0,0,0,7.47-8.25V32a16,16,0,0,1,16.77-16c8.61.4,15.23,7.82,15.23,16.43V120a8,8,0,0,0,8.53,8,8.17,8.17,0,0,0,7.47-8.25V64.45c0-8.61,6.62-16,15.23-16.43A16,16,0,0,1,216,64Z"/></svg>
+              <svg class="gs-shake" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M254.3,107.91,228.78,56.85a16,16,0,0,0-21.47-7.15L182.44,62.13,130.05,48.27a8.14,8.14,0,0,0-4.1,0L73.56,62.13,48.69,49.7a16,16,0,0,0-21.47,7.15L1.7,107.9a16,16,0,0,0,7.15,21.47l27,13.51,55.49,39.63a8.06,8.06,0,0,0,2.71,1.25l64,16a8,8,0,0,0,7.6-2.1l40-40,15.08-15.08,26.42-13.21a16,16,0,0,0,7.15-21.46Zm-54.89,33.37L165,113.72a8,8,0,0,0-10.68.61C136.51,132.27,116.66,130,104,122L147.24,80h31.81l27.21,54.41Zm-41.87,41.86L99.42,168.61l-49.2-35.14,28-56L128,64.28l9.8,2.59-45,43.68-.08.09a16,16,0,0,0,2.72,24.81c20.56,13.13,45.37,11,64.91-5L188,152.66Zm-25.72,34.8a8,8,0,0,1-7.75,6.06,8.13,8.13,0,0,1-1.95-.24L80.41,213.33a7.89,7.89,0,0,1-2.71-1.25L51.35,193.26a8,8,0,0,1,9.3-13l25.11,17.94L126,208.24A8,8,0,0,1,131.82,217.94Z"/></svg>
+              <i class="gs-spark at-shake" style="--k:0"></i>
+              <i class="gs-spark at-shake" style="--k:1"></i>
+              <i class="gs-spark at-shake" style="--k:2"></i>
+              <i class="gs-spark at-shake" style="--k:3"></i>
+            </span>
+          </span>
+        </a>
+
+        <div id="connect-hover-popup" role="dialog" aria-label="Quick Connect Links">
+          <div class="flex items-center gap-1.5">
+            <a href="mailto:AdrianoLop.V@icloud.com" id="connect-popup-mail" data-email="AdrianoLop.V@icloud.com" aria-label="Copy email and open mail client" title="Copy email &amp; open mail" class="w-9 h-9 flex items-center justify-center border border-white/10 bg-zinc-900/80 text-zinc-300 hover:border-rose-500/80 hover:text-rose-400 transition-colors">
+              <svg id="connect-mail-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14"></rect>
+                <polyline points="3 7 12 13 21 7"></polyline>
+              </svg>
+              <svg id="connect-mail-check" class="hidden w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/adriano-vilhena-a0493b332/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="w-9 h-9 flex items-center justify-center border border-white/10 bg-zinc-900/80 text-zinc-300 hover:border-rose-500/80 hover:text-rose-400 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/adrxlv" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="w-9 h-9 flex items-center justify-center border border-white/10 bg-zinc-900/80 text-zinc-300 hover:border-rose-500/80 hover:text-rose-400 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2A10 10 0 0 0 2 12C2 16.42 4.87 20.17 8.84 21.5C9.34 21.58 9.5 21.27 9.5 21C9.5 20.77 9.5 20.14 9.5 19.31C6.73 19.91 6.14 17.97 6.14 17.97C5.68 16.81 5.03 16.5 5.03 16.5C4.12 15.88 5.1 15.9 5.1 15.9C6.1 15.97 6.63 16.93 6.63 16.93C7.5 18.45 8.97 18 9.54 17.76C9.63 17.11 9.89 16.67 10.17 16.42C7.95 16.17 5.62 15.31 5.62 11.5C5.62 10.39 6 9.5 6.65 8.79C6.55 8.54 6.2 7.5 6.75 6.15C6.75 6.15 7.59 5.88 9.5 7.17C10.29 6.95 11.15 6.84 12 6.84C12.85 6.84 13.71 6.95 14.5 7.17C16.41 5.88 17.25 6.15 17.25 6.15C17.8 7.5 17.45 8.54 17.35 8.79C18 9.5 18.38 10.39 18.38 11.5C18.38 15.32 16.04 16.16 13.81 16.41C14.17 16.72 14.5 17.33 14.5 18.26C14.5 19.6 14.5 20.68 14.5 21C14.5 21.27 14.66 21.59 15.17 21.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/>
+              </svg>
+            </a>
+            <a href="https://www.tiktok.com/@adrx_lv" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok" class="w-9 h-9 flex items-center justify-center border border-white/10 bg-zinc-900/80 text-zinc-300 hover:border-rose-500/80 hover:text-rose-400 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+              </svg>
+            </a>
+          </div>
+          <p id="connect-popup-status" class="hidden mt-1.5 font-mono-tech text-[10px] tracking-widest uppercase text-emerald-300" aria-live="polite">Email copied!</p>
+          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" id="connect-popup-resume" class="mt-2 w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-600 hover:border-rose-600 hover:text-white font-mono-tech text-[11px] tracking-widest uppercase whitespace-nowrap transition-colors">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4H3v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Download Resume</span>
+          </a>
+        </div>
+      </div>
 
       <div class="caravan-widget relative inline-grid justify-items-end text-right py-1 sm:py-2">
         <div id="caravan-header-row" role="button" tabindex="0" aria-label="Toggle audio controls" class="inline-flex items-center justify-end gap-2.5 whitespace-nowrap cursor-pointer select-none min-h-[44px] sm:min-h-0 py-1 px-1">
@@ -746,13 +1013,16 @@
         <!-- Random [-10deg, +10deg] Angled Reel on Hover / Tap -->
         <div class="hero-loop-reel">
           <div id="hero-reel-frame" class="w-[min(76vw,18rem)] sm:w-96 h-40 sm:h-60 overflow-hidden shadow-2xl">
-            <img id="hero-reel-img" src="assets/fotografia/DSCN0658.webp" alt="Visual reel" class="w-full h-full object-cover" />
+            <img id="hero-reel-img" src="assets/fotografia/DSCN0658.webp" alt="Visual reel" class="w-full h-full object-cover" fetchpriority="high" decoding="async" />
           </div>
         </div>
       </div>
 
       <p class="slide-reveal mt-6 sm:mt-10 max-w-2xl text-[15px] sm:text-base text-zinc-300 leading-relaxed text-center [text-wrap:pretty]">
-        <span id="hero-curious-line" class="underline decoration-rose-500 decoration-2 underline-offset-4 text-white">I'm <span id="curious-decrypt" class="cursor-pointer hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades">curious</span>, and I act on it.</span> I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
+        <span class="block mb-1">
+          <span id="hero-curious-line" class="inline-block cursor-pointer underline decoration-rose-500 decoration-2 underline-offset-4 text-white group"><span class="transition-colors">I'm </span><span id="curious-decrypt" class="decrypt-slot cursor-pointer underline decoration-rose-500 decoration-2 underline-offset-4 group-hover:text-rose-400 hover:text-rose-400 transition-colors" data-default="curious" data-target="a Jack Of All Trades"><span class="decrypt-inner">curious</span></span><span class="transition-colors">, and I act on it.</span></span>
+        </span>
+        I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
       </p>
     </div>
 
@@ -774,7 +1044,7 @@
     <section id="thread-section" class="relative px-5 sm:px-12 max-w-7xl mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 items-stretch">
         <!-- Pinned Left Column (Compact fixed-height translucent header on mobile, vertically centered full-height on desktop) -->
-        <div class="lg:col-span-5 sticky top-0 z-20 bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
+        <div class="lg:col-span-5 sticky top-0 z-[30] bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
           <h2 class="font-brutal text-2xl sm:text-4xl lg:text-5xl leading-[0.95] tracking-tight">
             Controlled<br class="hidden lg:inline" />
             <span class="font-serif-editorial italic font-normal text-sky-400 lg:block"> Chaos.</span>
@@ -786,11 +1056,11 @@
 
         <!-- Scrolling Right Column -->
         <div class="lg:col-span-7 py-8 lg:py-32 space-y-12 sm:space-y-16 lg:space-y-28">
-          <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="0">
+          <article class="pinned-beat relative z-[15] space-y-4 sm:space-y-5" data-beat="0">
             <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('fencing')">
               <picture>
                 <source media="(max-width: 767px)" srcset="assets/IMG_1471-800.webp" type="image/webp" />
-                <img src="assets/IMG_1471.webp" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+                <img src="assets/IMG_1471.webp" alt="Distance, Feint, Counter-Measure — Fencing" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
               </picture>
             </div>
             <div class="sm:pl-16 max-w-lg">
@@ -801,11 +1071,11 @@
             </div>
           </article>
 
-          <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="1">
+          <article class="pinned-beat relative z-[30] space-y-4 sm:space-y-5" data-beat="1">
             <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('piano')">
               <picture>
                 <source media="(max-width: 767px)" srcset="assets/piano-800.webp" type="image/webp" />
-                <img src="assets/piano.webp" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+                <img src="assets/piano.webp" alt="Big band piano keys" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
               </picture>
             </div>
             <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
@@ -816,11 +1086,11 @@
             </div>
           </article>
 
-          <article class="pinned-beat space-y-4 sm:space-y-5" data-beat="2">
+          <article class="pinned-beat relative z-[30] space-y-4 sm:space-y-5" data-beat="2">
             <div class="tilt-card overflow-hidden cursor-pointer border border-white/10" onclick="openMorphModal('cosmos')">
               <picture>
                 <source media="(max-width: 767px)" srcset="assets/IMG_7252-800.webp" type="image/webp" />
-                <img src="assets/IMG_7252.webp" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" />
+                <img src="assets/IMG_7252.webp" alt="From Luanda to the World and Above" class="w-full aspect-[4/3] sm:aspect-auto sm:h-96 object-cover block" fetchpriority="high" decoding="async" />
               </picture>
             </div>
             <div class="sm:pl-12 max-w-lg">
@@ -834,19 +1104,20 @@
       </div>
     </section>
 
-    <!-- SEAM 2: Controlled Chaos -> What I Bring to the Table (Piano-String Wave) -->
+    <!-- SEAM 2: Controlled Chaos -> What I Bring to the Table (Bass String Wave) -->
     <div class="seam-wave-wrap" data-seam="wave" aria-hidden="true">
       <svg id="seam-wave-svg" class="seam-wave-svg" viewBox="0 0 1200 24" preserveAspectRatio="none">
-        <path id="seam-wave-path" d="M0 12 Q150 12 300 12 T600 12 T900 12 T1200 12" fill="none" stroke="rgba(244,244,240,0.18)" stroke-width="1.2" />
+        <path id="seam-wave-path" d="M0 12 C380 12, 820 12, 1200 12" fill="none" stroke="rgba(244,244,240,0.18)" stroke-width="1.2" />
       </svg>
     </div>
 
     <!-- WHAT I BRING TO THE TABLE (Before Photography, Closed Accordions + Programming Languages) -->
-    <section id="skills-accordion" class="py-14 sm:py-28 px-5 sm:px-12 max-w-4xl mx-auto">
+    <section id="skills-accordion" class="w-full py-14 sm:py-28 border-b border-[var(--border)]">
+      <div class="px-5 sm:px-12 max-w-4xl mx-auto">
       <div class="mb-8 sm:mb-10 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-8">
         <div class="flex items-center gap-4 sm:contents">
           <div class="tilt-card relative w-20 h-20 sm:w-32 sm:h-32 shrink-0 border border-[var(--border)] bg-zinc-900 overflow-hidden shadow-2xl group">
-            <img src="assets/profile.webp" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" />
+            <img src="assets/profile.webp" alt="Adriano Vilhena" class="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" fetchpriority="high" decoding="async" />
           </div>
           <h2 class="font-brutal text-2xl leading-[0.95] sm:hidden [text-wrap:balance]">What I bring to the table</h2>
         </div>
@@ -865,7 +1136,6 @@
               <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
-              <span class="font-mono-tech text-xs text-zinc-500">01</span>
               <span>Hackathons, Rapid Prototyping &amp; Product Strategy</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -891,7 +1161,6 @@
                 <polyline points="4 17 10 11 4 5"></polyline>
                 <line x1="12" y1="19" x2="20" y2="19"></line>
               </svg>
-              <span class="font-mono-tech text-xs text-zinc-500">02</span>
               <span>Full-Stack Engineering</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -917,7 +1186,6 @@
                 <circle cx="12" cy="12" r="3"></circle>
                 <path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9l2.1 2.1m10 10l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path>
               </svg>
-              <span class="font-mono-tech text-xs text-zinc-500">03</span>
               <span>Robotics, Hardware Integration &amp; Team Leadership</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -944,7 +1212,6 @@
                 <circle cx="6" cy="18" r="3"></circle>
                 <circle cx="18" cy="16" r="3"></circle>
               </svg>
-              <span class="font-mono-tech text-xs text-zinc-500">04</span>
               <span>Music, Sports and Photography</span>
             </span>
             <svg class="mp-chevron w-4 h-4 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -954,36 +1221,22 @@
           <div class="mp-accordion-content">
             <div class="mp-accordion-inner pt-3 text-sm sm:text-base text-zinc-400 space-y-3 leading-relaxed">
               <p>
-                Big band pianist, Fencer, Self-Taught Photographer Since 2023 and <span id="military-decrypt" class="cursor-pointer text-zinc-200 underline decoration-rose-500/70 decoration-dotted underline-offset-4 hover:text-rose-400 transition-colors" data-default="graduate of a Military School" data-target="graduate at Instituto dos Pupilos do Exército">graduate of a Military School</span>.
+                Big band pianist, Fencer, Self-Taught Photographer Since 2023 and <span id="military-decrypt" class="decrypt-slot cursor-pointer text-zinc-200 underline decoration-rose-500/70 decoration-dotted underline-offset-4 hover:text-rose-400 transition-colors" data-default="graduate of a Military School" data-target="graduate at Instituto dos Pupilos do Exército"><span class="decrypt-inner">graduate of a Military School</span></span>.
               </p>
             </div>
           </div>
         </div>
       </div>
+      </div>
     </section>
 
-    <!-- SEAM 3: Skills -> My Photography (Camera Viewfinder Framing Marks) -->
-    <div class="seam-viewfinder" data-seam="viewfinder" aria-hidden="true">
-      <span class="seam-vf-mark seam-vf-left">[ + ]</span>
-      <span class="seam-vf-mark seam-vf-right">[ + ]</span>
-    </div>
-
-    <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + IRIS GLYPH) + GPU DIAGONAL -> BENTO MOSAIC -->
-    <section id="photography-morph-section" class="relative h-[220vh] md:h-[320vh] border-b border-[var(--border)] bg-[var(--surface)]">
+    <!-- MY PHOTOGRAPHY: CLICKABLE HEADER (RED UNDERLINE + ARROW) + GPU DIAGONAL -> BENTO MOSAIC -->
+    <section id="photography-morph-section" class="relative z-[20] h-[220vh] md:h-[320vh] border-b border-[var(--border)] bg-transparent">
       <div class="sticky top-0 h-screen supports-[height:100dvh]:h-[100dvh] w-full overflow-hidden flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:py-10 pb-[max(1.25rem,env(safe-area-inset-bottom))] px-5 sm:px-12">
-        <!-- Clickable Fixed Title with Red Underline Hover & Lens Iris Glyph -->
+        <!-- Clickable Fixed Title with Red Underline Hover & Arrow -->
         <div class="z-20">
-          <button type="button" onclick="openFullGalleryModal()" data-glyph="photos" class="photo-heading-btn roll-host font-brutal text-2xl sm:text-5xl text-left text-white min-h-[44px] sm:min-h-0">
+          <button type="button" onclick="openFullGalleryModal()" class="photo-heading-btn roll-host font-brutal text-2xl sm:text-5xl text-left text-white min-h-[44px] sm:min-h-0">
             <span class="roll-wrap"><span class="roll-track"><span>My photography</span><span>My photography</span></span></span>
-            <svg class="glyph-svg glyph-iris w-5 h-5 sm:w-8 sm:h-8 text-zinc-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <circle cx="12" cy="12" r="9"></circle>
-              <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
-              <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
-              <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
-              <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
-              <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
-              <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
-            </svg>
             <svg class="photo-heading-arrow w-6 h-6 sm:w-9 sm:h-9 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
               <line x1="7" y1="17" x2="17" y2="7"></line>
               <polyline points="7 7 17 7 17 17"></polyline>
@@ -1038,14 +1291,22 @@
       <div class="md:col-span-7 relative">
         <div id="dotted-map-wrapper" class="relative w-full aspect-[64/30] sm:aspect-auto sm:h-72 overflow-hidden flex items-center justify-center">
           <div id="dotted-map-container" class="w-full h-full flex items-center justify-center"></div>
-          <!-- Minimalist Slide-Out Country Name Tag + Mission Telemetry from Pin -->
+          <!-- Minimalist Slide-Out Country Name Tag from Pin -->
           <div id="map-flag-banner">
-            <div class="px-2.5 py-1.5 font-mono-tech text-[10px] tracking-wider text-white uppercase">
-              <span id="map-flag-name" class="block"></span>
-              <span id="map-flag-telemetry" class="block text-[9px] text-rose-400/90 tracking-wider mt-0.5 empty:hidden"></span>
+            <div class="px-2.5 py-1 font-mono-tech text-[10px] tracking-wider text-white uppercase flex items-center gap-1.5">
+              <span id="map-flag-name"></span>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- CC BY 4.0 3D Model Credits (Desktop 3D Stage) -->
+      <div class="md:col-span-12 pt-4 border-t border-white/10 font-mono-tech text-[10px] leading-relaxed text-zinc-500 flex flex-wrap items-center gap-x-4 gap-y-1">
+        <span class="uppercase tracking-[0.2em] text-zinc-400">3D Credits (CC BY 4.0):</span>
+        <a href="https://skfb.ly/prPW6" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 underline underline-offset-4 transition-colors">Foil Fencing Weapons — ONE NOTCH MEDIA</a>
+        <a href="https://skfb.ly/ptoZX" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 underline underline-offset-4 transition-colors">SONY A7 III + FE 24-70mm — Arham Abdullah</a>
+        <a href="https://skfb.ly/o9sNB" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 underline underline-offset-4 transition-colors">Sony A6100 Camera — Paul</a>
+        <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 underline underline-offset-4 transition-colors">CC BY 4.0</a>
       </div>
     </footer>
 
@@ -1087,30 +1348,27 @@
 
   <script>
     // ==================== DATA ====================
-    const HERO_REEL_PHOTOS = [
-      {"src":"assets/fotografia/DSCN0658.webp","mobileSrc":"assets/fotografia/DSCN0658-800.webp","filename":"DSCN0658.webp","palette":"color","aspect":1.334},
-      {"src":"assets/fotografia/DSCN0697.webp","mobileSrc":"assets/fotografia/DSCN0697-800.webp","filename":"DSCN0697.webp","palette":"color","aspect":1.333},
-      {"src":"assets/fotografia/DSCN0728.webp","mobileSrc":"assets/fotografia/DSCN0728-800.webp","filename":"DSCN0728.webp","palette":"color","aspect":1.333},
-      {"src":"assets/fotografia/IMG_0049.webp","mobileSrc":"assets/fotografia/IMG_0049-800.webp","filename":"IMG_0049.webp","palette":"color","aspect":1.779},
-      {"src":"assets/fotografia/IMG_0107.webp","mobileSrc":"assets/fotografia/IMG_0107-800.webp","filename":"IMG_0107.webp","palette":"color","aspect":1.336},
-      {"src":"assets/fotografia/IMG_0111.webp","mobileSrc":"assets/fotografia/IMG_0111-800.webp","filename":"IMG_0111.webp","palette":"color","aspect":1.336},
-      {"src":"assets/fotografia/IMG_0351_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0351_SnapseedCopy-800.webp","filename":"IMG_0351_SnapseedCopy.webp","palette":"color","aspect":1.5},
-      {"src":"assets/fotografia/IMG_0465_Copia.webp","mobileSrc":"assets/fotografia/IMG_0465_Copia-800.webp","filename":"IMG_0465_Copia.webp","palette":"color","aspect":1.401}
-    ];
-
     const GALLERY_PHOTOS = [
       {"src":"assets/fotografia/DSCN0406.webp","mobileSrc":"assets/fotografia/DSCN0406-800.webp","filename":"DSCN0406.webp","palette":"color","aspect":0.75},
       {"src":"assets/fotografia/DSCN0536.webp","mobileSrc":"assets/fotografia/DSCN0536-800.webp","filename":"DSCN0536.webp","palette":"bw","aspect":0.749},
       {"src":"assets/fotografia/DSCN0547.webp","mobileSrc":"assets/fotografia/DSCN0547-800.webp","filename":"DSCN0547.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0658.webp","mobileSrc":"assets/fotografia/DSCN0658-800.webp","filename":"DSCN0658.webp","palette":"color","aspect":1.334},
       {"src":"assets/fotografia/DSCN0678.webp","mobileSrc":"assets/fotografia/DSCN0678-800.webp","filename":"DSCN0678.webp","palette":"bw","aspect":0.75},
       {"src":"assets/fotografia/DSCN0693.webp","mobileSrc":"assets/fotografia/DSCN0693-800.webp","filename":"DSCN0693.webp","palette":"color","aspect":0.75},
+      {"src":"assets/fotografia/DSCN0697.webp","mobileSrc":"assets/fotografia/DSCN0697-800.webp","filename":"DSCN0697.webp","palette":"color","aspect":1.333},
       {"src":"assets/fotografia/DSCN0712.webp","mobileSrc":"assets/fotografia/DSCN0712-800.webp","filename":"DSCN0712.webp","palette":"bw","aspect":0.749},
+      {"src":"assets/fotografia/DSCN0728.webp","mobileSrc":"assets/fotografia/DSCN0728-800.webp","filename":"DSCN0728.webp","palette":"color","aspect":1.333},
       {"src":"assets/fotografia/DSCN0746.webp","mobileSrc":"assets/fotografia/DSCN0746-800.webp","filename":"DSCN0746.webp","palette":"color","aspect":0.749},
       {"src":"assets/fotografia/DSCN0756.webp","mobileSrc":"assets/fotografia/DSCN0756-800.webp","filename":"DSCN0756.webp","palette":"color","aspect":0.75},
       {"src":"assets/fotografia/DSCN0787.webp","mobileSrc":"assets/fotografia/DSCN0787-800.webp","filename":"DSCN0787.webp","palette":"color","aspect":0.749},
       {"src":"assets/fotografia/DSCN0791.webp","mobileSrc":"assets/fotografia/DSCN0791-800.webp","filename":"DSCN0791.webp","palette":"color","aspect":0.75},
       {"src":"assets/fotografia/DSCN0831.webp","mobileSrc":"assets/fotografia/DSCN0831-800.webp","filename":"DSCN0831.webp","palette":"color","aspect":0.749},
+      {"src":"assets/fotografia/IMG_0049.webp","mobileSrc":"assets/fotografia/IMG_0049-800.webp","filename":"IMG_0049.webp","palette":"color","aspect":1.779},
+      {"src":"assets/fotografia/IMG_0107.webp","mobileSrc":"assets/fotografia/IMG_0107-800.webp","filename":"IMG_0107.webp","palette":"color","aspect":1.336},
+      {"src":"assets/fotografia/IMG_0111.webp","mobileSrc":"assets/fotografia/IMG_0111-800.webp","filename":"IMG_0111.webp","palette":"color","aspect":1.336},
+      {"src":"assets/fotografia/IMG_0351_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0351_SnapseedCopy-800.webp","filename":"IMG_0351_SnapseedCopy.webp","palette":"color","aspect":1.5},
       {"src":"assets/fotografia/IMG_0393_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0393_SnapseedCopy-800.webp","filename":"IMG_0393_SnapseedCopy.webp","palette":"color","aspect":0.667},
+      {"src":"assets/fotografia/IMG_0465_Copia.webp","mobileSrc":"assets/fotografia/IMG_0465_Copia-800.webp","filename":"IMG_0465_Copia.webp","palette":"color","aspect":1.401},
       {"src":"assets/fotografia/IMG_0467_Copia.webp","mobileSrc":"assets/fotografia/IMG_0467_Copia-800.webp","filename":"IMG_0467_Copia.webp","palette":"bw","aspect":0.749},
       {"src":"assets/fotografia/IMG_0498_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0498_SnapseedCopy-800.webp","filename":"IMG_0498_SnapseedCopy.webp","palette":"color","aspect":0.749},
       {"src":"assets/fotografia/IMG_0500_SnapseedCopy.webp","mobileSrc":"assets/fotografia/IMG_0500_SnapseedCopy-800.webp","filename":"IMG_0500_SnapseedCopy.webp","palette":"color","aspect":0.75},
@@ -1182,12 +1440,17 @@
       {"src":"assets/fotografia/YTL00482.webp","mobileSrc":"assets/fotografia/YTL00482-800.webp","filename":"YTL00482.webp","palette":"bw","aspect":1.5}
     ];
 
-    const HERO_REEL_SET = new Set(HERO_REEL_PHOTOS.map((p) => p.filename.toLowerCase()));
-    const EXCLUDED_GALLERY_FILES = new Set(["piano.jpg", "piano.webp", "img_7252.jpeg", "img_7252.webp", ...HERO_REEL_SET]);
+    const EXCLUDED_GALLERY_FILES = new Set(["piano.jpg", "piano.webp", "img_7252.jpeg", "img_7252.webp"]);
     const IMAGE_EXT_RE = /\.(jpe?g|png|webp|avif|gif)$/i;
 
     function isValidGalleryEntry(p) {
-      return Boolean(p && p.filename && IMAGE_EXT_RE.test(p.filename) && !EXCLUDED_GALLERY_FILES.has(String(p.filename).toLowerCase()));
+      return Boolean(
+        p &&
+        p.filename &&
+        IMAGE_EXT_RE.test(p.filename) &&
+        !/-800\.webp$/i.test(p.filename) &&
+        !EXCLUDED_GALLERY_FILES.has(String(p.filename).toLowerCase())
+      );
     }
 
     function normalizePhotoPath(urlOrPath) {
@@ -1215,10 +1478,13 @@
       return a;
     }
 
-    let ACTIVE_PHOTOS = shuffleArray(GALLERY_PHOTOS.filter(isValidGalleryEntry));
-    let ARCHIVE_PHOTOS = shuffleArray(ACTIVE_PHOTOS);
+    const ALL_VALID_PHOTOS = shuffleArray(GALLERY_PHOTOS.filter(isValidGalleryEntry));
+    let HERO_REEL_PHOTOS = shuffleArray(ALL_VALID_PHOTOS.filter((p) => (Number(p.aspect) || 1) > 1.05)).slice(0, 10);
+    const HERO_REEL_SET = new Set(HERO_REEL_PHOTOS.map((p) => p.filename.toLowerCase()));
+    let ACTIVE_PHOTOS = shuffleArray(ALL_VALID_PHOTOS.filter((p) => !HERO_REEL_SET.has(p.filename.toLowerCase())));
+    let ARCHIVE_PHOTOS = shuffleArray(ALL_VALID_PHOTOS);
 
-    const MORPH_CONTROLLER = { rebuild: null, layout: null, onPrune: null };
+    const MORPH_CONTROLLER = { rebuild: null, layout: null, onPrune: null, getItems: null, activateImages: null };
     const HERO_REEL_CONTROLLER = { refresh: null };
     const ARCHIVE_CONTROLLER = { render: null };
 
@@ -1290,11 +1556,20 @@
     function pruneBrokenPhoto(brokenSrc) {
       const targetNorm = normalizePhotoPath(brokenSrc);
       if (!targetNorm || !targetNorm.includes("assets/fotografia/")) return false;
+      const keepEntry = (p) =>
+        normalizePhotoPath(p.src) !== targetNorm &&
+        (!p.mobileSrc || normalizePhotoPath(p.mobileSrc) !== targetNorm);
+      const beforeReel = HERO_REEL_PHOTOS.length;
       const beforeActive = ACTIVE_PHOTOS.length;
       const beforeArchive = ARCHIVE_PHOTOS.length;
-      ACTIVE_PHOTOS = ACTIVE_PHOTOS.filter((p) => normalizePhotoPath(p.src) !== targetNorm);
-      ARCHIVE_PHOTOS = ARCHIVE_PHOTOS.filter((p) => normalizePhotoPath(p.src) !== targetNorm);
-      if (ACTIVE_PHOTOS.length === beforeActive && ARCHIVE_PHOTOS.length === beforeArchive) return false;
+      HERO_REEL_PHOTOS = HERO_REEL_PHOTOS.filter(keepEntry);
+      ACTIVE_PHOTOS = ACTIVE_PHOTOS.filter(keepEntry);
+      ARCHIVE_PHOTOS = ARCHIVE_PHOTOS.filter(keepEntry);
+      if (
+        HERO_REEL_PHOTOS.length === beforeReel &&
+        ACTIVE_PHOTOS.length === beforeActive &&
+        ARCHIVE_PHOTOS.length === beforeArchive
+      ) return false;
       MORPH_CONTROLLER.onPrune?.(targetNorm);
       ARCHIVE_CONTROLLER.render?.();
       HERO_REEL_CONTROLLER.refresh?.();
@@ -1304,8 +1579,12 @@
     async function discoverFotografiaPhotos() {
       const registerManifestEntries = (arr) => {
         if (!Array.isArray(arr)) return [];
-        const valid = arr.filter(isValidGalleryEntry);
-        valid.forEach((p) => KNOWN_PHOTO_MAP.set(p.filename.toLowerCase(), { ...p }));
+        const valid = arr.filter(isValidGalleryEntry).map((p) => {
+          const key = p.filename.toLowerCase();
+          const merged = { ...(KNOWN_PHOTO_MAP.get(key) || {}), ...p };
+          KNOWN_PHOTO_MAP.set(key, merged);
+          return merged;
+        });
         return valid;
       };
 
@@ -1345,13 +1624,13 @@
       }
 
       if (manifestItems && manifestItems.length > 0) {
-        ACTIVE_PHOTOS = shuffleArray(manifestItems);
+        ACTIVE_PHOTOS = shuffleArray(manifestItems.filter((p) => !HERO_REEL_SET.has(p.filename.toLowerCase())));
         ARCHIVE_PHOTOS = shuffleArray(manifestItems);
         return ACTIVE_PHOTOS;
       }
 
       const fallback = GALLERY_PHOTOS.filter(isValidGalleryEntry);
-      ACTIVE_PHOTOS = shuffleArray(fallback);
+      ACTIVE_PHOTOS = shuffleArray(fallback.filter((p) => !HERO_REEL_SET.has(p.filename.toLowerCase())));
       ARCHIVE_PHOTOS = shuffleArray(fallback);
       return ACTIVE_PHOTOS;
     }
@@ -1469,7 +1748,75 @@
       document.body.classList.remove("intro-locked");
     }
 
+    const PRELOADED_INTRO_IMAGES = [];
+
+    function preloadImageSrc(src, priority = "auto") {
+      if (!src) return Promise.resolve();
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.decoding = "async";
+        try { img.fetchPriority = priority; } catch {}
+        const done = () => resolve();
+        img.onload = () => {
+          Promise.resolve(img.decode?.()).catch(() => {}).finally(done);
+        };
+        img.onerror = done;
+        img.src = src;
+        PRELOADED_INTRO_IMAGES.push(img);
+      });
+    }
+
+    function preloadIntroPhotos() {
+      const usePhoneSrc = isPhoneViewport();
+      const tier1ImageUrls = new Set([
+        usePhoneSrc ? "assets/hero-rover-800.webp" : "assets/hero-rover.webp",
+        "assets/profile.webp",
+        usePhoneSrc ? "assets/IMG_1471-800.webp" : "assets/IMG_1471.webp",
+        usePhoneSrc ? "assets/piano-800.webp" : "assets/piano.webp",
+        usePhoneSrc ? "assets/IMG_7252-800.webp" : "assets/IMG_7252.webp",
+        ...HERO_REEL_PHOTOS.map((p) => (usePhoneSrc && p.mobileSrc) ? p.mobileSrc : p.src)
+      ]);
+
+      // Tier 1 (Highest priority): Hero PFP, Skills PFP, Controlled Chaos beats, Hero Reel, and Desktop 3D GLBs
+      const tier1Tasks = Array.from(tier1ImageUrls).map((src) => preloadImageSrc(src, "high"));
+      if (!usePhoneSrc && !navigator.connection?.saveData) {
+        [
+          "assets/models/foil.glb",
+          "assets/models/sony-a6100.glb",
+          "assets/models/sony-a7iii.glb"
+        ].forEach((glbUrl) => {
+          tier1Tasks.push(fetch(glbUrl, { priority: "high" }).catch(() => {}));
+        });
+      }
+
+      // Tier 2 (Runs during Anomaly intro right after Tier 1 settles or 350ms head-start): "My Photography" Morph Stage
+      let tier2Started = false;
+      const startTier2 = () => {
+        if (tier2Started) return;
+        tier2Started = true;
+        MORPH_CONTROLLER.activateImages?.();
+        const morphList = MORPH_CONTROLLER.getItems?.() || [];
+        const tier2Tasks = morphList.map((photo) => {
+          const src = (usePhoneSrc && photo.mobileSrc) ? photo.mobileSrc : photo.src;
+          return preloadImageSrc(src, "low");
+        });
+
+        // Tier 3 (Lowest priority background fill): Hidden Full Archive modal grid
+        Promise.allSettled(tier2Tasks).then(() => {
+          const archiveGrid = document.getElementById("full-archive-grid");
+          if (archiveGrid && !archiveGrid.children.length) {
+            ARCHIVE_CONTROLLER.render?.();
+          }
+        });
+      };
+
+      const tier1HeadStart = new Promise((resolve) => setTimeout(resolve, 350));
+      Promise.race([Promise.allSettled(tier1Tasks), tier1HeadStart]).then(startTier2);
+    }
+
     function runInPlaceIntro() {
+      preloadIntroPhotos();
+
       if (window.scrollY > 0) {
         savedScrollY = Math.max(savedScrollY, window.scrollY);
       }
@@ -1480,14 +1827,6 @@
       const wordEl = document.getElementById("hero-adriano-line");
       const backdrop = document.getElementById("intro-backdrop");
 
-      let introSeenRecently = false;
-      try {
-        const lastSeen = Number(localStorage.getItem("adriano:intro_seen") || 0);
-        introSeenRecently = lastSeen > 0 && (Date.now() - lastSeen) < 30 * 60 * 1000;
-      } catch {
-        introSeenRecently = false;
-      }
-
       const finishIntro = () => {
         window.removeEventListener("wheel", blockScrollDuringIntro, { passive: false });
         window.removeEventListener("touchmove", blockScrollDuringIntro, { passive: false });
@@ -1495,12 +1834,11 @@
         document.documentElement.classList.remove("intro-locked");
         document.body.classList.remove("intro-locked");
         document.body.classList.add("intro-complete");
-        try { localStorage.setItem("adriano:intro_seen", String(Date.now())); } catch {}
         if (savedScrollY > 40) {
           setTimeout(() => {
             scrollTrackingReady = true;
             window.scrollTo({ top: savedScrollY, behavior: prefersReducedMotion() ? "auto" : "smooth" });
-          }, introSeenRecently ? 120 : 320);
+          }, 450);
         } else {
           scrollTrackingReady = true;
         }
@@ -1520,7 +1858,7 @@
       ).join("");
 
       const startTime = performance.now();
-      const totalDuration = introSeenRecently ? 400 : (isPhoneViewport() ? 1150 : 3200);
+      const totalDuration = 3500;
 
       const interval = setInterval(() => {
         const elapsed = performance.now() - startTime;
@@ -1566,7 +1904,7 @@
           clearInterval(interval);
           finishIntro();
         }
-      }, introSeenRecently ? 45 : 60);
+      }, 65);
     }
 
     // ==================== 2. COORDINATED STAGE LOOP + GPU CURSOR (Sleeps when idle) ====================
@@ -1618,6 +1956,8 @@
         STAGE_LOOP.wake();
       }, { passive: true });
     })();
+
+    const AUDIO_VIZ = { isPlaying: false, energy: 0, beat: 0 };
 
     // ==================== 3. HERO WORDMARK REEL (Exclusive Pool) + CARAVAN + GROOVE SHIFT ====================
     (function initHeroAndAudio() {
@@ -1730,6 +2070,85 @@
         }
       });
 
+      // FORGe ButtonScenes Hover/Click Lifecycle + Post-Handshake Popup for #hero-connect-link
+      const connectWidget = document.getElementById("connect-widget");
+      const connectBtn = document.getElementById("hero-connect-link");
+      if (connectWidget && connectBtn && isFineHover() && !prefersReducedMotion()) {
+        const bsEl = connectBtn.querySelector(".bs");
+        const mailBtn = document.getElementById("connect-popup-mail");
+        const mailIcon = document.getElementById("connect-mail-icon");
+        const mailCheck = document.getElementById("connect-mail-check");
+        const mailStatus = document.getElementById("connect-popup-status");
+        let actTimer = 0;
+        let popupTimer = 0;
+        let leaveTimer = 0;
+        let mailStatusTimer = 0;
+        let popupOpen = false;
+
+        const playConnectScene = (e) => {
+          if (e && e.pointerType && e.pointerType !== "mouse") return;
+          window.clearTimeout(leaveTimer);
+          if (popupOpen) return;
+          if (bsEl) {
+            const scale = Math.max(0.5, Math.min(1, (connectBtn.offsetWidth - 14) / 160, (connectBtn.offsetHeight - 2) / 52));
+            bsEl.style.setProperty("--bs-scale", scale.toFixed(3));
+          }
+          delete connectBtn.dataset.playing;
+          void connectBtn.offsetWidth;
+          connectBtn.dataset.playing = "";
+          window.clearTimeout(popupTimer);
+          popupTimer = window.setTimeout(() => {
+            popupOpen = true;
+            connectWidget.classList.add("popup-open");
+            delete connectBtn.dataset.playing;
+          }, 2100);
+        };
+
+        const closeConnectWidget = () => {
+          window.clearTimeout(popupTimer);
+          window.clearTimeout(leaveTimer);
+          popupOpen = false;
+          connectWidget.classList.remove("popup-open");
+          delete connectBtn.dataset.playing;
+          delete connectBtn.dataset.act;
+        };
+
+        connectWidget.addEventListener("pointerenter", playConnectScene);
+        connectWidget.addEventListener("pointerleave", () => {
+          window.clearTimeout(popupTimer);
+          window.clearTimeout(leaveTimer);
+          leaveTimer = window.setTimeout(closeConnectWidget, 160);
+        });
+        connectBtn.addEventListener("pointerdown", (e) => {
+          if (e.button !== 0 || (e.pointerType && e.pointerType !== "mouse")) return;
+          window.clearTimeout(actTimer);
+          delete connectBtn.dataset.act;
+          void connectBtn.offsetWidth;
+          connectBtn.dataset.act = "";
+          actTimer = window.setTimeout(() => { delete connectBtn.dataset.act; }, 600);
+        });
+        if (mailBtn) {
+          mailBtn.addEventListener("click", () => {
+            const email = mailBtn.getAttribute("data-email") || "AdrianoLop.V@icloud.com";
+            copyTextToClipboard(email).then((copied) => {
+              if (!copied) return;
+              window.clearTimeout(mailStatusTimer);
+              mailBtn.classList.add("border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300");
+              mailIcon?.classList.add("hidden");
+              mailCheck?.classList.remove("hidden");
+              mailStatus?.classList.remove("hidden");
+              mailStatusTimer = window.setTimeout(() => {
+                mailBtn.classList.remove("border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300");
+                mailIcon?.classList.remove("hidden");
+                mailCheck?.classList.add("hidden");
+                mailStatus?.classList.add("hidden");
+              }, 2000);
+            });
+          });
+        }
+        window.addEventListener("blur", closeConnectWidget);
+      }
+
       // Caravan Audio Player (On-demand MP3 playback, preload="none", 25% default volume)
       const TRACKS = [
         { name: "CARAVAN", src: "assets/Caravan.mp3" },
@@ -1773,7 +2192,8 @@
           audioCtx = new Ctx();
           const source = audioCtx.createMediaElementSource(audio);
           analyser = audioCtx.createAnalyser();
-          analyser.fftSize = 64;
+          analyser.fftSize = 128;
+          analyser.smoothingTimeConstant = 0.65;
           source.connect(analyser);
           analyser.connect(audioCtx.destination);
           freqBins = new Uint8Array(analyser.frequencyBinCount);
@@ -1782,21 +2202,71 @@
         }
       }
 
+      let rollingBass = 0;
+      let beatEnv = 0;
+      let stringAmp = 0;
+      let stringPhase = 0;
+
       STAGE_LOOP.add((now) => {
         if (!isPlaying || prefersReducedMotion()) {
+          rollingBass = 0;
+          beatEnv = 0;
+          stringAmp = 0;
+          AUDIO_VIZ.isPlaying = false;
+          AUDIO_VIZ.energy = 0;
+          AUDIO_VIZ.beat = 0;
           document.documentElement.style.setProperty("--groove", "0");
+          document.documentElement.style.setProperty("--groove-beat", "0");
+          const wavePath = document.getElementById("seam-wave-path");
+          if (wavePath) wavePath.setAttribute("d", "M0 12 C380 12, 820 12, 1200 12");
           return false;
         }
-        let level = 0;
+        AUDIO_VIZ.isPlaying = true;
+        let energy = 0;
         if (analyser && freqBins) {
           analyser.getByteFrequencyData(freqBins);
-          const bass = (freqBins[0] + freqBins[1] + freqBins[2] + freqBins[3]) / (4 * 255);
-          level = Math.min(1, bass * 1.25);
+          const subBass = (freqBins[1] + freqBins[2] + freqBins[3]) / (3 * 255);
+          const mid = (freqBins[4] + freqBins[6] + freqBins[8] + freqBins[10]) / (4 * 255);
+          energy = Math.min(1, (subBass * 0.65 + mid * 0.35));
+          rollingBass = rollingBass > 0 ? (rollingBass * 0.88 + subBass * 0.12) : subBass;
+          const flux = subBass - rollingBass;
+          if (flux > 0.032) {
+            beatEnv = Math.min(1, Math.max(beatEnv, (flux - 0.032) * 7.5));
+            // Pluck the bass string on bass attack
+            stringAmp = Math.min(10.5, Math.max(stringAmp, 2.2 + subBass * 8.5));
+          } else {
+            beatEnv *= 0.76;
+            if (beatEnv < 0.02) beatEnv = 0;
+          }
+          // Natural upright-bass string ring decay + low-level sustain from sub-bass
+          stringAmp = Math.max(subBass * 2.4, stringAmp * 0.92);
         } else {
           // Fallback rhythmic pulse (~120 BPM) if AudioContext is unavailable
-          level = 0.35 + 0.35 * Math.sin((now / 250) * Math.PI);
+          energy = 0.35;
+          const phase = (now % 500) / 500;
+          beatEnv = phase < 0.18 ? Math.sin((phase / 0.18) * Math.PI) : 0;
+          stringAmp = 1.8 + beatEnv * 7.5;
         }
-        document.documentElement.style.setProperty("--groove", level.toFixed(3));
+        AUDIO_VIZ.energy = energy;
+        AUDIO_VIZ.beat = beatEnv;
+        document.documentElement.style.setProperty("--groove", energy.toFixed(3));
+        document.documentElement.style.setProperty("--groove-beat", beatEnv.toFixed(3));
+
+        // Plucked upright bass string: single taut standing wave anchored at (0,12) and (1200,12)
+        const wavePath = document.getElementById("seam-wave-path");
+        if (wavePath) {
+          stringPhase += 0.34;
+          const disp = Math.sin(stringPhase) * stringAmp;
+          const cy = 12 + disp;
+          wavePath.setAttribute(
+            "d",
+            `M0 12 C380 ${cy.toFixed(2)}, 820 ${cy.toFixed(2)}, 1200 12`
+          );
+          wavePath.setAttribute(
+            "stroke",
+            stringAmp > 3.2 ? `rgba(245, 158, 11, ${Math.min(0.85, 0.28 + (stringAmp / 10.5) * 0.52).toFixed(2)})` : "rgba(244, 244, 240, 0.26)"
+          );
+        }
         return true;
       });
 
@@ -1876,7 +2346,15 @@
       audio.addEventListener("pause", () => {
         isPlaying = false;
         updatePlayUI();
+        AUDIO_VIZ.isPlaying = false;
+        AUDIO_VIZ.energy = 0;
+        AUDIO_VIZ.beat = 0;
         document.documentElement.style.setProperty("--groove", "0");
+        document.documentElement.style.setProperty("--groove-beat", "0");
+        const wavePath = document.getElementById("seam-wave-path");
+        if (wavePath) {
+          wavePath.setAttribute("stroke", "rgba(244,244,240,0.18)");
+        }
       });
       audio.addEventListener("ended", () => {
         switchTrack(1, true);
@@ -1956,6 +2434,7 @@
       let morphEls = [];
       let diagStart = [];
       let bentoSlots = [];
+      let imagesActivated = false;
 
       function pickMorphBatch(desiredCount) {
         const valid = ACTIVE_PHOTOS.filter(isValidGalleryEntry);
@@ -2173,12 +2652,15 @@
           tile.setAttribute("data-palette", photo.palette || "color");
           tile.setAttribute("data-photo-src", photo.src);
 
+          const targetSrc = usePhoneSrc && photo.mobileSrc ? photo.mobileSrc : photo.src;
           const img = document.createElement("img");
-          img.src = usePhoneSrc && photo.mobileSrc ? photo.mobileSrc : photo.src;
+          img.dataset.src = targetSrc;
+          if (imagesActivated) img.src = targetSrc;
           img.alt = photo.filename || "Photography";
           img.className = "w-full h-full object-contain block pointer-events-none select-none transition-transform duration-500 group-hover:scale-[1.03]";
           img.loading = "eager";
           img.decoding = "async";
+          try { img.fetchPriority = "low"; } catch {}
 
           tile.appendChild(img);
           stage.appendChild(tile);
@@ -2215,8 +2697,29 @@
 
       let morphScrollQueued = false;
 
+      function computeDiagDrift(p, isMobile) {
+        if (isMobile) return Math.min(1, p / 0.48);
+        if (p <= 0.20) {
+          const t = p / 0.20;
+          return 0.46 * (1 - Math.pow(1 - t, 2.2));
+        }
+        if (p <= 0.365) {
+          // Bullet-time freeze while Sony a6100 aims and fires the shutter
+          const t = (p - 0.20) / 0.165;
+          return 0.46 + 0.04 * t;
+        }
+        if (p <= 0.58) {
+          // Diagonal movement resumes after the flash
+          const t = (p - 0.365) / 0.215;
+          const ease = t * t * (3 - 2 * t);
+          return 0.50 + 0.50 * ease;
+        }
+        return 1;
+      }
+
       function updateMorph() {
         if (morphEls.length === 0) return;
+        const isMobile = window.innerWidth < 768;
         const driftX = diagMeta.driftX;
         const driftY = diagMeta.driftY;
 
@@ -2224,8 +2727,9 @@
         const scrollable = section.offsetHeight - window.innerHeight;
         const p = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
 
-        const diagDrift = Math.min(1, p / 0.45);
-        const morphT = p <= 0.45 ? 0 : easeInOutCubic((p - 0.45) / 0.55);
+        const diagDrift = computeDiagDrift(p, isMobile);
+        const morphStart = isMobile ? 0.48 : 0.58;
+        const morphT = p <= morphStart ? 0 : easeInOutCubic((p - morphStart) / (1 - morphStart));
 
         morphEls.forEach((el, i) => {
           const d = diagStart[i];
@@ -2267,6 +2771,14 @@
       }
 
       MORPH_CONTROLLER.rebuild = rebuildMorphGrid;
+      MORPH_CONTROLLER.getItems = () => morphItems;
+      MORPH_CONTROLLER.activateImages = () => {
+        if (imagesActivated) return;
+        imagesActivated = true;
+        stage.querySelectorAll("img[data-src]").forEach((img) => {
+          if (!img.getAttribute("src")) img.src = img.dataset.src;
+        });
+      };
       MORPH_CONTROLLER.layout = () => {
         recomputeGeometry();
         updateMorph();
@@ -2357,19 +2869,60 @@
     });
 
     (function initDecryptText() {
+      const measurer = document.createElement("span");
+      measurer.setAttribute("aria-hidden", "true");
+      measurer.style.cssText = "position:fixed;visibility:hidden;pointer-events:none;white-space:nowrap;top:-9999px;left:-9999px;";
+      document.body.appendChild(measurer);
+
       document.querySelectorAll("[data-default][data-target]").forEach((el) => {
         const defaultText = el.getAttribute("data-default");
         const targetText = el.getAttribute("data-target");
+        const textNode = el.querySelector(".decrypt-inner") || el;
+        const triggerEl = el.closest("#hero-curious-line") || el;
         let timer = null;
         let revealed = false;
+        let defaultW = 0;
+        let targetW = 0;
+        let lockWidths = false;
+
+        function measureWidths() {
+          const cs = window.getComputedStyle(el);
+          measurer.style.font = cs.font;
+          measurer.style.letterSpacing = cs.letterSpacing;
+          measurer.textContent = defaultText;
+          defaultW = Math.ceil(measurer.getBoundingClientRect().width) + 1;
+          measurer.textContent = targetText;
+          targetW = Math.ceil(measurer.getBoundingClientRect().width) + 1;
+
+          const container = el.closest("p") || el.parentElement;
+          const availW = container ? container.clientWidth : window.innerWidth;
+          // For #hero-curious-line leave room for "I'm " + ", and I act on it." (~160px)
+          const reserveW = el.id === "curious-decrypt" ? 160 : 8;
+          lockWidths = availW > 0 && (targetW + reserveW) <= availW;
+
+          if (lockWidths) {
+            el.classList.add("decrypt-slot");
+            el.style.width = `${revealed ? targetW : defaultW}px`;
+          } else {
+            el.classList.remove("decrypt-slot");
+            el.style.width = "";
+          }
+        }
+
+        measureWidths();
+        document.fonts?.ready?.then(measureWidths);
+        window.addEventListener("resize", measureWidths, { passive: true });
 
         function animateDecrypt(toText) {
           clearInterval(timer);
+          if (lockWidths) {
+            el.style.width = `${toText === targetText ? targetW : defaultW}px`;
+          }
           if (prefersReducedMotion()) {
-            el.textContent = toText;
+            textNode.textContent = toText;
             return;
           }
-          const startText = el.textContent;
+          const startText = textNode.textContent;
           const maxLen = Math.max(startText.length, toText.length);
           const totalSteps = 13;
           let step = 0;
@@ -2390,26 +2943,26 @@
                 out += CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)];
               }
             }
-            el.textContent = out;
+            textNode.textContent = out;
 
             if (step >= totalSteps || maxLen === 0) {
               clearInterval(timer);
-              el.textContent = toText;
+              textNode.textContent = toText;
             }
           }, 25);
         }
 
-        el.addEventListener("mouseenter", () => {
+        triggerEl.addEventListener("mouseenter", () => {
           if (!hasFineHover()) return;
           revealed = true;
           animateDecrypt(targetText);
         });
-        el.addEventListener("mouseleave", () => {
+        triggerEl.addEventListener("mouseleave", () => {
           if (!hasFineHover()) return;
           revealed = false;
           animateDecrypt(defaultText);
         });
-        el.addEventListener("click", () => {
+        triggerEl.addEventListener("click", () => {
           if (hasFineHover()) return;
           revealed = !revealed;
           animateDecrypt(revealed ? targetText : defaultText);
@@ -2462,7 +3015,7 @@
           const safeAlt = String(photo.filename || "Photography").replace(/"/g, "&quot;");
           return `
             <div class="palette-item min-w-0 overflow-hidden bg-zinc-900 border border-white/5 shadow-lg cursor-pointer group" data-palette="${photo.palette || "color"}" data-photo-src="${safeSrc}" style="flex: ${a} 1 0%; aspect-ratio: ${a};">
-              <img src="${displaySrc}" alt="${safeAlt}" class="w-full h-full object-contain block transition-transform duration-500 group-hover:scale-[1.02]" loading="eager" decoding="async" />
+              <img src="${displaySrc}" alt="${safeAlt}" class="w-full h-full object-contain block transition-transform duration-500 group-hover:scale-[1.02]" loading="eager" decoding="async" fetchpriority="low" />
             </div>
           `;
         }).join("");
@@ -2508,6 +3061,8 @@
     ARCHIVE_CONTROLLER.render = renderFullArchiveGrid;
 
     function openFullGalleryModal() {
+      const grid = document.getElementById("full-archive-grid");
+      if (grid && !grid.children.length) renderFullArchiveGrid();
       const modal = document.getElementById("full-gallery-modal");
       modal.classList.remove("hidden");
       modal.classList.add("flex");
@@ -2580,7 +3135,6 @@
       const container = document.getElementById("dotted-map-container");
       const banner = document.getElementById("map-flag-banner");
       const nameEl = document.getElementById("map-flag-name");
-      const telemetryEl = document.getElementById("map-flag-telemetry");
 
       const byCode = {};
       FLOWN_DESTINATIONS.forEach((d) => { byCode[d.code] = d; });
@@ -2692,8 +3246,7 @@
           const topPx = (svgRect.top - wrapRect.top) + py * scaleY;
 
           nameEl.textContent = dest.name;
-          if (telemetryEl) telemetryEl.textContent = dest.telemetry || "";
-          const bannerWidth = Math.max(banner.offsetWidth || 160, 160);
+          const bannerWidth = Math.max(banner.offsetWidth || 120, 120);
           const clampedLeft = Math.max(4, Math.min(wrapRect.width - bannerWidth - 14, leftPx));
           const clampedTop = Math.max(22, Math.min(wrapRect.height - 22, topPx));
           banner.style.left = `${clampedLeft}px`;
@@ -2798,48 +3351,56 @@
       }
     }
 
+    async function copyTextToClipboard(text) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch {}
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+      document.body.removeChild(ta);
+      return copied;
+    }
+
     function initCopyEmailButton() {
       const btn = document.getElementById("copy-email-btn");
-      const label = document.getElementById("copy-email-label");
-      if (!btn || !label) return;
+      const labels = btn ? Array.from(btn.querySelectorAll(".roll-track > span")) : [];
+      if (!btn || labels.length === 0) return;
       const email = btn.getAttribute("data-email") || "AdrianoLop.V@icloud.com";
+      const idleClasses = [
+        "border-rose-500/50", "bg-rose-500/10", "text-rose-300",
+        "hover:bg-rose-600", "hover:border-rose-600", "hover:text-white"
+      ];
+      const copiedClasses = [
+        "border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300",
+        "hover:bg-emerald-500/30", "hover:border-emerald-400", "hover:text-emerald-200"
+      ];
       let resetTimer = null;
 
       btn.addEventListener("click", async () => {
-        let copied = false;
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(email);
-            copied = true;
-          }
-        } catch (err) {
-          copied = false;
-        }
-        if (!copied) {
-          const ta = document.createElement("textarea");
-          ta.value = email;
-          ta.setAttribute("readonly", "");
-          ta.style.position = "fixed";
-          ta.style.opacity = "0";
-          document.body.appendChild(ta);
-          ta.select();
-          try {
-            copied = document.execCommand("copy");
-          } catch (err) {
-            copied = false;
-          }
-          document.body.removeChild(ta);
-        }
-
+        const copied = await copyTextToClipboard(email);
         if (copied) {
           clearTimeout(resetTimer);
-          label.textContent = "Copied!";
-          btn.classList.remove("border-rose-500/50", "bg-rose-500/10", "text-rose-300");
-          btn.classList.add("border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300");
+          labels.forEach((s) => { s.textContent = "Copied!"; });
+          btn.classList.remove(...idleClasses);
+          btn.classList.add(...copiedClasses);
           resetTimer = setTimeout(() => {
-            label.textContent = "Copy";
-            btn.classList.remove("border-emerald-400/70", "bg-emerald-500/20", "text-emerald-300");
-            btn.classList.add("border-rose-500/50", "bg-rose-500/10", "text-rose-300");
+            labels.forEach((s) => { s.textContent = "Copy"; });
+            btn.classList.remove(...copiedClasses);
+            btn.classList.add(...idleClasses);
           }, 2000);
         }
       });
@@ -2865,6 +3426,7 @@
       let waveRaf = null;
       const updateWave = () => {
         waveRaf = null;
+        if (AUDIO_VIZ.isPlaying) return;
         const rect = waveWrap.getBoundingClientRect();
         const vh = window.innerHeight || 800;
         if (rect.bottom < -40 || rect.top > vh + 40) return;
@@ -2872,7 +3434,7 @@
         const amp = Math.max(0, 1 - distFromCenter) * 9.5;
         wavePath.setAttribute(
           "d",
-          `M0 12 Q150 ${(12 - amp).toFixed(2)} 300 12 T600 12 T900 12 T1200 12`
+          `M0 12 C380 ${(12 - amp).toFixed(2)}, 820 ${(12 - amp).toFixed(2)}, 1200 12`
         );
       };
       window.addEventListener("scroll", () => {
@@ -2881,12 +3443,291 @@
       updateWave();
     }
 
+    // ==================== 10. WIDE-ONLY 3D STAGE (FORGe Scroll Choreography) ====================
+    async function initStage3D() {
+      const canvas = document.getElementById("stage-3d-canvas");
+      const nav = navigator;
+      if (
+        !canvas ||
+        window.innerWidth < 768 ||
+        prefersReducedMotion() ||
+        nav.connection?.saveData
+      ) {
+        return;
+      }
+
+      try {
+        const [THREE, { GLTFLoader }, { RoomEnvironment }] = await Promise.all([
+          import("three"),
+          import("three/addons/loaders/GLTFLoader.js"),
+          import("three/addons/environments/RoomEnvironment.js")
+        ]);
+
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: true,
+          powerPreference: "high-performance"
+        });
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        renderer.setPixelRatio(dpr);
+        renderer.setSize(window.innerWidth, window.innerHeight, false);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.25;
+
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        const scene = new THREE.Scene();
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        scene.environmentIntensity = 0.95;
+
+        const camera = new THREE.PerspectiveCamera(36, window.innerWidth / window.innerHeight, 0.1, 40);
+        camera.position.set(0, 0, 7.2);
+
+        // Chiaroscuro Lighting matching Obsidian + Crimson + Sky palette
+        scene.add(new THREE.AmbientLight(0xf4f4f0, 0.65));
+        const keyLight = new THREE.DirectionalLight(0xf4f4f0, 2.2);
+        keyLight.position.set(4, 5, 5);
+        scene.add(keyLight);
+
+        const crimsonRim = new THREE.DirectionalLight(0xe11d48, 2.6);
+        crimsonRim.position.set(-5, -1, -2);
+        scene.add(crimsonRim);
+
+        const skyFill = new THREE.DirectionalLight(0x38bdf8, 1.25);
+        skyFill.position.set(4, -3, 2);
+        scene.add(skyFill);
+
+        const loader = new GLTFLoader();
+        const wrapAndNormalize = (gltf, targetSize) => {
+          const root = gltf.scene;
+          const box = new THREE.Box3().setFromObject(root);
+          const size = new THREE.Vector3();
+          const center = new THREE.Vector3();
+          box.getSize(size);
+          box.getCenter(center);
+          const maxDim = Math.max(size.x, size.y, size.z) || 1;
+          const scale = targetSize / maxDim;
+          root.position.sub(center);
+          const pivot = new THREE.Group();
+          pivot.add(root);
+          pivot.scale.setScalar(scale);
+          pivot.userData.baseScale = scale;
+          pivot.visible = false;
+          scene.add(pivot);
+          return pivot;
+        };
+
+        let foilPivot = null;
+        let a7Pivot = null;
+        let a6100Pivot = null;
+
+        loader.load("assets/models/foil.glb", (g) => {
+          foilPivot = wrapAndNormalize(g, 4.6);
+          scheduleRender();
+        }, undefined, () => {});
+
+        loader.load("assets/models/sony-a7iii.glb", (g) => {
+          a7Pivot = wrapAndNormalize(g, 1.55);
+          scheduleRender();
+        }, undefined, () => {});
+
+        const a6100Materials = [];
+        loader.load("assets/models/sony-a6100.glb", (g) => {
+          g.scene.traverse((node) => {
+            if (node.isMesh && node.material) {
+              const mats = Array.isArray(node.material) ? node.material : [node.material];
+              mats.forEach((m) => {
+                m.transparent = true;
+                m.opacity = 1;
+                a6100Materials.push(m);
+              });
+            }
+          });
+          a6100Pivot = wrapAndNormalize(g, 1.38);
+          scheduleRender();
+        }, undefined, () => {});
+
+        const photoSec = document.getElementById("photography-morph-section");
+        const flashEl = document.getElementById("camera-shutter-flash");
+
+        let ptrX = 0, ptrY = 0, curPtrX = 0, curPtrY = 0;
+        let smoothScrollY = window.scrollY || 0;
+        let rafPending = false;
+
+        const clamp01 = (v) => Math.max(0, Math.min(1, v));
+        const lerp3 = (a, b, t) => a + (b - a) * t;
+        const smooth = (t) => t * t * (3 - 2 * t);
+
+        function update3DScene() {
+          rafPending = false;
+          if (window.innerWidth < 768) {
+            canvas.style.opacity = "0";
+            if (flashEl) flashEl.style.opacity = "0";
+            return;
+          }
+
+          curPtrX += (ptrX - curPtrX) * 0.08;
+          curPtrY += (ptrY - curPtrY) * 0.08;
+
+          const targetY = window.scrollY || 0;
+          const scrollDiff = targetY - smoothScrollY;
+          if (Math.abs(scrollDiff) > 0.35) {
+            smoothScrollY += scrollDiff * 0.16;
+          } else {
+            smoothScrollY = targetY;
+          }
+          const deltaY = targetY - smoothScrollY;
+
+          const vh = window.innerHeight || 800;
+          const aspectScale = Math.min(1.2, Math.max(0.75, (window.innerWidth / vh) / 1.77));
+          let anyVisible = false;
+          let flashOpacity = 0;
+
+          // 1. Foil Fencing Blade: single-pass Hero -> Controlled Chaos flight (enters left, crosses Distance/Feint, exits right)
+          if (foilPivot) {
+            const pPass1 = clamp01((smoothScrollY - vh * 0.02) / (vh * 1.05));
+            const pass1Active = pPass1 > 0.005 && pPass1 < 0.995;
+
+            foilPivot.visible = pass1Active;
+            if (pass1Active) {
+              anyVisible = true;
+              foilPivot.scale.setScalar(foilPivot.userData.baseScale);
+              const x = (-7.0 + pPass1 * 14.0) * aspectScale + curPtrX * 0.12;
+              const y = 0.62 - pPass1 * 0.95 + Math.sin(pPass1 * Math.PI) * 0.28 + curPtrY * 0.08;
+              const z = -1.0 + Math.sin(pPass1 * Math.PI) * 1.65;
+              foilPivot.position.set(x, y, z);
+              foilPivot.rotation.set(
+                pPass1 * Math.PI * 2.2 + curPtrY * 0.12,
+                Math.PI - 0.26 + pPass1 * 0.52 + curPtrX * 0.10,
+                -0.14 + Math.cos(pPass1 * Math.PI) * 0.14
+              );
+            }
+          }
+
+          // 2. Photography Cameras: Sony a6100 (Right-side entrance -> Center -> Flash fade & vanish) + Sony a7 III (full opacity)
+          if ((a7Pivot || a6100Pivot) && photoSec) {
+            const pr = photoSec.getBoundingClientRect();
+            const photoTop = pr.top + deltaY;
+            const photoBottom = pr.bottom + deltaY;
+            const scrollable = Math.max(1, photoSec.offsetHeight - vh);
+            const pPhoto = clamp01(-photoTop / scrollable);
+
+            // Sony a6100: enters from the right (+4.6 * aspectScale), aims horizontally at center, fades into shutter flash
+            if (a6100Pivot) {
+              const a6Active = pr.top < vh * 0.25 && photoBottom > vh * 0.35 && pPhoto > 0.005 && pPhoto < 0.368;
+              a6100Pivot.visible = a6Active;
+              if (a6Active) {
+                anyVisible = true;
+                a6100Pivot.scale.setScalar(a6100Pivot.userData.baseScale);
+                if (pPhoto <= 0.22) {
+                  const t = 1 - Math.pow(1 - (pPhoto / 0.22), 3);
+                  a6100Pivot.position.set(
+                    lerp3(4.6 * aspectScale, 0, t) + curPtrX * 0.08,
+                    lerp3(2.05, 0.04, t) + curPtrY * 0.06,
+                    lerp3(-0.6, 1.35, t)
+                  );
+                  a6100Pivot.rotation.set(
+                    lerp3(0.28, 0.08, t) + curPtrY * 0.08,
+                    lerp3(-2.15, -Math.PI / 2 - 0.28, t) + curPtrX * 0.10,
+                    lerp3(0.18, 0.05, t)
+                  );
+                } else {
+                  const u = smooth((pPhoto - 0.22) / (0.368 - 0.22));
+                  a6100Pivot.position.set(
+                    curPtrX * 0.06,
+                    0.04 + curPtrY * 0.04,
+                    lerp3(1.35, 1.68, u)
+                  );
+                  a6100Pivot.rotation.set(
+                    lerp3(0.08, 0, u) + curPtrY * 0.05,
+                    lerp3(-Math.PI / 2 - 0.28, -Math.PI / 2, u) + curPtrX * 0.05,
+                    lerp3(0.05, 0, u)
+                  );
+                }
+
+                const camOpacity = pPhoto < 0.340 ? 1 : clamp01(1 - (pPhoto - 0.340) / 0.028);
+                a6100Materials.forEach((m) => { m.opacity = camOpacity; });
+              } else {
+                a6100Materials.forEach((m) => { m.opacity = 1; });
+              }
+            }
+
+            if (pPhoto >= 0.342 && pPhoto <= 0.415 && pr.top < vh * 0.25 && photoBottom > vh * 0.35) {
+              flashOpacity = Math.exp(-Math.pow((pPhoto - 0.366) / 0.016, 2));
+            }
+
+            // Sony a7 III: maintains its existing Bottom-Left corner animation at full opacity
+            if (a7Pivot) {
+              const rawPCam = clamp01((-photoTop + vh * 0.25) / (scrollable * 0.62));
+              const a7Active = photoTop < vh * 0.25 && photoBottom > vh * 0.4 && rawPCam > 0.01 && rawPCam < 0.99;
+              a7Pivot.visible = a7Active;
+              if (a7Active) {
+                anyVisible = true;
+                const env = smooth(Math.sin(rawPCam * Math.PI));
+                a7Pivot.scale.setScalar(a7Pivot.userData.baseScale);
+                const xStart = -5.8 * aspectScale;
+                const xTarget = -2.95 * aspectScale;
+                a7Pivot.position.set(
+                  xStart + (xTarget - xStart) * env + curPtrX * 0.08,
+                  -1.22 + env * 0.08 + curPtrY * 0.06,
+                  -0.3
+                );
+                a7Pivot.rotation.set(
+                  -0.18 + curPtrY * 0.10,
+                  0.68 + env * 0.22 + curPtrX * 0.12,
+                  -0.06
+                );
+              }
+            }
+          }
+
+          if (flashEl) {
+            flashEl.style.opacity = flashOpacity > 0.01 ? flashOpacity.toFixed(3) : "0";
+          }
+
+          canvas.style.opacity = anyVisible ? "1" : "0";
+          if (anyVisible) {
+            renderer.render(scene, camera);
+          }
+
+          if ((Math.hypot(ptrX - curPtrX, ptrY - curPtrY) > 0.004 && anyVisible) || Math.abs(targetY - smoothScrollY) > 0.35) {
+            scheduleRender();
+          }
+        }
+
+        function scheduleRender() {
+          if (rafPending) return;
+          rafPending = true;
+          requestAnimationFrame(update3DScene);
+        }
+
+        window.addEventListener("scroll", scheduleRender, { passive: true });
+        window.addEventListener("mousemove", (e) => {
+          ptrX = (e.clientX / (window.innerWidth || 1) - 0.5) * 2;
+          ptrY = -(e.clientY / (window.innerHeight || 1) - 0.5) * 2;
+          scheduleRender();
+        }, { passive: true });
+        window.addEventListener("resize", () => {
+          if (window.innerWidth < 768) {
+            canvas.style.opacity = "0";
+            return;
+          }
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight, false);
+          scheduleRender();
+        });
+      } catch {
+        // Graceful fallback if WebGL/CDN unavailable
+      }
+    }
+
     // ==================== INIT ====================
     window.addEventListener("DOMContentLoaded", () => {
+      initStage3D();
       runInPlaceIntro();
       initCopyEmailButton();
       initSeams();
-      renderFullArchiveGrid();
       initDottedMap();
       const initialKeys = new Set(ACTIVE_PHOTOS.map((p) => p.filename.toLowerCase()));
       discoverFotografiaPhotos().then((resolved) => {
