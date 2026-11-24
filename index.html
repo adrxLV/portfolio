@@ -171,11 +171,8 @@
       }
     }
 
-    .font-serif-editorial { font-family: 'Instrument Serif', serif; }
-    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+    /* 2-Font System: Syne for headings, Inter (body default) for UI & copy; Jim Nightshade reserved for wordmark */
     .font-brutal { font-family: 'Syne', sans-serif; }
-    .font-space { font-family: 'Space Grotesk', sans-serif; }
-    .font-playwrite { font-family: 'Playwrite AU SA', cursive; }
     .font-nightshade { font-family: 'Jim Nightshade', cursive; }
 
     /* Magic UI Smooth Cursor (GPU translate3d, crisp white with black border) */
@@ -888,7 +885,7 @@
   <div id="camera-shutter-flash" aria-hidden="true" class="hidden md:block fixed inset-0 pointer-events-none z-[26] opacity-0" style="background: radial-gradient(circle at 50% 48%, rgba(255,255,255,0.98) 0%, rgba(244,244,240,0.85) 28%, rgba(244,244,240,0.25) 68%, rgba(9,9,11,0) 100%);"></div>
 
   <!-- HERO SECTION -->
-  <section id="hero-section" class="relative min-h-screen supports-[min-height:100svh]:min-h-[100svh] flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-8 pb-[max(1.75rem,env(safe-area-inset-bottom))] sm:pb-16 px-5 sm:px-12 overflow-hidden border-b border-[var(--border)]">
+  <section id="hero-section" class="relative min-h-[84vh] supports-[min-height:84svh]:min-h-[84svh] sm:min-h-[86vh] sm:supports-[min-height:86svh]:min-h-[86svh] flex flex-col justify-between pt-[max(1.25rem,env(safe-area-inset-top))] sm:pt-8 pb-10 sm:pb-16 px-5 sm:px-12 overflow-x-clip border-b border-[var(--border)]">
     <!-- Chiaroscuro Background Portrait (Option 4) -->
     <div id="hero-bg-portrait" aria-hidden="true">
       <div id="hero-bg-parallax">
@@ -902,7 +899,7 @@
     <!-- Top Bar: Discreet Connect Anchor + Post-Handshake Quick Popup (Left) + Borderless CARAVAN Audio Control (Right) -->
     <div class="relative z-30 flex items-center justify-between gap-4 slide-reveal">
       <div id="connect-widget" class="relative inline-flex items-center">
-        <a href="#contact-footer" id="hero-connect-link" data-glyph="partner" class="forge-partner-btn font-mono-tech text-xs tracking-widest uppercase">
+        <a href="#contact-footer" id="hero-connect-link" data-glyph="partner" class="forge-partner-btn text-xs font-medium tracking-[0.18em] uppercase">
           <span class="roll">
             <span class="sr-only">Connect</span>
             <span class="roll-in" aria-hidden="true"><span data-ch="C" style="--i:0" class="roll-ch">C</span><span data-ch="o" style="--i:1" class="roll-ch">o</span><span data-ch="n" style="--i:2" class="roll-ch">n</span><span data-ch="n" style="--i:3" class="roll-ch">n</span><span data-ch="e" style="--i:4" class="roll-ch">e</span><span data-ch="c" style="--i:5" class="roll-ch">c</span><span data-ch="t" style="--i:6" class="roll-ch">t</span></span>
@@ -947,8 +944,8 @@
               </svg>
             </a>
           </div>
-          <p id="connect-popup-status" class="hidden mt-1.5 font-mono-tech text-[10px] tracking-widest uppercase text-emerald-300" aria-live="polite">Email copied!</p>
-          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" id="connect-popup-resume" class="mt-2 w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-600 hover:border-rose-600 hover:text-white font-mono-tech text-[11px] tracking-widest uppercase whitespace-nowrap transition-colors">
+          <p id="connect-popup-status" class="hidden mt-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-emerald-300" aria-live="polite">Email copied!</p>
+          <a href="Adriano_Vilhena_CV.pdf" download="Adriano_Vilhena_CV.pdf" id="connect-popup-resume" class="mt-2 w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-rose-500/50 bg-rose-500/10 text-rose-300 hover:bg-rose-600 hover:border-rose-600 hover:text-white text-[11px] font-medium tracking-[0.14em] uppercase whitespace-nowrap transition-colors">
             <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M21 15v4H3v-4"></path>
               <polyline points="7 10 12 15 17 10"></polyline>
@@ -967,7 +964,7 @@
             <span class="w-[2px] h-full bg-amber-400 eq-3"></span>
             <span class="w-[2px] h-full bg-amber-400 eq-4"></span>
           </div>
-          <span id="track-title" class="font-mono-tech text-xs tracking-widest text-zinc-200">CARAVAN</span>
+          <span id="track-title" class="text-xs font-medium tracking-[0.18em] text-zinc-200">CARAVAN</span>
         </div>
 
         <!-- Hover / Tap Controls (Full comfortable width on mobile touchscreens, inline-compact on desktop) -->
@@ -1025,23 +1022,13 @@
         I poke at things until they explain themselves. My best solutions? Came when two of those obsessions <span class="magic-hl">turned out to share the same problem</span>.
       </p>
     </div>
-
-    <!-- Discreet Scroll Down Indicator -->
-    <div class="relative z-30 flex justify-center slide-reveal">
-      <a href="#skills-accordion" aria-label="Scroll down" class="group inline-flex flex-col items-center gap-1.5 min-w-[44px] min-h-[44px] justify-center text-zinc-500 hover:text-zinc-300 transition-colors">
-        <span class="font-mono-tech text-[10px] tracking-[0.24em] uppercase">Scroll</span>
-        <svg class="w-3.5 h-3.5 text-zinc-500 group-hover:text-rose-400 transition-transform duration-300 group-hover:translate-y-0.5 motion-safe:animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </a>
-    </div>
   </section>
 
   <!-- REST OF THE PAGE -->
   <div class="slide-reveal">
 
     <!-- WHAT I CAN HELP YOU WITH (Before Controlled Chaos, Closed Accordions + Programming Languages) -->
-    <section id="skills-accordion" class="w-full py-14 sm:py-28 border-b border-[var(--border)]">
+    <section id="skills-accordion" class="w-full pt-12 pb-16 sm:pt-16 sm:pb-28 border-b border-[var(--border)]">
       <div class="px-5 sm:px-12 max-w-4xl mx-auto">
       <div class="mb-8 sm:mb-10 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-8">
         <div class="flex items-center gap-4 sm:contents">
@@ -1061,7 +1048,7 @@
       <div id="accordion-list" class="border-t border-[var(--border)]">
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+            <span class="flex items-center gap-3 text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
               <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
@@ -1085,7 +1072,7 @@
 
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+            <span class="flex items-center gap-3 text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
               <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <polyline points="4 17 10 11 4 5"></polyline>
                 <line x1="12" y1="19" x2="20" y2="19"></line>
@@ -1110,7 +1097,7 @@
 
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+            <span class="flex items-center gap-3 text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
               <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <circle cx="12" cy="12" r="3"></circle>
                 <path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9l2.1 2.1m10 10l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path>
@@ -1135,7 +1122,7 @@
 
         <div class="mp-accordion-item py-5">
           <button type="button" class="mp-accordion-trigger w-full flex items-center justify-between text-left gap-4 group">
-            <span class="flex items-center gap-3 font-space text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
+            <span class="flex items-center gap-3 text-lg sm:text-xl font-medium group-hover:text-rose-400 transition-colors">
               <svg class="acc-glyph glyph-svg w-4 h-4 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <path d="M9 18V5l12-2v13"></path>
                 <circle cx="6" cy="18" r="3"></circle>
@@ -1166,7 +1153,7 @@
         <div class="lg:col-span-5 sticky top-0 z-[30] bg-[var(--bg)]/90 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none border-b border-[var(--border)] lg:border-b-0 lg:h-screen flex flex-col justify-center pt-[max(0.85rem,env(safe-area-inset-top))] pb-3.5 lg:py-0 space-y-2 sm:space-y-4 lg:space-y-6">
           <h2 class="font-brutal text-2xl sm:text-4xl lg:text-5xl leading-[0.95] tracking-tight">
             Controlled<br class="hidden lg:inline" />
-            <span class="font-serif-editorial italic font-normal text-sky-400 lg:block"> Chaos.</span>
+            <span class="text-sky-400 lg:block"> Chaos.</span>
           </h2>
           <p id="pinned-dynamic-quote" class="text-xs sm:text-base lg:text-lg text-zinc-300 leading-relaxed border-l-2 border-rose-500 pl-3 sm:pl-4 min-h-[3.25rem] sm:min-h-[3.5rem] lg:min-h-0 flex items-center transition-all duration-300">
             Every discipline I care about is a study in timing, spatial awareness, and composure when variables collide.
@@ -1183,7 +1170,7 @@
               </picture>
             </div>
             <div class="sm:pl-16 max-w-lg">
-              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Distance, Feint, Counter-Measure</h3>
+              <h3 class="font-brutal text-xl sm:text-2xl font-bold [text-wrap:balance]">Distance, Feint, Counter-Measure</h3>
               <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
                 Good fencers and good engineers have more in common than you think. Neither of them merely reacts. They read early, prepare obsessively, and stay calm precisely because <span class="magic-hl">the hard work was done before anything moved.</span>
               </p>
@@ -1198,7 +1185,7 @@
               </picture>
             </div>
             <div class="sm:pr-16 max-w-lg ml-auto text-left sm:text-right">
-              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">Teamwork playing Jazz</h3>
+              <h3 class="font-brutal text-xl sm:text-2xl font-bold [text-wrap:balance]">Teamwork playing Jazz</h3>
               <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
                 Big band piano taught me more about leadership than any textbook. Drive when the horns need pushing, disappear when someone's soloing, and <span class="magic-hl hl-amber">trust that the groove holds without you filling every bar.</span>
               </p>
@@ -1213,7 +1200,7 @@
               </picture>
             </div>
             <div class="sm:pl-12 max-w-lg">
-              <h3 class="font-space text-xl sm:text-2xl font-bold [text-wrap:balance]">From Luanda to the World and Above</h3>
+              <h3 class="font-brutal text-xl sm:text-2xl font-bold [text-wrap:balance]">From Luanda to the World and Above</h3>
               <p class="text-[15px] sm:text-sm text-zinc-400 mt-2 leading-relaxed [text-wrap:pretty]">
                 Across SLI, FGC 2024 and 2025, we explored how lunar technology and Robotics can improve life on Earth. I’ve started building in Luanda and arrived in Portugal, aiming to work in <span class="magic-hl hl-sky">Space-Applied Cybersecurity</span>.
               </p>
@@ -1251,8 +1238,8 @@
 
     <!-- FOOTER: CONTACT + CONTEXT-GROUPED LINKS + DOTTED MAP WITH WHITE PINS & COUNTRY NAME TAGS -->
     <footer id="contact-footer" class="pt-12 sm:pt-16 pb-[max(3rem,calc(env(safe-area-inset-bottom)+1.5rem))] sm:pb-16 px-5 sm:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 items-center">
-      <div class="md:col-span-5 space-y-5 font-mono-tech text-xs text-zinc-400">
-        <p class="text-white font-space text-xl font-bold">Adriano Lopes de Vilhena</p>
+      <div class="md:col-span-5 space-y-5 text-xs text-zinc-400">
+        <p class="text-white font-brutal text-xl font-bold">Adriano Lopes de Vilhena</p>
 
         <!-- Highlighted Email + Quick Copy-to-Clipboard -->
         <div class="flex flex-wrap items-center gap-2.5 pt-0.5">
@@ -1293,7 +1280,7 @@
           <div id="dotted-map-container" class="w-full h-full flex items-center justify-center"></div>
           <!-- Minimalist Slide-Out Country Name Tag from Pin -->
           <div id="map-flag-banner">
-            <div class="px-2.5 py-1 font-mono-tech text-[10px] tracking-wider text-white uppercase flex items-center gap-1.5">
+            <div class="px-2.5 py-1 text-[10px] font-medium tracking-wider text-white uppercase flex items-center gap-1.5">
               <span id="map-flag-name"></span>
             </div>
           </div>
@@ -1301,7 +1288,7 @@
       </div>
 
       <!-- CC BY 4.0 3D Model Credits (Desktop 3D Stage) -->
-      <div class="md:col-span-12 pt-4 border-t border-white/10 font-mono-tech text-[10px] leading-relaxed text-zinc-500 flex flex-wrap items-center gap-x-4 gap-y-1">
+      <div class="md:col-span-12 pt-4 border-t border-white/10 text-[10px] leading-relaxed text-zinc-500 flex flex-wrap items-center gap-x-4 gap-y-1">
         <span class="uppercase tracking-[0.2em] text-zinc-400">3D Credits (CC BY 4.0):</span>
         <a href="https://skfb.ly/prPW6" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 underline underline-offset-4 transition-colors">Foil Fencing Weapons — ONE NOTCH MEDIA</a>
         <a href="https://skfb.ly/ptoZX" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 underline underline-offset-4 transition-colors">SONY A7 III + FE 24-70mm — Arham Abdullah</a>
@@ -1316,7 +1303,7 @@
   <div id="full-gallery-modal" class="fixed inset-0 z-[9985] hidden flex-col bg-[#070709]/95 backdrop-blur-xl overflow-y-auto">
     <div class="sticky top-0 z-20 flex items-center justify-between gap-4 px-5 sm:px-12 pt-[max(1.25rem,env(safe-area-inset-top))] pb-4 sm:py-6 bg-[#070709]/90 border-b border-[var(--border)]">
       <h2 class="font-brutal text-lg sm:text-4xl [text-wrap:balance]">Complete Photography Archive</h2>
-      <button type="button" onclick="closeFullGalleryModal()" class="min-h-[44px] sm:min-h-0 px-4 py-2 border border-white/20 font-mono-tech text-xs text-white hover:bg-rose-600 hover:border-rose-600 transition-colors shrink-0">
+      <button type="button" onclick="closeFullGalleryModal()" class="min-h-[44px] sm:min-h-0 px-4 py-2 border border-white/20 text-xs font-medium tracking-[0.14em] text-white hover:bg-rose-600 hover:border-rose-600 transition-colors shrink-0">
         CLOSE [ESC]
       </button>
     </div>
@@ -1331,13 +1318,13 @@
     <div id="morph-modal-card" class="w-full max-w-3xl max-h-[92dvh] overflow-y-auto border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
       <div class="relative bg-zinc-950">
         <img id="morph-modal-img" src="" alt="" class="w-full aspect-[4/3] sm:aspect-auto sm:h-80 object-cover" />
-        <button type="button" onclick="closeMorphModal()" aria-label="Close modal" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-9 sm:h-9 bg-black/80 text-white border border-white/20 flex items-center justify-center hover:bg-rose-600 transition-colors font-mono-tech text-base sm:text-sm">
+        <button type="button" onclick="closeMorphModal()" aria-label="Close modal" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-11 h-11 sm:w-9 sm:h-9 bg-black/80 text-white border border-white/20 flex items-center justify-center hover:bg-rose-600 transition-colors text-base sm:text-sm">
           &times;
         </button>
       </div>
       <div id="morph-modal-body" class="p-5 sm:p-8 space-y-3 sm:space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <span id="morph-modal-meta" class="font-mono-tech text-[11px] text-zinc-400"></span>
+          <span id="morph-modal-meta" class="text-[11px] font-medium tracking-[0.14em] uppercase text-zinc-400"></span>
         </div>
         <h3 id="morph-modal-title" class="font-brutal text-2xl sm:text-3xl [text-wrap:balance]"></h3>
         <p id="morph-modal-desc" class="text-[15px] sm:text-base text-zinc-300 leading-relaxed [text-wrap:pretty]"></p>
@@ -3094,7 +3081,7 @@
         document.getElementById("morph-modal-title").textContent = data.title;
         document.getElementById("morph-modal-desc").textContent = data.desc;
         document.getElementById("morph-modal-pills").innerHTML = (data.pills || [])
-          .map((p) => `<span class="font-mono-tech text-[11px] px-3 py-1 border border-white/15 bg-white/5">${p}</span>`)
+          .map((p) => `<span class="text-[11px] font-medium tracking-wider uppercase px-3 py-1 border border-white/15 bg-white/5">${p}</span>`)
           .join("");
       } else if (typeof target === "string" && target.startsWith("assets/")) {
         card.className = "w-auto max-w-[94vw] max-h-[90dvh] overflow-hidden border border-[var(--border)] bg-zinc-950 shadow-2xl";
